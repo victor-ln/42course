@@ -15,7 +15,7 @@
 static size_t	count_size(size_t num, size_t base);
 static char		num_base(size_t num);
 
-char	*ft_hextoa(size_t nbr, char specifier)
+char	*ft_hextoa(size_t nbr)
 {
 	char	*res;
 	size_t	size;
@@ -32,12 +32,6 @@ char	*ft_hextoa(size_t nbr, char specifier)
 	}
 	if (size == 0 && res[1] == '\0')
 		*(res + size) = '0';
-	if (specifier == 'X')
-	{
-		size = -1;
-		while (res[++size])
-			res[size] = ft_toupper(res[size]);
-	}
 	return (res);
 }
 

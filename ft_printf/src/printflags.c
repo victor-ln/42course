@@ -32,19 +32,25 @@ int	ft_print_hash_flag(t_params p, char *arg)
 
 int	ft_print_zeros_or_blank_flag(t_params p, int len, char **arg)
 {
-	if (!p.zero_or_blank && p.width > len)
+	if ((!p.zero_or_blank && p.width > len)
+		|| (p.specifier == 's' && p.zero_or_blank == '0'))
 		return (ft_printchar(p.width, ' ', len));
 	if (p.zero_or_blank == '0' && p.width > len)
 	{
 		if (*arg[0] == '-' && ft_strchr("di", p.specifier))
 		{
-			if (!p.precision_char)
-			{
-				write(1, "-", 1);
-				ft_remove_minus(&arg);
-				return ((zero_flag(p, len) + 1));
-			}
-			return ((zero_flag(p, (len + 1))));
+			if (p.precision_char)
+				return ((zero_flag(p, (len + 1))));
+			return ((write(1, "-", 1)) + (zero_flag(p, len)));
+		}
+		if (p.plus_or_space && ft_strchr("di", p.specifier)
+			&& !p.precision_char)
+		{
+			if (p.plus_or_space == ' ')
+				write(1, " ", 1);
+			else
+				write(1, "+", 1);
+			return (zero_flag(p, len) + 1);
 		}
 		return (zero_flag(p, len));
 	}
@@ -94,10 +100,13 @@ int	ft_print_precision(char **arg, t_params p)
 	if (p.precision <= len)
 		return (0);
 	else if (*arg[0] == '-' && ft_strchr("di", p.specifier))
+		return (write(1, "-", 1) + (ft_printchar((p.precision - len), '0', 0)));
+	if (ft_strchr("di", p.specifier) && p.plus_or_space)
 	{
-		write(1, "-", 1);
-		ft_remove_minus(&arg);
-		return ((ft_printchar((p.precision - len), '0', 0) + 1));
+		if (p.plus_or_space == ' ')
+			write(1, " ", 1);
+		else
+			write(1, "+", 1);
 	}
 	return (ft_printchar((p.precision - len), '0', 0));
 }

@@ -38,6 +38,8 @@ fclean:		clean
 	@$(MK) $(LIBPATH) fclean
 	@echo "Binaries removed."
 
+bonus:		all
+
 re:			fclean all
 
 .PHONY: all, clean, fclean, re

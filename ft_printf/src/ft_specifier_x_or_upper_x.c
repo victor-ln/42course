@@ -25,8 +25,14 @@ char	*ft_specifier_x_or_upper_x(va_list args, t_params p)
 		num = nbr;
 	if (!num && !p.precision && p.precision_char)
 		return (ft_strdup(""));
-	res = ft_hextoa(num, p.specifier);
+	res = ft_hextoa(num);
 	if (!res)
 		return (NULL);
+	if (p.specifier == 'X')
+	{
+		num = -1;
+		while (res[++num])
+			res[num] = ft_toupper(res[num]);
+	}
 	return (res);
 }

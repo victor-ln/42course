@@ -18,7 +18,7 @@ char	*ft_specifier_p(va_list args)
 	char	*arg;
 
 	num = va_arg(args, size_t);
-	arg = ft_hextoa(num, 'x');
+	arg = ft_hextoa(num);
 	if (!arg)
 		return (NULL);
 	return (arg);

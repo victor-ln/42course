@@ -46,19 +46,6 @@ int	ft_printchar(int width, char c, int offset)
 	return (printed);
 }
 
-void	ft_remove_minus(char ***arg)
-{
-	char	*new_string;
-	size_t	i;
-
-	i = ft_strlen(**arg);
-	new_string = (char *)malloc(i);
-	ft_strlcpy(new_string, &***arg + 1, i + 1);
-	free (**arg);
-	**arg = ft_strdup(new_string);
-	free(new_string);
-}
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;

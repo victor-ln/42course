@@ -12,10 +12,10 @@
 
 #include "../inc/ft_printf.h"
 
-static char	*apply_args(t_params params, va_list args);
+static char	*apply_args(t_params p, va_list args);
 static void	char_zero(char *arg, char *char_zero, char specifier);
 static int	total_length(char *arg, t_params p);
-static int	write_arg(char *arg, int len, char char_zero);
+static int	write_and_free_arg(char *arg, char char_zero, t_params p);
 
 int	ft_print_args(t_params p, va_list args)
 {
@@ -25,7 +25,7 @@ int	ft_print_args(t_params p, va_list args)
 	char	*arg;
 
 	if (p.specifier == '%')
-		return (write(1, "%", 1));
+		return (write(1, "%%", 1));
 	arg = apply_args(p, args);
 	if (!arg)
 		return (0);
@@ -35,10 +35,9 @@ int	ft_print_args(t_params p, va_list args)
 	printed += ft_print_hash_flag(p, arg);
 	printed += ft_print_plus_or_space_flag(arg[0], p);
 	printed += ft_print_precision(&arg, p);
-	printed += write_arg(arg, ft_strlen(arg), c_zero);
+	printed += write_and_free_arg(arg, c_zero, p);
 	if (p.zero_or_blank == '-' && p.width > printed)
 		printed += ft_printchar(p.width, ' ', printed);
-	free(arg);
 	return (printed);
 }
 
@@ -58,7 +57,7 @@ static char	*apply_args(t_params p, va_list args)
 		return (ft_specifier_x_or_upper_x(args, p));
 }
 
-void	char_zero(char *arg, char *char_zero, char specifier)
+static void	char_zero(char *arg, char *char_zero, char specifier)
 {
 	*char_zero = 0;
 	if (specifier == 'c')
@@ -92,12 +91,27 @@ static int	total_length(char *arg, t_params p)
 	return (len);
 }
 
-static int	write_arg(char *arg, int len, char char_zero)
+static int	write_and_free_arg(char *arg, char char_zero, t_params p)
 {
 	char	zero;
+	int		len;
 
-	if (char_zero == 0)
-		return (write(1, arg, len));
 	zero = 0;
-	return (write(1, &zero, 1));
+	len = ft_strlen(arg);
+	if (char_zero)
+		write(1, &zero, 1);
+	else if (arg[0] == '-' && ft_strchr("di", p.specifier))
+	{
+		if ((len > p.precision && len >= p.width)
+			|| (len >= p.width && !p.precision_char)
+			|| (len > p.precision && p.zero_or_blank != '0')
+			|| (len > p.precision && p.width > len && p.precision_char))
+			write(1, arg, len);
+		else
+			write(1, arg + 1, (len -= 1));
+	}
+	else
+		write(1, arg, len);
+	free(arg);
+	return (len);
 }

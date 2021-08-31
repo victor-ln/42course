@@ -43,10 +43,9 @@ char	*ft_specifier_d_or_i(va_list args, t_params params);
 char	*ft_specifier_x_or_upper_x(va_list args, t_params p);
 
 char	*ft_utoa(unsigned int nbr);
-char	*ft_hextoa(size_t nbr, char specifier);
+char	*ft_hextoa(size_t nbr);
 
 void	ft_start_struct(t_params *p);
-void	ft_remove_minus(char ***arg);
 int		ft_toward_specifier(char *format);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_printchar(int width, char c, int len);
