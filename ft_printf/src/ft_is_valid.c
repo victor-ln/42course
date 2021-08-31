@@ -45,22 +45,20 @@ static int	set_flags(const char *format, t_params *p)
 {
 	int	i;
 
-	i = 0;
-	while (ft_strchr("# +0-", *format))
+	i = -1;
+	while (ft_strchr("# +0-", format[++i]))
 	{
-		if (*format == '#')
+		if (format[i] == '#')
 			p->hash = '#';
-		if (*format == '+')
+		if (format[i] == '+')
 			p->plus_or_space = '+';
-		if (*format == ' ' && !p->plus_or_space)
+		if (format[i] == ' ' && !p->plus_or_space)
 			p->plus_or_space = ' ';
-		if (*format == '-')
+		if (format[i] == '-')
 			p->zero_or_blank = '-';
-		if (*format == '0' && p->zero_or_blank != '-')
-			if (*(format + 1) >= 1 && *(format + 1) <= '9')
+		if (format[i] == '0' && p->zero_or_blank != '-')
+			if (format[i + 1] >= '1' && format[i + 1] <= '9')
 				p->zero_or_blank = '0';
-		i++;
-		format++;
 	}
 	return (i);
 }
