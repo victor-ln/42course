@@ -14,11 +14,11 @@
 
 char	*ft_specifier_p(va_list args)
 {
-	size_t	num;
+	size_t	nbr;
 	char	*arg;
 
-	num = va_arg(args, size_t);
-	arg = ft_hextoa(num);
+	nbr = va_arg(args, size_t);
+	arg = ft_hextoa(nbr);
 	if (!arg)
 		return (NULL);
 	return (arg);

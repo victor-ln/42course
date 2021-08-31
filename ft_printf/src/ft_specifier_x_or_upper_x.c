@@ -14,25 +14,25 @@
 
 char	*ft_specifier_x_or_upper_x(va_list args, t_params p)
 {
-	int				nbr;
-	unsigned int	num;
-	char			*res;
+	int				s_nbr;
+	unsigned int	u_nbr;
+	char			*arg;
 
-	nbr = va_arg(args, int);
-	if (nbr < 0)
-		num = (4294967296 + nbr);
+	s_nbr = va_arg(args, int);
+	if (s_nbr < 0)
+		u_nbr = (4294967296 + s_nbr);
 	else
-		num = nbr;
-	if (!num && !p.precision && p.precision_char)
+		u_nbr = s_nbr;
+	if (!u_nbr && !p.precision && p.precision_char)
 		return (ft_strdup(""));
-	res = ft_hextoa(num);
-	if (!res)
+	arg = ft_hextoa(u_nbr);
+	if (!arg)
 		return (NULL);
 	if (p.specifier == 'X')
 	{
-		num = -1;
-		while (res[++num])
-			res[num] = ft_toupper(res[num]);
+		u_nbr = -1;
+		while (arg[++u_nbr])
+			arg[u_nbr] = ft_toupper(arg[u_nbr]);
 	}
-	return (res);
+	return (arg);
 }

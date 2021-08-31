@@ -14,13 +14,13 @@
 
 char	*ft_specifier_d_or_i(va_list args, t_params params)
 {
-	int		num;
+	int		nbr;
 	char	*arg;
 
-	num = va_arg(args, int);
-	if (!params.precision && !num && params.precision_char)
+	nbr = va_arg(args, int);
+	if (!params.precision && !nbr && params.precision_char)
 		return (ft_strdup(""));
-	arg = ft_itoa(num);
+	arg = ft_itoa(nbr);
 	if (!arg)
 		return (NULL);
 	return (arg);

@@ -23,7 +23,7 @@ void	ft_start_struct(t_params *p)
 	p->precision_char = 0;
 }
 
-int	ft_toward_specifier(char *format)
+int	ft_toward_specifier(const char *format)
 {
 	int	i;
 

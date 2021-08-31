@@ -12,23 +12,20 @@
 
 #include "../inc/ft_printf.h"
 
-static int	print_out(char *format, va_list args);
+static int	print_out(const char *format, va_list args);
 
 int	ft_printf(const char *format, ...)
 {
 	int		printed;
-	char	*buffer;
 	va_list	args;
 
 	va_start(args, format);
-	buffer = ft_strdup(format);
-	printed = print_out(buffer, args);
+	printed = print_out(format, args);
 	va_end(args);
-	free(buffer);
 	return (printed);
 }
 
-static int	print_out(char *format, va_list args)
+static int	print_out(const char *format, va_list args)
 {
 	int			printed;
 	int			option;

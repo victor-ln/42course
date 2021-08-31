@@ -12,12 +12,12 @@
 
 #include "../inc/ft_printf.h"
 
-static int	set_flags(char *format, t_params *p);
-static int	find_error(char *format, t_params *p);
-static int	set_width(char *format, t_params *p, va_list args);
-static int	set_precision(char *format, t_params *p, va_list args);
+static int	set_flags(const char *format, t_params *p);
+static int	find_error(const char *format, t_params *p);
+static int	set_width(const char *format, t_params *p, va_list args);
+static int	set_precision(const char *format, t_params *p, va_list args);
 
-int	ft_is_valid(char *format, t_params *p, va_list args)
+int	ft_is_valid(const char *format, t_params *p, va_list args)
 {
 	if (*format == '%')
 	{
@@ -41,7 +41,7 @@ int	ft_is_valid(char *format, t_params *p, va_list args)
 	return (0);
 }
 
-static int	set_flags(char *format, t_params *p)
+static int	set_flags(const char *format, t_params *p)
 {
 	int	i;
 
@@ -65,7 +65,7 @@ static int	set_flags(char *format, t_params *p)
 	return (i);
 }
 
-static int	set_width(char *format, t_params *p, va_list args)
+static int	set_width(const char *format, t_params *p, va_list args)
 {
 	int	i;
 
@@ -90,7 +90,7 @@ static int	set_width(char *format, t_params *p, va_list args)
 	return (i);
 }
 
-static int	find_error(char *format, t_params *p)
+static int	find_error(const char *format, t_params *p)
 {
 	int	i;
 
@@ -104,7 +104,7 @@ static int	find_error(char *format, t_params *p)
 	return (0);
 }
 
-static int	set_precision(char *format, t_params *p, va_list args)
+static int	set_precision(const char *format, t_params *p, va_list args)
 {
 	int	i;
 

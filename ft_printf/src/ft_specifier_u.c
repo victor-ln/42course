@@ -15,13 +15,13 @@
 char	*ft_specifier_u(va_list args, t_params p)
 {
 	unsigned int	nbr;
-	char			*res;
+	char			*arg;
 
 	nbr = va_arg(args, unsigned int);
 	if (!nbr && !p.precision && p.precision_char)
 		return (ft_strdup(""));
-	res = ft_utoa(nbr);
-	if (!res)
+	arg = ft_utoa(nbr);
+	if (!arg)
 		return (NULL);
-	return (res);
+	return (arg);
 }

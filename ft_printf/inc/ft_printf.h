@@ -33,7 +33,7 @@ typedef struct s_params
 
 int		ft_printf(const char *format, ...);
 int		ft_print_args(t_params p, va_list args);
-int		ft_is_valid(char *format, t_params *p, va_list args);
+int		ft_is_valid(const char *format, t_params *p, va_list args);
 
 char	*ft_specifier_c(va_list args);
 char	*ft_specifier_p(va_list args);
@@ -46,7 +46,7 @@ char	*ft_utoa(unsigned int nbr);
 char	*ft_hextoa(size_t nbr);
 
 void	ft_start_struct(t_params *p);
-int		ft_toward_specifier(char *format);
+int		ft_toward_specifier(const char *format);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_printchar(int width, char c, int len);
 
