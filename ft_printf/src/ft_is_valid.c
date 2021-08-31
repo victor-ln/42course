@@ -92,14 +92,13 @@ static int	set_width(const char *format, t_params *p, va_list args)
 
 static int	find_error(const char *format, t_params *p)
 {
-	int	i;
-
-	i = 0;
-	if (p->width > LIMIT || p->precision > LIMIT || p->width < (-LIMIT))
+	if (p->width > LIMIT
+		|| p->precision > LIMIT
+		|| p->width < (-LIMIT))
 		return (-1);
 	if (p->precision < 0)
 		return (0);
-	if (!format[i + 1])
+	if (!format[1])
 		return (-1);
 	return (0);
 }
