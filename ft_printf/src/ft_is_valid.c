@@ -12,27 +12,25 @@
 
 #include "../inc/ft_printf.h"
 
-static int	set_flags(const char *format, t_params *p);
-static int	find_error(const char *format, t_params *p);
-static int	set_width(const char *format, t_params *p, va_list args);
-static int	set_precision(const char *format, t_params *p, va_list args);
+static t_data	*set_flags(t_data *format, t_params *p);
+static t_data	*set_width(t_data *format, t_params *p, va_list args);
+static t_data	*set_precision(t_data *format, t_params *p, va_list args);
+static int		find_error(t_data *format, t_params *p);
 
-int	ft_is_valid(const char *format, t_params *p, va_list args)
+int	ft_is_valid(t_data *format, t_params *p, va_list args)
 {
-	if (*format == '%')
+	if (*(format - 1) == '%')
 	{
-		format++;
 		ft_start_struct(p);
-		format += set_flags(&*format, p);
-		format += set_width(&*format, p, args);
+		format = set_flags(&*format, p);
+		format = set_width(&*format, p, args);
 		if (*format == '.')
-			format += set_precision(&*format, p, args);
-		if (p->precision <= LIMIT && p->width <= LIMIT
-			&& p->precision >= 0 && p->width >= (-LIMIT))
+			format = set_precision(format + 1, p, args);
+		if (p->precision <= LIMIT && p->width <= LIMIT && p->precision >= 0)
 		{
-			if (ft_strchr("cspdiuxX%", *format) && *format)
+			if (ft_strchr(TYPES, *format) && *format)
 			{
-				p->specifier = *format;
+				p->type = *format;
 				return (1);
 			}
 		}
@@ -41,88 +39,70 @@ int	ft_is_valid(const char *format, t_params *p, va_list args)
 	return (0);
 }
 
-static int	set_flags(const char *format, t_params *p)
+static t_data	*set_flags(t_data *format, t_params *p)
 {
-	int	i;
-
-	i = -1;
-	while (ft_strchr("# +0-", format[++i]))
+	while (ft_strchr(FLAGS, *format))
 	{
-		if (format[i] == '#')
+		if (*format == '#')
 			p->hash = '#';
-		if (format[i] == '+')
+		if (*format == '+')
 			p->plus_or_space = '+';
-		if (format[i] == ' ' && !p->plus_or_space)
+		if (*format == ' ' && !p->plus_or_space)
 			p->plus_or_space = ' ';
-		if (format[i] == '-')
-			p->zero_or_blank = '-';
-		if (format[i] == '0' && p->zero_or_blank != '-')
-			if (format[i + 1] >= '1' && format[i + 1] <= '9')
-				p->zero_or_blank = '0';
+		if (*format == '-')
+			p->zr_or_spaces = '-';
+		if (*format == '0' && !p->zr_or_spaces)
+			p->zr_or_spaces = '0';
+		format++;
 	}
-	return (i);
+	return (format);
 }
 
-static int	set_width(const char *format, t_params *p, va_list args)
+static t_data	*set_width(t_data *format, t_params *p, va_list args)
 {
-	int	i;
-
-	i = 0;
-	if (*format >= '0' && *format <= '9')
-	{
-		while (ft_strchr("0123456789", format[i]))
-			i++;
-		if (ft_strchr(".cspdiuxX%", format[i]))
-			p->width = atoi(format);
-	}
-	else if (*format == '*' && ft_strchr(".cspdiuxX%", *(format + 1)))
+	if (*format == '*' && (ft_strchr(TYPES, format[1]) || format[1] == '.'))
 	{
 		p->width = va_arg(args, int);
-		if (p->width < 0 && p->zero_or_blank != '-')
+		if (p->width < 0 && p->zr_or_spaces != '-')
 		{
 			p->width *= -1;
-			p->zero_or_blank = '-';
+			p->zr_or_spaces = '-';
 		}
-		i++;
+		format++;
 	}
-	return (i);
+	while (ft_isdigit(*format))
+	{
+		p->width = p->width * 10 + *format - 48;
+		format++;
+	}
+	return (format);
 }
 
-static int	find_error(const char *format, t_params *p)
+static t_data	*set_precision(t_data *format, t_params *p, va_list args)
 {
-	if (p->width > LIMIT
-		|| p->precision > LIMIT
-		|| p->width < (-LIMIT))
+	p->precision_c = 1;
+	if (*format == '*' && ft_strchr(TYPES, format[1]))
+	{
+		p->precision = va_arg(args, int);
+		if (p->precision < 0)
+			p->precision = 1;
+		return (format += 2);
+	}
+	while (ft_isdigit(*format))
+	{
+		p->precision = p->precision * 10 + *format - 48;
+		format++;
+	}
+	return (format);
+}
+
+static int	find_error(t_data *format, t_params *p)
+{
+	if (p->width > LIMIT || p->precision > LIMIT)
 		return (-1);
 	if (p->precision < 0)
 		return (0);
 	if (!format[1])
 		return (-1);
 	return (0);
-}
-
-static int	set_precision(const char *format, t_params *p, va_list args)
-{
-	int	i;
-
-	i = 1;
-	p->precision_char = '1';
-	if (*format == '.' && format[1] == '*' && ft_strchr("cspdiuxX%", format[2]))
-	{
-		p->precision = va_arg(args, int);
-		if (p->precision < 0)
-			p->precision = 1;
-		return (2);
-	}
-	else if (*format == '.' && ft_strchr("-0123456789", format[i]))
-	{
-		while (ft_strchr("-0123456789", format[i]))
-			i++;
-		if (format[i] != '*')
-		{
-			p->precision = ft_atoi(++format);
-			return (i);
-		}
-	}
-	return (1);
 }

@@ -14,23 +14,20 @@
 
 void	ft_start_struct(t_params *p)
 {
-	p->specifier = 0;
+	p->type = 0;
 	p->hash = 0;
 	p->plus_or_space = 0;
-	p->zero_or_blank = 0;
+	p->zr_or_spaces = 0;
 	p->width = 0;
 	p->precision = 0;
-	p->precision_char = 0;
+	p->precision_c = 0;
 }
 
-int	ft_toward_specifier(const char *format)
+t_data	*ft_toward_specifier(const char *format)
 {
-	int	i;
-
-	i = 1;
-	while (!ft_strchr("cspdiuxX%", format[i]) && format[i])
-		i++;
-	return (i);
+	while (!ft_strchr("cspdiuxX%", *format) && *format)
+		format++;
+	return (format);
 }
 
 int	ft_printchar(int width, char c, int offset)

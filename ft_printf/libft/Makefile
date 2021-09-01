@@ -1,16 +1,15 @@
-FLAGS		= -Wall -Wextra -Werror
-
+CFLAGS		= -Wall -Wextra -Werror
+CC			= clang
 NAME		= libft.a
 
-SRC			=	ft_atoi.c ft_itoa.c ft_strchr.c ft_strdup.c ft_strlcpy.c ft_strlen.c \
-				ft_toupper.c \
+SRC			=	ft_itoa.c ft_strchr.c ft_strdup.c ft_strlcpy.c ft_strlen.c \
+				ft_toupper.c ft_isdigit.c ft_bzero.c \
 
 OBJ			= $(SRC:.c=.o)
 
 all:		$(NAME)
 
-$(NAME):
-	@gcc $(FLAGS) -c $(SRC)
+$(NAME):	$(OBJ)
 	@ar crs $(NAME) $(OBJ)
 
 clean:
