@@ -19,13 +19,7 @@ static void	check_errors(t_game *game, int status);
 
 void	start_game(t_game *game)
 {
-	int	index;
-
-	index = -1;
 	check_errors(game, init_map(game->map, game->map.map));
-	while (game->map.map[++index] != 'P')
-		index++;
-	game->map.player_p = index;
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
