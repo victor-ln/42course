@@ -40,12 +40,14 @@ static void	free_game(t_game *s_game)
 		free(s_game->map.map);
 	if (s_game->moved_str)
 		free(s_game->moved_str);
-	free_struct(&s_game->sprites, 5);
-}
-
-static void	free_struct(void *ptr, int len)
-{
-	while (--len > -1)
-		if (((char *)ptr + len))
-			free(((char *)ptr + len));
+	if (s_game->sprites.collect)
+		free(s_game->sprites.collect);
+	if (s_game->sprites.exit)
+		free(s_game->sprites.exit);
+	if (s_game->sprites.ground)
+		free(s_game->sprites.ground);
+	if (s_game->sprites.player)
+		free(s_game->sprites.player);
+	if (s_game->sprites.wall)
+		free(s_game->sprites.wall);
 }
