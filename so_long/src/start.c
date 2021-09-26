@@ -38,7 +38,7 @@ static void	check_errors(t_game *game, int status)
 	if (status == 2)
 		exit_game("Invalid map, unknown char or map not surrounded by walls\n",
 			1, game);
-	if (status == 4)
+	if (status == 4 || game->map.x % game->map.y)
 		exit_game("Invalid map, it's not rectangular\n", 1, game);
 	if (game->map.y < 3)
 		exit_game("Invalid map, not enough lines or columns\n", 1, game);
@@ -51,8 +51,6 @@ static void	check_errors(t_game *game, int status)
 		game->map.map++;
 	if (status == 3 || *game->map.map)
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
-	if (game->map.x % game->map.y)
-		exit_game("Invalid map, lines differs in their lengths\n", 1, game);
 }
 
 static int	init_map(t_map map, char *ptr)
