@@ -53,8 +53,6 @@ static int	close_window(int keycode, t_game *game)
 
 static void	move(t_game *game, int direction)
 {
-	if (direction <= 0 || direction >= game->map.x)
-		return ;
 	if (game->map.map[game->map.player_p + direction] != '1')
 	{
 		if (game->map.map[game->map.player_p + direction] == 'C')
