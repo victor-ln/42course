@@ -83,14 +83,6 @@ static int	init_map(t_map map, char *ptr)
 	return ((map.x / map.y) == map.y);
 }
 
-/*
-
-	1	1	1	1	1 \n
-	1	C	P	E	1 \n
-	1	1	1	1	1	1 \0
-
-*/
-
 static void	get_sprites(t_sprites *sprites, void *mlx)
 {
 	specific_one(sprites->collect, mlx, PATH_C);
