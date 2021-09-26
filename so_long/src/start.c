@@ -45,15 +45,14 @@ static void	check_errors(t_game *game, int status)
 		exit_game("Invalid map, it's not rectangular\n", 1, game);
 	if (game->map.y < 3)
 		exit_game("Invalid map, not enough lines or columns\n", 1, game);
-	if ((game->map.exit != 1 || game->map.player != 1 || !game->map.collects)
-		&& !status)
-		exit_game("Invalid map, it needs an exit, a player and collects\n",
-			1, game);
 	game->map.map += game->map.x - (game->map.x / game->map.y);
 	while (*game->map.map == '1')
 		game->map.map++;
 	if (status == 3 || *game->map.map)
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
+	if (game->map.exit != 1 || game->map.player != 1 || !game->map.collects)
+		exit_game("Invalid map, it needs an exit, a player and collects\n",
+			1, game);
 	write(1, "Valid map\n", 9);
 }
 
