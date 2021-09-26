@@ -76,7 +76,10 @@ static int	init_map(t_map map, char *ptr)
 		if (*ptr == 'C')
 			map.collects++;
 		else if (*ptr == 'P')
+		{
 			map.player++;
+			map.player_p = map.x + map.y;
+		}
 		else if (*ptr == 'E')
 			map.exit++;
 		ptr++;
