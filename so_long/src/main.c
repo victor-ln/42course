@@ -53,17 +53,16 @@ static int	close_window(int keycode, t_game *game)
 
 static void	move(t_game *game, int direction)
 {
-	if (game->map.map[game->map.player_p + direction] != '1')
-	{
-		if (game->map.map[game->map.player_p + direction] == 'C')
-			game->map.collects--;
-		else if (game->map.map[game->map.player_p + direction] == 'E')
-			if (!game->map.collects)
-				exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
-		game->map.map[game->map.player_p] = '0';
-		game->map.map[game->map.player_p + direction] = 'P';
-		game->map.player_p += direction;
-		game->moved_nbr++;
-		render(game);
-	}
+	if (game->map.map[game->map.player_p + direction] == '1')
+		return ;
+	if (game->map.map[game->map.player_p + direction] == 'C')
+		game->map.collects--;
+	else if (game->map.map[game->map.player_p + direction] == 'E')
+		if (!game->map.collects)
+			exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
+	game->map.map[game->map.player_p] = '0';
+	game->map.map[game->map.player_p + direction] = 'P';
+	game->map.player_p += direction;
+	game->moved_nbr++;
+	render(game);
 }
