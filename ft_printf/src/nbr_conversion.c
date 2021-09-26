@@ -24,13 +24,13 @@ char	*ft_hextoa(size_t nbr)
 	res = (char *)malloc(size + 1);
 	if (!res)
 		return (NULL);
-	*(res + size--) = '\0';
-	while (nbr > 0)
+	*(res + size--) = 0;
+	while (nbr)
 	{
 		*(res + size--) = num_base((nbr % 16));
 		nbr /= 16;
 	}
-	if (size == 0 && res[1] == '\0')
+	if (!size && !res[1])
 		*(res + size) = '0';
 	return (res);
 }
@@ -44,13 +44,13 @@ char	*ft_utoa(unsigned int nbr)
 	str = (char *)malloc(size + 1);
 	if (!str)
 		return (NULL);
-	*(str + size--) = '\0';
-	while (nbr > 0)
+	*(str + size--) = 0;
+	while (nbr)
 	{
 		*(str + size--) = num_base((nbr % 10));
 		nbr /= 10;
 	}
-	if (size == 0 && str[1] == '\0')
+	if (!size && !str[1])
 		*(str + size) = '0';
 	return (str);
 }
@@ -60,9 +60,9 @@ static size_t	count_size(size_t num, size_t base)
 	size_t	size;
 
 	size = 0;
-	if (num == 0)
+	if (!num)
 		return (1);
-	while (num != 0)
+	while (num)
 	{
 		num /= base;
 		size++;

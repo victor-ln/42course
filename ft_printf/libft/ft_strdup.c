@@ -23,11 +23,11 @@ char	*ft_strdup(const char *string)
 	new_str = (char *)malloc(ft_strlen(string) + 1);
 	if (!new_str)
 		return (NULL);
-	while (string[i] != '\0')
+	while (string[i])
 	{
 		new_str[i] = string[i];
 		i++;
 	}
-	new_str[i] = '\0';
+	new_str[i] = 0;
 	return (new_str);
 }

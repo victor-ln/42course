@@ -3,7 +3,7 @@ CC			= clang
 NAME		= libft.a
 
 SRC			=	ft_itoa.c ft_strchr.c ft_strdup.c ft_strlcpy.c ft_strlen.c \
-				ft_toupper.c ft_isdigit.c ft_bzero.c \
+				ft_toupper.c ft_isdigit.c \
 
 OBJ			= $(SRC:.c=.o)
 

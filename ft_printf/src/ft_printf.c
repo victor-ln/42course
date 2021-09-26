@@ -19,21 +19,20 @@ int	ft_printf(const char *format, ...)
 	va_list		args;
 	t_params	params;
 
-	va_start(args, format);
 	printed = 0;
+	va_start(args, format);
 	while (*format)
 	{
 		option = ft_is_valid(format + 1, &params, args);
 		if (!option)
-			printed += (write(1, format, 1));
+			printed += (write(1, format++, 1));
 		else if (option > 0)
 		{
 			printed += ft_print_args(params, args);
-			format = ft_toward_specifier(format + 1);
+			format = ft_toward_specifier(++format);
 		}
 		else
 			return (-1);
-		format++;
 	}
 	va_end(args);
 	return (printed);

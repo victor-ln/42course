@@ -23,11 +23,11 @@ void	ft_start_struct(t_params *p)
 	p->precision_c = 0;
 }
 
-t_data	*ft_toward_specifier(const char *format)
+t_data	*ft_toward_specifier(t_data *format)
 {
-	while (!ft_strchr("cspdiuxX%", *format) && *format)
+	while (!ft_strchr(TYPES, *format) && *format)
 		format++;
-	return (format);
+	return (++format);
 }
 
 int	ft_printchar(int width, char c, int offset)
@@ -45,10 +45,10 @@ int	ft_printchar(int width, char c, int offset)
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	int	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

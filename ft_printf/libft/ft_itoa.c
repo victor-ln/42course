@@ -12,16 +12,6 @@
 
 #include "libft.h"
 
-static int	ft_size(int n)
-{
-	int	size;
-
-	size = 1;
-	if (n > 0)
-		size = 0;
-	return (size);
-}
-
 static long	ft_sign(long n)
 {
 	long	sign;
@@ -32,14 +22,18 @@ static long	ft_sign(long n)
 	return (sign);
 }
 
-static size_t	ft_size_num(size_t size2, int nbr2)
+static size_t	ft_size_num(size_t size, int nbr)
 {
-	while (nbr2)
+	if (!nbr)
+		return (1);
+	if (nbr < 0)
+		size++;
+	while (nbr)
 	{
-		nbr2 /= 10;
-		size2++;
+		nbr /= 10;
+		size++;
 	}
-	return (size2);
+	return (size);
 }
 
 char	*ft_itoa(int nbr)
@@ -48,22 +42,20 @@ char	*ft_itoa(int nbr)
 	long	n;
 	size_t	size;
 
-	n = nbr;
-	size = ft_size(nbr);
-	n = ft_sign(n);
-	size = ft_size_num(size, nbr);
+	size = ft_size_num(0, nbr);
+	n = ft_sign(nbr);
 	str = (char *)malloc(size + 1);
 	if (!str)
 		return (0);
-	*(str + size--) = '\0';
-	while (n > 0)
+	*(str + size--) = 0;
+	while (n)
 	{
-		*(str + size--) = n % 10 + '0';
+		*(str + size--) = n % 10 + 48;
 		n /= 10;
 	}
-	if (size == 0 && str[1] == '\0')
-		*(str + size) = '0';
-	else if (size == 0 && str[1] != '\0')
-		*(str + size) = '-';
+	if (!size && !str[1])
+		*(str + size) = 48;
+	else if (!size && str[1])
+		*(str + size) = 45;
 	return (str);
 }

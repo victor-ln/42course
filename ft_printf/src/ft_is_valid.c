@@ -22,10 +22,10 @@ int	ft_is_valid(t_data *format, t_params *p, va_list args)
 	if (*(format - 1) == '%')
 	{
 		ft_start_struct(p);
-		format = set_flags(&*format, p);
-		format = set_width(&*format, p, args);
+		format = set_flags(format, p);
+		format = set_width(format, p, args);
 		if (*format == '.')
-			format = set_precision(format + 1, p, args);
+			format = set_precision(++format, p, args);
 		if (p->precision <= LIMIT && p->width <= LIMIT && p->precision >= 0)
 		{
 			if (ft_strchr(TYPES, *format) && *format)
@@ -34,7 +34,7 @@ int	ft_is_valid(t_data *format, t_params *p, va_list args)
 				return (1);
 			}
 		}
-		return (find_error(&*format, p));
+		return (find_error(format, p));
 	}
 	return (0);
 }
