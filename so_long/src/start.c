@@ -44,7 +44,7 @@ static void	check_errors(t_game *game, int status)
 	if (status == 4 || game->map.x % game->map.y)
 		exit_game("Invalid map, it's not rectangular\n", 1, game);
 	if (game->map.y < 3)
-		exit_game("Invalid map, not enough lines or columns\n", 1, game);
+		exit_game("Invalid map, not enough lines\n", 1, game);
 	game->map.map += game->map.x - (game->map.x / game->map.y);
 	while (*game->map.map == '1')
 		game->map.map++;
