@@ -49,7 +49,7 @@ static void	check_errors(t_game *game, int status)
 		game->map.map++;
 	if (status == 3 || *game->map.map)
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
-	if (game->map.x % game->map.y && game->map.y < game->map.x)
+	if (game->map.x % game->map.y)
 		exit_game("Invalid map, lines differs in their lengths\n", 1, game);
 }
 
