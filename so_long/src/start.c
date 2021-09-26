@@ -69,12 +69,10 @@ static int	init_map(t_map map, char *ptr)
 			map.x++;
 		else if (*(ptr + 1) != '1' || *(ptr - 1) != '1')
 			return (3);
+		else if (map.x % map.y)
+			return (4);
 		else
-		{
 			map.y++;
-			if (map.x % (map.y - 1))
-				return (4);
-		}
 		if (*ptr == 'C')
 			map.collects++;
 		else if (*ptr == 'P')
