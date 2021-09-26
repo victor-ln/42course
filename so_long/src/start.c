@@ -76,7 +76,7 @@ static int	init_map(t_map map, char *ptr)
 	}
 	if (*ptr)
 		return (2);
-	return ((map.x / map.y) != map.y);
+	return ((map.x / map.y) == map.y);
 }
 
 static void	get_sprites(t_sprites *sprites, void *mlx)
