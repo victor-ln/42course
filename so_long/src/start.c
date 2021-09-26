@@ -72,7 +72,7 @@ static int	init_map(t_map map, char *ptr)
 		else
 		{
 			map.y++;
-			if (map.x % map.y - 1)
+			if (map.x % (map.y - 1))
 				return (4);
 		}
 		if (*ptr == 'C')
