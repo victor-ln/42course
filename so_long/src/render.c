@@ -14,7 +14,7 @@
 
 static void			draw_img(t_img *img, int x, int y);
 static void			draw_pixel(t_img *img, int x, int y, unsigned int color);
-static unsigned int	which_color(t_img *img, int x, int y);
+static unsigned int	get_color(t_img *img, int x, int y);
 static t_img		*which_one(char map_point, t_sprites *sprites);
 
 void	render(t_game *g)
@@ -50,7 +50,7 @@ static void	draw_img(t_img *img, int x, int y)
 	{
 		j = -1;
 		while (++j < img->height)
-			draw_pixel(img, i + x, j + y, which_color(img, i, j));
+			draw_pixel(img, i + x, j + y, get_color(img, i, j));
 	}
 }
 
@@ -67,7 +67,7 @@ static t_img	*which_one(char map_point, t_sprites *sprites)
 	return (sprites->exit);
 }
 
-static unsigned int	which_color(t_img *img, int x, int y)
+static unsigned int	get_color(t_img *img, int x, int y)
 {
 	return (*(unsigned int *)
 		img->data + (y * img->size_line + x * (img->bpp / 8)));
