@@ -28,6 +28,9 @@ void	start_game(t_game *game)
 	if (!game->win)
 		exit_game("Couldn't create a window\n", EXIT_FAILURE, game);
 	get_sprites(&game->sprites, game->mlx);
+	if (!game->sprites.collect || !game->sprites.exit || !game->sprites.ground
+		|| !game->sprites.player || !game->sprites.wall)
+		exit_game("Sprites got NULL\n", EXIT_FAILURE, game);
 	render(game);
 }
 
@@ -51,6 +54,7 @@ static void	check_errors(t_game *game, int status)
 		game->map.map++;
 	if (status == 3 || *game->map.map)
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
+	write(1, "Valid map\n", 9);
 }
 
 static int	init_map(t_map map, char *ptr)
