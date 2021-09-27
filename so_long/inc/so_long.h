@@ -25,7 +25,7 @@ char	*load_map(char *filename);
 */
 void	init_struct(t_game *game);
 /*
-** Initializes stack variables in game structure and its sub structures.
+** Initializes stack variables of game structure and its sub structures.
 */
 void	start_game(t_game *game);
 /*
