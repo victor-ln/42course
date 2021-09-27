@@ -63,7 +63,6 @@ char	*ft_utoa(size_t nbr)
 void	init_struct(t_game *game)
 {
 	game->mlx = 0;
-	game->map.content = 0;
 	game->moved_nbr = 0;
 	game->moved_str = 0;
 	game->map.area = 1;
