@@ -53,7 +53,6 @@ static void	check_errors(t_game *game, int status)
 	if (game->map.exit != 1 || game->map.player != 1 || !game->map.collects)
 		exit_game("Invalid map, it needs an exit, a player and collects\n",
 			1, game);
-	write(1, "Valid map\n", 9);
 }
 
 static int	init_map(t_map map, char *ptr)

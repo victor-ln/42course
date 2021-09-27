@@ -12,8 +12,6 @@
 
 #include "so_long.h"
 
-void	ft_bzero(void *s, size_t n);
-
 char	*ft_strchr(const char *src, int c)
 {
 	while (*src != c)
@@ -73,17 +71,4 @@ void	init_struct(t_game *game)
 	game->map.collects = 0;
 	game->map.exit = 0;
 	game->map.player = 0;
-	ft_bzero(&game->sprites, 5);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t	index;
-
-	index = 0;
-	while (index < n)
-	{
-		((char *)s)[index] = (char)0;
-		index++;
-	}
 }
