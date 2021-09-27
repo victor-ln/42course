@@ -56,13 +56,13 @@ static void	move(t_game *game, int direction)
 {
 	if (game->map.content[game->map.player_p + direction] == '1')
 		return ;
+	game->moved_nbr++;
+	update(game, direction);
 	if (game->map.content[game->map.player_p + direction] == 'C')
 		game->map.collects--;
 	else if (game->map.content[game->map.player_p + direction] == 'E')
 		if (!game->map.collects)
 			exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
-	game->moved_nbr++;
-	update(game, direction);
 }
 
 static void	update(t_game *game, int direction)
