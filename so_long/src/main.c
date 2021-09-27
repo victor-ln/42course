@@ -54,8 +54,7 @@ static int	close_window(int keycode, t_game *game)
 
 static void	move(t_game *game, int direction)
 {
-	if (game->map.map[game->map.player_p + direction] == '1'
-		|| game->map.map[game->map.player_p + direction] == '\n')
+	if (game->map.map[game->map.player_p + direction] == '1')
 		return ;
 	if (game->map.map[game->map.player_p + direction] == 'C')
 		game->map.collects--;
