@@ -42,7 +42,7 @@ typedef struct s_map
 {
 	int		area;
 	int		height;
-	int		line_length;
+	int		line_len;
 	int		exit;
 	int		player;
 	int		collects;
@@ -55,7 +55,6 @@ typedef struct s_game
 	int			moved_nbr;
 	void		*mlx;
 	void		*win;
-	char		*moved_str;
 	t_map		map;
 	t_img		*image;
 	t_sprites	sprites;

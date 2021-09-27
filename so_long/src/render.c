@@ -18,16 +18,16 @@ void	render(t_game *g)
 {
 	int		x;
 	int		y;
-	int		map_point;
+	int		map_p;
 
 	y = -1;
 	while (++y < g->map.height)
 	{
 		x = -1;
-		while (++x < (g->map.line_length - 1))
+		while (++x < (g->map.line_len - 1))
 		{
-			map_point = g->map.content[(g->map.line_length - 1) * y + x + (y != 0)];
-			draw_img(g->image, which_one(map_point, &g->sprites), x, y);
+			map_p = g->map.content[(g->map.line_len - 1) * y + x + (y != 0)];
+			draw_img(g->image, which_one(map_p, &g->sprites), x, y);
 		}
 	}
 	mlx_put_image_to_window(g->mlx, g->win, g->image, 0, 0);
