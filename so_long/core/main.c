@@ -57,8 +57,6 @@ static void	move(t_game *game, int direction)
 	if (game->map.content[game->map.player_p + direction] == '1')
 		return ;
 	game->moved_nbr++;
-	// game->map.content[game->map.player_p] = '0';
-	// game->map.content[game->map.player_p + direction] = 'P';
 	if (game->map.content[game->map.player_p + direction] == 'C')
 		game->map.collects--;
 	else if (game->map.content[game->map.player_p + direction] == 'E')
@@ -67,29 +65,7 @@ static void	move(t_game *game, int direction)
 	update(game, direction);
 }
 
-static void	update(t_game *game, int direction)
-{
-	int		col;
-	int		line;
-	char	*temp;
-
-	temp = ft_utoa(game->moved_nbr);
-	line = game->map.player_p / game->map.line_len;
-	col = game->map.line_len - (game->map.player_p % game->map.line_len);
-	game->map.player_p += direction;
-	if (direction > 1 || direction < -1)
-		draw_img(game->image, game->sprites.player, (game->map.player_p / game->map.line_len), col);
-	else
-		draw_img(game->image, game->sprites.player, line, (game->map.line_len - (game->map.player_p % game->map.line_len)));
-	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
-	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
-	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, temp);
-	free(temp);
-	temp = 0;
-}
-
 /*
-
 	Map example:
 
 	0	1	2	3	4	5	columns
@@ -102,13 +78,35 @@ static void	update(t_game *game, int direction)
 	Move example:
 
 	if (keycode = 's')
-		direction = ((area === 20) / (height === 4) + 1) === 6
+		direction = ((area = 20) / (height = 4) + 1) = 6
 	player_position = 9
-	line_len = (20 / 4 + 1) === 6
+	line_len = (20 / 4 + 1) = 6
 
-	actual_line = ((player_p) / line_len) === 1
-	actual_col = line_len - ((player_p % line_len) === 3) === 3
-	after_line = ((player_p === 9 + direction === 6) / line_len === 6) === 2;
-	after_col = (line_len - (player_p === 9 + direction === 6) % line_len === 3) === 3;
-
+	actual_line = ((player_p) / line_len) = 1
+	actual_col = line_len - ((player_p % line_len) = 3) = 3
+	after_line = ((player_p = 9 + direction = 6) / line_len = 6) = 2;
+	after_col = (line_len - (player_p = 9 + direction = 6) % line_len = 3) = 3;
 */
+
+static void	update(t_game *game, int direction)
+{
+	int		col;
+	int		line;
+	char	*temp;
+
+	temp = ft_utoa(game->moved_nbr);
+	line = game->map.player_p / game->map.line_len;
+	col = game->map.line_len - (game->map.player_p % game->map.line_len);
+	game->map.player_p += direction;
+	if (direction > 1 || direction < -1)
+		draw_img(game->image, game->sprites.player,
+			(game->map.player_p / game->map.line_len), col);
+	else
+		draw_img(game->image, game->sprites.player, line,
+			(game->map.line_len - (game->map.player_p % game->map.line_len)));
+	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
+	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
+	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, temp);
+	free(temp);
+	temp = 0;
+}
