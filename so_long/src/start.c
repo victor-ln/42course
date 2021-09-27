@@ -23,8 +23,8 @@ void	start_game(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
-	game->win = mlx_new_window(game->mlx, game->map.x * 64,
-			game->map.y * 64, "so_long");
+	game->win = mlx_new_window(game->mlx, game->map.area * 64,
+			game->map.height * 64, "so_long");
 	if (!game->win)
 		exit_game("Couldn't create a window\n", EXIT_FAILURE, game);
 	get_sprites(&game->sprites, game->mlx);
@@ -41,11 +41,11 @@ static void	check_errors(t_game *game, int status)
 	if (status == 2)
 		exit_game("Invalid map, unknown char or map not surrounded by walls\n",
 			1, game);
-	if (status == 4 || game->map.x % game->map.y)
+	if (status == 4 || game->map.area % game->map.height)
 		exit_game("Invalid map, it's not rectangular\n", 1, game);
-	if (game->map.y < 3)
+	if (game->map.height < 3)
 		exit_game("Invalid map, not enough lines\n", 1, game);
-	game->map.map += game->map.x - (game->map.x / game->map.y);
+	game->map.map += game->map.area - (game->map.area / game->map.height);
 	while (*game->map.map == '1')
 		game->map.map++;
 	if (status == 3 || *game->map.map)
@@ -58,22 +58,22 @@ static void	check_errors(t_game *game, int status)
 
 static int	init_map(t_map map, char *ptr)
 {
-	while ((strchr(MAP, *ptr) && map.y) || (!map.y && *ptr == '1'))
+	while ((strchr(MAP, *ptr) && map.height) || (!map.height && *ptr == '1'))
 	{
 		if (*ptr != '\n')
-			map.x++;
+			map.area++;
 		else if (*(ptr + 1) != '1' || *(ptr - 1) != '1')
 			return (3);
-		else if (map.x % map.y)
+		else if (map.area % map.height)
 			return (4);
 		else
-			map.y++;
+			map.height++;
 		if (*ptr == 'C')
 			map.collects++;
 		else if (*ptr == 'P')
 		{
 			map.player++;
-			map.player_p = map.x + map.y;
+			map.player_p = map.area + map.height;
 		}
 		else if (*ptr == 'E')
 			map.exit++;
@@ -81,7 +81,7 @@ static int	init_map(t_map map, char *ptr)
 	}
 	if (*ptr)
 		return (2);
-	return ((map.x / map.y) == map.y);
+	return ((map.area / map.height) == map.height);
 }
 
 static void	get_sprites(t_sprites *sprites, void *mlx)

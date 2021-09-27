@@ -45,8 +45,8 @@ typedef struct	s_map
 	int		player;
 	int		collects;
 	int		exit;
-	int		x;
-	int		y;
+	int		area;
+	int		height;
 }				t_map;
 
 typedef struct	s_game

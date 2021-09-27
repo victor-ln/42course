@@ -68,8 +68,8 @@ void	init_structs(t_game *game)
 	game->moved_str = 0;
 	game->map.map = 0;
 	game->mlx = 0;
-	game->map.x = 1;
-	game->map.y = 1;
+	game->map.area = 1;
+	game->map.height = 1;
 	ft_bzero(&game->map, 5);
 	ft_bzero(&game->sprites, 5);
 }

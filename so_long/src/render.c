@@ -22,13 +22,13 @@ void	render(t_game *g)
 	int	x;
 	int	y;
 
-	x = -1;
-	while (++x <= g->map.x)
+	y = -1;
+	while (++y <= g->map.height)
 	{
-		y = -1;
-		while (++y <= g->map.y)
+		x = -1;
+		while (++x <= g->map.area)
 		{
-			if (g->map.map[x + y] == '\n')
+			if (g->map.map[g->map.area + g->map.height] == '\n')
 				continue ;
 			draw_img(which_one(g->map.map[x + y], &g->sprites), x * 64, y * 64);
 		}
@@ -46,10 +46,10 @@ static void	draw_img(t_img *img, int x, int y)
 	int		j;
 
 	i = -1;
-	while (++i < img->width)
+	while (++i <= img->width)
 	{
 		j = -1;
-		while (++j < img->height)
+		while (++j <= img->height)
 			draw_pixel(img, i + x, j + y, get_color(img, i, j));
 	}
 }
