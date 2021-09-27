@@ -12,20 +12,20 @@
 
 #include "so_long.h"
 
-static int	init_map(t_map map, char *ptr);
+static int	init_map(t_map *map, char *ptr);
 static void	get_sprites(t_sprites *s, void *mlx);
 static void	specific_one(t_img *img, void *mlx, char *path);
 static void	check_errors(t_game *game, int status);
 
 void	start_game(t_game *game)
 {
-	check_errors(game, init_map(game->map, game->map.map));
+	check_errors(game, init_map(&game->map, game->map.map));
 	game->mlx = mlx_init();
-	if (!game->mlx)
+	if (game->mlx == NULL)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
 	game->win = mlx_new_window(game->mlx, (game->map.area - 1) * 64,
 			(game->map.height - 1) * 64, "so_long");
-	if (!game->win)
+	if (game->win == NULL)
 		exit_game("Couldn't create a window\n", EXIT_FAILURE, game);
 	get_sprites(&game->sprites, game->mlx);
 	if (!game->sprites.collect || !game->sprites.exit || !game->sprites.ground
@@ -55,32 +55,33 @@ static void	check_errors(t_game *game, int status)
 			1, game);
 }
 
-static int	init_map(t_map map, char *ptr)
+static int	init_map(t_map *map, char *ptr)
 {
-	while ((strchr(MAP, *ptr) && map.height) || (!map.height && *ptr == '1'))
+	while ((strchr(MAP, *ptr) && map->height > 1)
+		|| (map->height == 1 && *ptr == '1'))
 	{
 		if (*ptr != '\n')
-			map.area++;
+			map->area++;
 		else if (*(ptr + 1) != '1' || *(ptr - 1) != '1')
 			return (3);
-		else if (map.area % map.height)
+		else if (map->area % map->height)
 			return (4);
 		else
-			map.height++;
+			map->height++;
 		if (*ptr == 'C')
-			map.collects++;
+			map->collects++;
 		else if (*ptr == 'P')
 		{
-			map.player++;
-			map.player_p = (map.area - 1) + (map.height - 1);
+			map->player++;
+			map->player_p = (map->area - 1) + (map->height - 1);
 		}
 		else if (*ptr == 'E')
-			map.exit++;
+			map->exit++;
 		ptr++;
 	}
 	if (*ptr)
 		return (2);
-	return ((map.area / map.height) == map.height);
+	return ((map->area / map->height) == map->height);
 }
 
 static void	get_sprites(t_sprites *sprites, void *mlx)
