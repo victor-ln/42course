@@ -62,43 +62,30 @@ static void	move(t_game *game, int direction)
 	else if (game->map.map[game->map.player_p + direction] == 'E')
 		if (!game->map.collects)
 			exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
-	game->map.map[game->map.player_p] = '0';
-	game->map.map[game->map.player_p + direction] = 'P';
-	game->map.player_p += direction;
 	game->moved_nbr++;
 	update(game, direction);
 }
 
 static void	update(t_game *game, int direction)
 {
-	int	player_col;
-	int	player_line;
-	int	direction_col;
-	int	direction_line;
+	int	actual_col;
+	int	after_col;
+	int	actual_line;
+	int	after_line;
 	int	line_len;
 
 	game->moved_str = ft_utoa(game->moved_nbr);
 	line_len = (game->map.area / game->map.height + 1);
-	player_line = game->map.player_p / line_len;
-	direction_line = (game->map.player_p + direction) / line_len;
-	line_len--;
-	player_col = line_len - game->map.player_p % (game->map.area / game->map.height);
-	direction_col = line_len - (game->map.player_p + direction) % (game->map.area / game->map.height);
-	draw_img(game->sprites.player, player_col, player_line);
-	draw_img(game->sprites.ground, direction_col, direction_line);
+	actual_line = game->map.player_p / line_len;
+	actual_col = (line_len - 1) - (game->map.player_p % (game->map.area / game->map.height));
+	game->map.player_p += direction;
+	after_line = (game->map.player_p + direction) / line_len;
+	after_col = (line_len - 1) - ((game->map.player_p + direction)
+				% (game->map.area / game->map.height));
+	draw_img(game->sprites.ground, actual_col, actual_line);
+	draw_img(game->sprites.player, after_col, after_line);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
 	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, game->moved_str);
 	free(game->moved_str);
 	game->moved_str = 0;
 }
-
-/*
-
-	1	1	1	1	1	\n
-	1	0	0	P	1	\n
-	1	C	1	0	1	\n
-	1	0	1	C	1	\n
-	1	E	1	1	1	\n
-	1	1	1	1	1	\0
-
-*/
