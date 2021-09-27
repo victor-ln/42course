@@ -24,9 +24,9 @@ void	render(t_game *g)
 	while (++y < g->map.height)
 	{
 		x = -1;
-		while (++x < g->map.line_length)
+		while (++x < (g->map.line_length - 1))
 		{
-			map_point = g->map.content[g->map.line_length * y + x + (y != 0)];
+			map_point = g->map.content[(g->map.line_length - 1) * y + x + (y != 0)];
 			draw_img(g->image, which_one(map_point, &g->sprites), x, y);
 		}
 	}

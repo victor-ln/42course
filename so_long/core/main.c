@@ -78,8 +78,8 @@ static void	update(t_game *game, int direction)
 	actual_line = game->map.player_p / game->map.line_length;
 	actual_col = game->map.line_length - (game->map.player_p % game->map.line_length);
 	game->map.player_p += direction;
-	after_line = (game->map.player_p + direction) / game->map.line_length;
-	after_col = game->map.line_length - ((game->map.player_p + direction) % game->map.line_length);
+	after_line = game->map.player_p / game->map.line_length;
+	after_col = game->map.line_length - (game->map.player_p % game->map.line_length);
 	draw_img(game->image, game->sprites.ground, actual_col, actual_line);
 	draw_img(game->image, game->sprites.player, after_col, after_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
