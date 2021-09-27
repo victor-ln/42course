@@ -88,3 +88,13 @@ static void	update(t_game *game, int direction)
 	free(game->moved_str);
 	game->moved_str = NULL;
 }
+
+/*
+	Map example:
+
+	1	1	1	1	1	\n
+	1	0	C	P	1	\n
+	1	E	1	C	1	\n
+	1	1	1	1	1	\0
+
+*/
