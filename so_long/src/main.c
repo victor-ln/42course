@@ -73,18 +73,17 @@ static void	update(t_game *game, int direction)
 {
 	int	player_col;
 	int	player_line;
-	int	direction_p;
 	int	direction_col;
 	int	direction_line;
 	int	line_len;
 
 	game->moved_str = ft_utoa(game->moved_nbr);
-	direction_p = game->map.player_p + direction;
 	line_len = (game->map.area / game->map.height + 1);
 	player_line = game->map.player_p / line_len;
-	player_col = (line_len - 1) - game->map.player_p % (game->map.area / game->map.height);
-	direction_col = direction_p / line_len;
-	direction_line = (line_len - 1) - direction_p % (game->map.area / game->map.height);
+	direction_line = (game->map.player_p + direction) / line_len;
+	line_len--;
+	player_col = line_len - game->map.player_p % (game->map.area / game->map.height);
+	direction_col = line_len - (game->map.player_p + direction) % (game->map.area / game->map.height);
 	draw_img(game->sprites.player, player_col, player_line);
 	draw_img(game->sprites.ground, direction_col, direction_line);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
@@ -92,3 +91,14 @@ static void	update(t_game *game, int direction)
 	free(game->moved_str);
 	game->moved_str = 0;
 }
+
+/*
+
+	1	1	1	1	1	\n
+	1	0	0	P	1	\n
+	1	C	1	0	1	\n
+	1	0	1	C	1	\n
+	1	E	1	1	1	\n
+	1	1	1	1	1	\0
+
+*/

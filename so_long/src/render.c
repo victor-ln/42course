@@ -21,6 +21,7 @@ void	render(t_game *g)
 	int		x;
 	int		y;
 	int		line_len;
+	int		map_point;
 
 	line_len = g->map.area / g->map.height;
 	y = -1;
@@ -28,7 +29,10 @@ void	render(t_game *g)
 	{
 		x = -1;
 		while (++x < line_len)
-			draw_img(which_one(g->map.map[line_len * y + x + (y != 0)], &g->sprites), x, y);
+		{
+			map_point = g->map.map[line_len * y + x + (y != 0)];
+			draw_img(which_one(map_point, &g->sprites), x, y);
+		}
 	}
 	mlx_string_put(g->mlx, g->win, 0, 0, g->moved_nbr * x, "Moved : 0");
 }
