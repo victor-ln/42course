@@ -45,7 +45,8 @@ static void	check_errors(t_game *game, int status)
 		exit_game("Invalid map, it's not rectangular\n", 1, game);
 	if (game->map.height < 3 || ((game->map.area / game->map.height) < 3))
 		exit_game("Invalid map, not enough lines\n", 1, game);
-	game->map.content += game->map.area - (game->map.area / game->map.height);
+	game->map.content += (game->map.area + game->map.height - 1)
+		- (game->map.area / game->map.height);
 	while (*game->map.content == '1')
 		game->map.content++;
 	if (status == 3 || *game->map.content)
@@ -54,6 +55,16 @@ static void	check_errors(t_game *game, int status)
 		exit_game("Invalid map, it needs an exit, a player and collects\n",
 			1, game);
 }
+
+/*
+	Map example:
+
+	1	1	1	1	1	\n
+	1	0	C	P	1	\n
+	1	E	1	C	1	\n
+	1	1	1	1	1	\0
+
+*/
 
 static int	init_map(t_map *map, char *ptr)
 {
