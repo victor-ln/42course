@@ -34,13 +34,13 @@ static int	key_pressed(int keycode, t_game *game)
 {
 	if (keycode == 'd')
 		move(game, 1);
-	if (keycode == 'a')
+	else if (keycode == 'a')
 		move(game, -1);
-	if (keycode == 's')
+	else if (keycode == 's')
 		move(game, (game->map.area / game->map.height));
-	if (keycode == 'w')
+	else if (keycode == 'w')
 		move(game, ((game->map.area / game->map.height) * -1));
-	if (keycode == ESC)
+	else if (keycode == ESC)
 		exit_game("ESC pressed\n", EXIT_SUCCESS, game);
 	return (0);
 }
