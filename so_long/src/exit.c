@@ -35,8 +35,8 @@ static void	free_game(t_game *s_game)
 		free(s_game->mlx);
 	if (s_game->win != NULL)
 		free(s_game->win);
-	if (s_game->map.map != NULL)
-		free(s_game->map.map);
+	if (s_game->map.content != NULL)
+		free(s_game->map.content);
 	if (s_game->moved_str != NULL)
 		free(s_game->moved_str);
 	if (s_game->sprites.collect != NULL)

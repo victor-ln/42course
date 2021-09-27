@@ -24,7 +24,7 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 		exit_game("Invalid number of arguments\n", EXIT_FAILURE, 0);
 	init_struct(&game);
-	game.map.map = load_map(argv[1]);
+	game.map.content = load_map(argv[1]);
 	start_game(&game);
 	mlx_key_hook(game.win, key_pressed, &game);
 	mlx_hook(game.win, 17, 0L, close_window, &game);
@@ -54,11 +54,11 @@ static int	close_window(int keycode, t_game *game)
 
 static void	move(t_game *game, int direction)
 {
-	if (game->map.map[game->map.player_p + direction] == '1')
+	if (game->map.content[game->map.player_p + direction] == '1')
 		return ;
-	if (game->map.map[game->map.player_p + direction] == 'C')
+	if (game->map.content[game->map.player_p + direction] == 'C')
 		game->map.collects--;
-	else if (game->map.map[game->map.player_p + direction] == 'E')
+	else if (game->map.content[game->map.player_p + direction] == 'E')
 		if (!game->map.collects)
 			exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
 	game->moved_nbr++;

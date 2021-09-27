@@ -40,7 +40,7 @@ typedef struct	s_sprites
 
 typedef struct	s_map
 {
-	char	*map;
+	char	*content;
 	int		player_p;
 	int		player;
 	int		collects;

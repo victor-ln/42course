@@ -19,7 +19,7 @@ static void	check_errors(t_game *game, int status);
 
 void	start_game(t_game *game)
 {
-	check_errors(game, init_map(&game->map, game->map.map));
+	check_errors(game, init_map(&game->map, game->map.content));
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
@@ -45,10 +45,10 @@ static void	check_errors(t_game *game, int status)
 		exit_game("Invalid map, it's not rectangular\n", 1, game);
 	if (game->map.height < 3)
 		exit_game("Invalid map, not enough lines\n", 1, game);
-	game->map.map += game->map.area - (game->map.area / game->map.height);
-	while (*game->map.map == '1')
-		game->map.map++;
-	if (status == 3 || *game->map.map)
+	game->map.content += game->map.area - (game->map.area / game->map.height);
+	while (*game->map.content == '1')
+		game->map.content++;
+	if (status == 3 || *game->map.content)
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
 	if (game->map.exit != 1 || game->map.player != 1 || !game->map.collects)
 		exit_game("Invalid map, it needs an exit, a player and collects\n",

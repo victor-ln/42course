@@ -28,7 +28,7 @@ void	render(t_game *g)
 		x = -1;
 		while (++x < line_len)
 		{
-			map_point = g->map.map[line_len * y + x + (y != 0)];
+			map_point = g->map.content[line_len * y + x + (y != 0)];
 			draw_img(which_one(map_point, &g->sprites), x, y);
 		}
 	}
