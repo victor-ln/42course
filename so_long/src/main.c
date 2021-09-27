@@ -37,9 +37,9 @@ static int	key_pressed(int keycode, t_game *game)
 	else if (keycode == 'a')
 		move(game, -1);
 	else if (keycode == 's')
-		move(game, (game->map.area / game->map.height));
+		move(game, (game->map.area / game->map.height +  1));
 	else if (keycode == 'w')
-		move(game, ((game->map.area / game->map.height) * -1));
+		move(game, ((game->map.area / game->map.height + 1) * -1));
 	else if (keycode == ESC)
 		exit_game("ESC pressed\n", EXIT_SUCCESS, game);
 	return (0);
