@@ -57,6 +57,8 @@ static void	move(t_game *game, int direction)
 	if (game->map.content[game->map.player_p + direction] == '1')
 		return ;
 	game->moved_nbr++;
+	// game->map.content[game->map.player_p] = '0';
+	// game->map.content[game->map.player_p + direction] = 'P';
 	update(game, direction);
 	if (game->map.content[game->map.player_p + direction] == 'C')
 		game->map.collects--;
@@ -76,10 +78,10 @@ static void	update(t_game *game, int direction)
 	game->moved_str = ft_utoa(game->moved_nbr);
 	line_len = (game->map.area / game->map.height + 1);
 	actual_line = game->map.player_p / line_len;
-	actual_col = (line_len - 1) - (game->map.player_p % line_len);
+	actual_col = line_len - (game->map.player_p % line_len);
 	game->map.player_p += direction;
 	after_line = (game->map.player_p + direction) / line_len;
-	after_col = (line_len - 1) - ((game->map.player_p + direction) % line_len);
+	after_col = line_len - ((game->map.player_p + direction) % line_len);
 	draw_img(game->image, game->sprites.ground, actual_col, actual_line);
 	draw_img(game->image, game->sprites.player, after_col, after_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
@@ -90,11 +92,26 @@ static void	update(t_game *game, int direction)
 }
 
 /*
+
 	Map example:
 
-	1	1	1	1	1	\n
-	1	0	C	P	1	\n
-	1	E	1	C	1	\n
-	1	1	1	1	1	\0
+	0	1	2	3	4	5	columns
+
+	1	1	1	1	1	\n	line 0
+	1	0	C	P	1	\n	line 1
+	1	E	1	C	1	\n	line 2
+	1	1	1	1	1	\0	line 3
+
+	Move example:
+
+	if (keycode = 's')
+		direction = ((area === 20) / (height === 4) + 1) === 6
+	player_position = 9
+	line_len = (20 / 4 + 1) === 6
+
+	actual_line = ((player_p) / line_len) === 1
+	actual_col = line_len - ((player_p % line_len) === 3) === 3
+	after_line = ((player_p === 9 + direction === 6) / line_len === 6) === 2;
+	after_col = (line_len - (player_p === 9 + direction === 6) % line_len === 3) === 3;
 
 */
