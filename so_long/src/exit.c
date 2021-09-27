@@ -12,9 +12,9 @@
 
 #include "so_long.h"
 
-static void	free_game(t_game *s_game);
+static void	free_game(t_game *game);
 
-int	exit_game(char *message, int status, t_game *s_game)
+int	exit_game(char *message, int status, t_game *game)
 {
 	if (status)
 	{
@@ -25,28 +25,28 @@ int	exit_game(char *message, int status, t_game *s_game)
 	else
 		while (*message)
 			write(1, message++, 1);
-	free_game(s_game);
+	free_game(game);
 	exit(status);
 }
 
-static void	free_game(t_game *s_game)
+static void	free_game(t_game *game)
 {
-	if (s_game->mlx != NULL)
-		free(s_game->mlx);
-	if (s_game->win != NULL)
-		free(s_game->win);
-	if (s_game->map.content != NULL)
-		free(s_game->map.content);
-	if (s_game->moved_str != NULL)
-		free(s_game->moved_str);
-	if (s_game->sprites.collect != NULL)
-		free(s_game->sprites.collect);
-	if (s_game->sprites.exit != NULL)
-		free(s_game->sprites.exit);
-	if (s_game->sprites.ground != NULL)
-		free(s_game->sprites.ground);
-	if (s_game->sprites.player != NULL)
-		free(s_game->sprites.player);
-	if (s_game->sprites.wall != NULL)
-		free(s_game->sprites.wall);
+	if (game->mlx != NULL)
+		free(game->mlx);
+	if (game->win != NULL)
+		free(game->win);
+	if (game->map.content != NULL)
+		free(game->map.content);
+	if (game->moved_str != NULL)
+		free(game->moved_str);
+	if (game->sprites.collect != NULL)
+		free(game->sprites.collect);
+	if (game->sprites.exit != NULL)
+		free(game->sprites.exit);
+	if (game->sprites.ground != NULL)
+		free(game->sprites.ground);
+	if (game->sprites.player != NULL)
+		free(game->sprites.player);
+	if (game->sprites.wall != NULL)
+		free(game->sprites.wall);
 }
