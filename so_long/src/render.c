@@ -21,17 +21,15 @@ void	render(t_game *g)
 {
 	int	x;
 	int	y;
+	int	line_len;
 
+	line_len = g->map.area / g->map.height;
 	y = -1;
 	while (++y <= g->map.height)
 	{
 		x = -1;
-		while (++x <= g->map.area)
-		{
-			if (g->map.map[g->map.area + g->map.height] == '\n')
-				continue ;
+		while (++x <= line_len)
 			draw_img(which_one(g->map.map[x + y], &g->sprites), x * 64, y * 64);
-		}
 	}
 	g->moved_str = ft_utoa(g->moved_nbr);
 	mlx_string_put(g->mlx, g->win, 0, 0, g->moved_nbr * x, "Moved : ");

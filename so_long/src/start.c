@@ -73,7 +73,7 @@ static int	init_map(t_map map, char *ptr)
 		else if (*ptr == 'P')
 		{
 			map.player++;
-			map.player_p = map.area + map.height;
+			map.player_p = (map.area - 1) + (map.height - 1);
 		}
 		else if (*ptr == 'E')
 			map.exit++;
