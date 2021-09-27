@@ -82,10 +82,11 @@ static void	update(t_game *game, int direction)
 	after_line = (game->map.player_p + direction) / line_len;
 	after_col = (line_len - 1) - ((game->map.player_p + direction)
 			% (game->map.area / game->map.height));
-	draw_img(game->sprites.ground, actual_col, actual_line);
-	draw_img(game->sprites.player, after_col, after_line);
+	draw_img(game->image, game->sprites.ground, actual_col, actual_line);
+	draw_img(game->image, game->sprites.player, after_col, after_line);
+	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
 	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, game->moved_str);
 	free(game->moved_str);
-	game->moved_str = 0;
+	game->moved_str = NULL;
 }

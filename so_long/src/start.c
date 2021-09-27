@@ -14,19 +14,24 @@
 
 static int	init_map(t_map *map, char *ptr);
 static void	get_sprites(t_sprites *s, void *mlx);
+static void	check_map_errors(t_game *game, int status);
 static void	specific_one(t_img *img, void *mlx, char *path);
-static void	check_errors(t_game *game, int status);
 
 void	start_game(t_game *game)
 {
-	check_errors(game, init_map(&game->map, game->map.content));
+	check_map_errors(game, init_map(&game->map, game->map.content));
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
-	game->win = mlx_new_window(game->mlx, (game->map.area - 1) * 64,
-			(game->map.height - 1) * 64, "so_long");
+	game->win = mlx_new_window(game->mlx,
+			(game->map.area / game->map.height) * 64, game->map.height * 64,
+			"so_long");
 	if (game->win == NULL)
 		exit_game("Couldn't create a window\n", EXIT_FAILURE, game);
+	game->image = mlx_new_image(game->mlx,
+			(game->map.area / game->map.height) * 64, game->map.height * 64);
+	if (game->image == NULL)
+		exit_game("Couldn't create an image\n", EXIT_FAILURE, game);
 	get_sprites(&game->sprites, game->mlx);
 	if (!game->sprites.collect || !game->sprites.exit || !game->sprites.ground
 		|| !game->sprites.player || !game->sprites.wall)
@@ -34,7 +39,7 @@ void	start_game(t_game *game)
 	render(game);
 }
 
-static void	check_errors(t_game *game, int status)
+static void	check_map_errors(t_game *game, int status)
 {
 	if ((game->map.area / game->map.height) == game->map.height)
 		exit_game("Invalid map, it's a square\n", 1, game);
@@ -97,11 +102,11 @@ static int	init_map(t_map *map, char *ptr)
 
 static void	get_sprites(t_sprites *sprites, void *mlx)
 {
-	specific_one(sprites->collect, mlx, PATH_C);
-	specific_one(sprites->ground, mlx, PATH_0);
 	specific_one(sprites->player, mlx, PATH_P);
-	specific_one(sprites->wall, mlx, PATH_1);
+	specific_one(sprites->collect, mlx, PATH_C);
 	specific_one(sprites->exit, mlx, PATH_E);
+	specific_one(sprites->wall, mlx, PATH_1);
+	specific_one(sprites->ground, mlx, PATH_0);
 }
 
 static void	specific_one(t_img *img, void *mlx, char *path)

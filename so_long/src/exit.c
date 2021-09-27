@@ -35,6 +35,8 @@ static void	free_game(t_game *game)
 		free(game->mlx);
 	if (game->win != NULL)
 		free(game->win);
+	if (game->image != NULL)
+		free(game->image);
 	if (game->map.content != NULL)
 		free(game->map.content);
 	if (game->moved_str != NULL)
