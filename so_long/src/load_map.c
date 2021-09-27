@@ -32,10 +32,10 @@ char	*load_map(char *filename)
 	while (*filename)
 		filename++;
 	if (ft_strcmp(filename - 4, ".ber"))
-		exit_game("Invalid extension", EXIT_FAILURE, 0);
+		exit_game("Invalid extension\n", EXIT_FAILURE, 0);
 	fd = open(filename, 00);
 	if (fd < 0)
-		exit_game("Invalid file", EXIT_FAILURE, 0);
+		exit_game("Invalid file\n", EXIT_FAILURE, 0);
 	return (save_map(fd));
 }
 

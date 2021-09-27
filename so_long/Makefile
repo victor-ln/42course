@@ -1,26 +1,28 @@
 CC = clang
 FLAGS = -Wall -Werror -Wextra -fsanitize=address
-LINKS = -lmlx -lbsd -lX11 -lXext -lm -lz
+LINKS = -lbsd -lX11 -lXext -lm -lz
 INC = -I ./mlx -I ./inc
 NAME = so_long
 
 SRC = src/exit.c src/load_map.c src/render.c src/start.c src/utils.c
-MAIN = src/main.c
+MAIN = core/main.c
 
 OBJ = $(SRC:.c=.o)
 
 all:		$(NAME)
 
 $(NAME):
-	make -C ./mlx
-	clang $(FLAGS) $(INC) -c $(SRC)
-	clang $(FLAGS) $(INC) $(OBJ) $(MAIN) ./mlx/libmlx.a $(LINKS) -o $(NAME)
+	@clang $(FLAGS) $(INC) -c $(SRC)
+	@make -C ./mlx
+	@mv *.o src
+	@clang $(FLAGS) $(INC) $(OBJ) $(MAIN) ./mlx/libmlx.a $(LINKS) -o $(NAME)
 
 clean:
-	make -C ./mlx clean
+	@rm -fr $(OBJ)
+	@make -C ./mlx clean
 
-fclean:
-	make -C ./mlx clean
+fclean:	clean
+	rm $(NAME)
 
 re:			fclean all
 
