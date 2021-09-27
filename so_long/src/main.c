@@ -13,7 +13,7 @@
 #include "so_long.h"
 
 static void	move(t_game *game, int direction);
-static void	update(t_game *game, int direction);
+static void	render_movement(t_game *game, int direction);
 static int	key_pressed(int keycode, t_game *game);
 static int	close_window(int keycode, t_game *game);
 
@@ -63,10 +63,10 @@ static void	move(t_game *game, int direction)
 		if (!game->map.collects)
 			exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
 	game->moved_nbr++;
-	update(game, direction);
+	render_movement(game, direction);
 }
 
-static void	update(t_game *game, int direction)
+static void	render_movement(t_game *game, int direction)
 {
 	int	actual_col;
 	int	after_col;

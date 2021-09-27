@@ -13,7 +13,6 @@
 #include "so_long.h"
 
 static void			draw_pixel(t_img *img, int x, int y, unsigned int color);
-;
 static t_img		*which_one(char map_point, t_sprites *sprites);
 
 void	render(t_game *g)
