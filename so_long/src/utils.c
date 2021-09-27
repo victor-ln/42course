@@ -64,13 +64,15 @@ char	*ft_utoa(size_t nbr)
 
 void	init_structs(t_game *game)
 {
+	game->mlx = 0;
+	game->map.map = 0;
 	game->moved_nbr = 0;
 	game->moved_str = 0;
-	game->map.map = 0;
-	game->mlx = 0;
 	game->map.area = 1;
 	game->map.height = 1;
-	ft_bzero(&game->map, 5);
+	game->map.collects = 0;
+	game->map.exit = 0;
+	game->map.player = 0;
 	ft_bzero(&game->sprites, 5);
 }
 
