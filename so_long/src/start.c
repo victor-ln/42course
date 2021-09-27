@@ -36,7 +36,7 @@ void	start_game(t_game *game)
 
 static void	check_errors(t_game *game, int status)
 {
-	if (status == 1)
+	if ((game->map.area / game->map.height) == game->map.height)
 		exit_game("Invalid map, it's a square\n", 1, game);
 	if (status == 2)
 		exit_game("Invalid map, unknown char or map not surrounded by walls\n",
@@ -81,7 +81,7 @@ static int	init_map(t_map *map, char *ptr)
 	}
 	if (*ptr)
 		return (2);
-	return ((map->area / map->height) == map->height);
+	return (EXIT_SUCCESS);
 }
 
 static void	get_sprites(t_sprites *sprites, void *mlx)
