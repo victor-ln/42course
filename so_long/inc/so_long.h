@@ -59,13 +59,16 @@ typedef struct	s_game
 	t_sprites	sprites;
 }				t_game;
 
-char	*load_map(char *filename);
-void	start_game(t_game *s_game);
-void	init_structs(t_game *s_game);
-void	render(t_game *s_game);
-int		exit_game(char *message, int status, t_game *s_game);
-char	*ft_strchr(const char *src, int c);
-char	*ft_utoa(size_t nbr);
-int		ft_strcmp(char *s1, char *s2);
+char			*load_map(char *filename);
+void			start_game(t_game *s_game);
+void			init_structs(t_game *s_game);
+void			render(t_game *s_game);
+int				exit_game(char *message, int status, t_game *s_game);
+void			draw_img(t_img *img, int x, int y);
+unsigned int	get_color(t_img *img, int x, int y);
+void			draw_pixel(t_img *img, int x, int y, unsigned int color);
+char			*ft_strchr(const char *src, int c);
+char			*ft_utoa(size_t nbr);
+int				ft_strcmp(char *s1, char *s2);
 
 #endif // SO_LONG_H

@@ -12,38 +12,35 @@
 
 #include "so_long.h"
 
-static void			draw_img(t_img *img, int x, int y);
 static void			draw_pixel(t_img *img, int x, int y, unsigned int color);
-static unsigned int	get_color(t_img *img, int x, int y);
+;
 static t_img		*which_one(char map_point, t_sprites *sprites);
 
 void	render(t_game *g)
 {
-	int	x;
-	int	y;
-	int	line_len;
+	int		x;
+	int		y;
+	int		line_len;
 
 	line_len = g->map.area / g->map.height;
 	y = -1;
-	while (++y <= g->map.height)
+	while (++y < g->map.height)
 	{
 		x = -1;
-		while (++x <= line_len)
-			draw_img(which_one(g->map.map[x + y], &g->sprites), x * 64, y * 64);
+		while (++x < line_len)
+			draw_img(which_one(g->map.map[line_len * y + x + (y != 0)], &g->sprites), x, y);
 	}
-	g->moved_str = ft_utoa(g->moved_nbr);
-	mlx_string_put(g->mlx, g->win, 0, 0, g->moved_nbr * x, "Moved : ");
-	mlx_string_put(g->mlx, g->win, 8, 0, g->moved_nbr * x, g->moved_str);
-	free(g->moved_str);
-	g->moved_str = 0;
+	mlx_string_put(g->mlx, g->win, 0, 0, g->moved_nbr * x, "Moved : 0");
 }
 
-static void	draw_img(t_img *img, int x, int y)
+void	draw_img(t_img *img, int x, int y)
 {
 	int		i;
 	int		j;
 
 	i = -1;
+	x *= 64;
+	y *= 64;
 	while (++i <= img->width)
 	{
 		j = -1;
@@ -65,13 +62,13 @@ static t_img	*which_one(char map_point, t_sprites *sprites)
 	return (sprites->exit);
 }
 
-static unsigned int	get_color(t_img *img, int x, int y)
+unsigned int	get_color(t_img *img, int x, int y)
 {
 	return (*(unsigned int *)
 		img->data + (y * img->size_line + x * (img->bpp / 8)));
 }
 
-static void	draw_pixel(t_img *img, int x, int y, unsigned int color)
+void	draw_pixel(t_img *img, int x, int y, unsigned int color)
 {
 	char	*pixel;
 

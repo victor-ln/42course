@@ -23,8 +23,8 @@ void	start_game(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
-	game->win = mlx_new_window(game->mlx, game->map.area * 64,
-			game->map.height * 64, "so_long");
+	game->win = mlx_new_window(game->mlx, (game->map.area - 1) * 64,
+			(game->map.height - 1) * 64, "so_long");
 	if (!game->win)
 		exit_game("Couldn't create a window\n", EXIT_FAILURE, game);
 	get_sprites(&game->sprites, game->mlx);

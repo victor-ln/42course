@@ -13,6 +13,7 @@
 #include "so_long.h"
 
 static void	move(t_game *game, int direction);
+static void	update(t_game *game, int direction);
 static int	key_pressed(int keycode, t_game *game);
 static int	close_window(int keycode, t_game *game);
 
@@ -66,5 +67,28 @@ static void	move(t_game *game, int direction)
 	game->map.player_p += direction;
 	game->moved_nbr++;
 	update(game, direction);
-	render(game);
+}
+
+static void	update(t_game *game, int direction)
+{
+	int	player_col;
+	int	player_line;
+	int	direction_p;
+	int	direction_col;
+	int	direction_line;
+	int	line_len;
+
+	game->moved_str = ft_utoa(game->moved_nbr);
+	direction_p = game->map.player_p + direction;
+	line_len = (game->map.area / game->map.height + 1);
+	player_line = game->map.player_p / line_len;
+	player_col = (line_len - 1) - game->map.player_p % (game->map.area / game->map.height);
+	direction_col = direction_p / line_len;
+	direction_line = (line_len - 1) - direction_p % (game->map.area / game->map.height);
+	draw_img(game->sprites.player, player_col, player_line);
+	draw_img(game->sprites.ground, direction_col, direction_line);
+	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
+	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, game->moved_str);
+	free(game->moved_str);
+	game->moved_str = 0;
 }
