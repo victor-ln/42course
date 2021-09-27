@@ -34,11 +34,11 @@ void	start_game(t_game *game);
 */
 void	render(t_game *game);
 /*
-** Renders each map point with this respectives sprites.
+** Renders pixel per pixel each map character with this respectives sprites.
 */
 int		exit_game(char *message, int status, t_game *game);
 /*
-** Writes "Error\n" if status equals EXIT_FAILURE macro,
+** Writes "Error\n" if status equals 1,
 ** writes the message passed, free all allocated memory and exit(status).
 */
 void	draw_img(t_img *img, t_img *sprite, int x, int y);
@@ -48,7 +48,7 @@ void	draw_img(t_img *img, t_img *sprite, int x, int y);
 */
 size_t	get_color(t_img *img, int x, int y);
 /*
-** Returns the pixel color of (x, y) position at the sprite.
+** Returns the pixel color of (x, y) position of the sprite.
 */
 void	draw_pixel(t_img *img, int x, int y, size_t color);
 /*
