@@ -62,7 +62,7 @@ char	*ft_utoa(size_t nbr)
 	return (str);
 }
 
-void	init_structs(t_game *game)
+void	init_struct(t_game *game)
 {
 	game->mlx = 0;
 	game->map.map = 0;

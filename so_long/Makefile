@@ -1,6 +1,6 @@
-CC = gcc
+CC = clang
 FLAGS = -Wall -Werror -Wextra -fsanitize=address
-LINKS = -L ./mlx -lmlx -lbsd -lX11 -lXext -lm -lz
+LINKS = -lmlx -lbsd -lX11 -lXext -lm -lz
 INC = -I ./mlx -I ./inc
 NAME = so_long
 
@@ -13,8 +13,8 @@ all:		$(NAME)
 
 $(NAME):
 	make -C ./mlx
-	gcc $(FLAGS) $(INC) -c $(SRC)
-	gcc $(FLAGS) $(INC) $(OBJ) $(MAIN) ./mlx/libmlx.a $(LINKS) -o $(NAME)
+	clang $(FLAGS) $(INC) -c $(SRC)
+	clang $(FLAGS) $(INC) $(OBJ) $(MAIN) ./mlx/libmlx.a $(LINKS) -o $(NAME)
 
 clean:
 	make -C ./mlx clean

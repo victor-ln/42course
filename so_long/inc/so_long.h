@@ -61,7 +61,7 @@ typedef struct	s_game
 
 char			*load_map(char *filename);
 void			start_game(t_game *s_game);
-void			init_structs(t_game *s_game);
+void			init_struct(t_game *s_game);
 void			render(t_game *s_game);
 int				exit_game(char *message, int status, t_game *s_game);
 void			draw_img(t_img *img, int x, int y);

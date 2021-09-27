@@ -13,7 +13,7 @@
 #include "so_long.h"
 
 static void	move(t_game *game, int direction);
-static void	render_movement(t_game *game, int direction);
+static void	update(t_game *game, int direction);
 static int	key_pressed(int keycode, t_game *game);
 static int	close_window(int keycode, t_game *game);
 
@@ -23,7 +23,7 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2)
 		exit_game("Invalid number of arguments\n", EXIT_FAILURE, 0);
-	init_structs(&game);
+	init_struct(&game);
 	game.map.map = load_map(argv[1]);
 	start_game(&game);
 	mlx_key_hook(game.win, key_pressed, &game);
@@ -62,10 +62,10 @@ static void	move(t_game *game, int direction)
 		if (!game->map.collects)
 			exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
 	game->moved_nbr++;
-	render_movement(game, direction);
+	update(game, direction);
 }
 
-static void	render_movement(t_game *game, int direction)
+static void	update(t_game *game, int direction)
 {
 	int	actual_col;
 	int	after_col;
