@@ -35,7 +35,7 @@ void	render(t_game *g)
 		}
 	}
 	mlx_string_put(g->mlx, g->win, 0, 0, g->moved_nbr * x, "Moved : 0");
-}
+}	
 
 void	draw_img(t_img *img, int x, int y)
 {
