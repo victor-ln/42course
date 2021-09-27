@@ -59,6 +59,7 @@ static void	check_map_errors(t_game *game, int status)
 	if (game->map.exit != 1 || game->map.player != 1 || !game->map.collects)
 		exit_game("Invalid map, it needs an exit, a player and collects\n",
 			1, game);
+	game->map.line_length = (game->map.area / game->map.height + 1);
 }
 
 /*

@@ -41,8 +41,9 @@ typedef struct s_sprites
 typedef struct s_map
 {
 	int		area;
-	int		exit;
 	int		height;
+	int		line_length;
+	int		exit;
 	int		player;
 	int		collects;
 	int		player_p;
