@@ -39,8 +39,6 @@ static void	free_game(t_game *game)
 		free(game->image);
 	if (game->map.content != NULL)
 		free(game->map.content);
-	if (game->moved_str != NULL)
-		free(game->moved_str);
 	if (game->sprites.collect != NULL)
 		free(game->sprites.collect);
 	if (game->sprites.exit != NULL)
