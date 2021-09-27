@@ -18,17 +18,15 @@ void	render(t_game *g)
 {
 	int		x;
 	int		y;
-	int		line_len;
 	int		map_point;
 
-	line_len = g->map.area / g->map.height;
 	y = -1;
 	while (++y < g->map.height)
 	{
 		x = -1;
-		while (++x < line_len)
+		while (++x < g->map.line_length)
 		{
-			map_point = g->map.content[line_len * y + x + (y != 0)];
+			map_point = g->map.content[g->map.line_length * y + x + (y != 0)];
 			draw_img(g->image, which_one(map_point, &g->sprites), x, y);
 		}
 	}
