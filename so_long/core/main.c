@@ -38,9 +38,9 @@ static int	key_pressed(int keycode, t_game *game)
 	else if (keycode == 'a')
 		move(game, -1);
 	else if (keycode == 's')
-		move(game, game->map.line_len);
+		move(game, game->map.width);
 	else if (keycode == 'w')
-		move(game, (game->map.line_len * -1));
+		move(game, (game->map.width * -1));
 	else if (keycode == ESC)
 		exit_game("ESC pressed\n", EXIT_SUCCESS, game);
 	return (0);
@@ -80,12 +80,12 @@ static void	move(t_game *game, int direction)
 	if (keycode = 's')
 		direction = ((area = 20) / (height = 4) + 1) = 6
 	player_position = 9
-	line_len = (20 / 4 + 1) = 6
+	width = (20 / 4 + 1) = 6
 
-	actual_line = ((player_p) / line_len) = 1
-	actual_col = line_len - ((player_p % line_len) = 3) = 3
-	after_line = ((player_p = 9 + direction = 6) / line_len = 6) = 2;
-	after_col = (line_len - (player_p = 9 + direction = 6) % line_len = 3) = 3;
+	actual_line = ((player_p) / width) = 1
+	actual_col = width - ((player_p % width) = 3) = 3
+	after_line = ((player_p = 9 + direction = 6) / width = 6) = 2;
+	after_col = (width - (player_p = 9 + direction = 6) % width = 3) = 3;
 */
 
 static void	update(t_game *game, int direction)
@@ -95,15 +95,15 @@ static void	update(t_game *game, int direction)
 	char	*temp;
 
 	temp = ft_utoa(game->moved_nbr);
-	line = game->map.player_p / game->map.line_len;
-	col = game->map.line_len - (game->map.player_p % game->map.line_len);
+	line = game->map.player_p / game->map.width;
+	col = game->map.width - (game->map.player_p % game->map.width);
 	game->map.player_p += direction;
 	if (direction > 1 || direction < -1)
 		draw_img(game->image, game->sprites.player,
-			(game->map.player_p / game->map.line_len), col);
+			(game->map.player_p / game->map.width), col);
 	else
 		draw_img(game->image, game->sprites.player, line,
-			(game->map.line_len - (game->map.player_p % game->map.line_len)));
+			(game->map.width - (game->map.player_p % game->map.width)));
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
 	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, temp);
