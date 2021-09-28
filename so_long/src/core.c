@@ -46,7 +46,7 @@ static int	key_pressed(int keycode, t_game *game)
 	return (0);
 }
 
-static int	close_window(int keycode, t_game *game)
+static void	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
 	exit_game("Window closed\n", EXIT_SUCCESS, game);
