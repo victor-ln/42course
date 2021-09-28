@@ -67,9 +67,10 @@ static int	close_window(int keycode, t_game *game)
 /*
 ** Receives the direction to move.
 ** If direction is not valid it does nothing, else renders
-** the ground img in the player position and the player in the direction.
+** the ground image in the player position and the player in the direction moved.
 ** Checks if collects is in direction and decrements collects variable.
-** If collects is 0 and direction points to way_out, then exit_game successfully.
+** If collects is 0 and direction points to the way out,
+** then exits game successfully.
 */
 static void	move(t_game *game, int direction)
 {
@@ -101,22 +102,24 @@ static void	move(t_game *game, int direction)
 	player_position = 9
 	line_len = (20 / 4 + 1) = 6
 
-	actual_line = player_p / line_len = 1
-	actual_col = (line_len = 6 - (player_p % line_len = 3)) = 3
+	current_line = player_p / line_len = 1
+	current_col = (line_len = 6 - (player_p % line_len = 3)) = 3
 	(player_p += direction) = 15
 	next_line = (player_p = 15 / line_len = 6) = 2;
 	next_col = (line_len = 6 - (player_p = 15 % line_len = 6) = 3) = 3;
 */
 
 /*
-** Receives direction and calculates the colum and line to move the player,
-** draws the sprite of the ground in the actual position, the player in the moved
-** and puts the string with the number of movements done.
+** Receives the direction and calculates
+** the column and line to move the player, then
+** draws the sprite of the ground in the current position,
+** the player in the moved one and puts
+** the string with the number of movements done.
 */
 static void	update(t_game *game, int direction)
 {
-	int		actual_line;
-	int		actual_col;
+	int		current_line;
+	int		current_col;
 	int		next_line;
 	int		next_col;
 	char	*temp;
@@ -124,12 +127,12 @@ static void	update(t_game *game, int direction)
 	temp = ft_utoa(game->moved_nbr);
 	if (!temp)
 		exit_game("Malloc error\n", EXIT_FAILURE, game);
-	actual_line = game->map.player_p / game->map.width;
-	actual_col = game->map.width - (game->map.player_p % game->map.width);
+	current_line = game->map.player_p / game->map.width;
+	current_col = game->map.width - (game->map.player_p % game->map.width);
 	game->map.player_p += direction;
 	next_line = game->map.player_p / game->map.width;
 	next_col = game->map.width - (game->map.player_p % game->map.width);
-	draw_img(game->image, game->sprites.ground, actual_col, actual_line);
+	draw_img(game->image, game->sprites.ground, current_col, current_line);
 	draw_img(game->image, game->sprites.player, next_col, next_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
