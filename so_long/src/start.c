@@ -41,41 +41,40 @@ void	start_game(t_game *game)
 
 static void	check_map_errors(t_game *game, int status)
 {
-	game->map.width = (game->map.area / game->map.height);
-	if (game->map.width == game->map.height)
-		exit_game("Invalid map, it's a square\n", 1, game);
 	if (status == 2)
-		exit_game("Invalid map, unknown char or map isn't surrounded by walls\n",
-			1, game);
-	if (status == 4 || game->map.area % game->map.height)
-		exit_game("Invalid map, it's not rectangular\n", 1, game);
-	if (game->map.height < 3 || game->map.width < 3)
-		exit_game("Invalid map, not enough lines\n", 1, game);
+		exit_game("Invalid map, it has an invalid character\n", 1, game);
+	while (*game->map.content == '1')
+		game->map.content++;
+	if (*game->map.content != '\n')
+		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
 	game->map.content += game->map.area + game->map.height - \
-		1 - game->map.width;
+		1 - (game->map.width * 2);
 	while (*game->map.content == '1')
 		game->map.content++;
 	if (status == 3 || *game->map.content)
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
+	if (game->map.area % game->map.height || 4)
+		exit_game("Invalid map, lines or columns in diff lengths\n", 1, game);
+	if (game->map.width == game->map.height)
+		exit_game("Invalid map, it's a square\n", 1, game);
+	if (game->map.height < 3 || game->map.width < 3)
+		exit_game("Invalid map, not enough lines\n", 1, game);
 	if (game->map.exit != 1 || game->map.player != 1 || !game->map.collects)
-		exit_game("Invalid map, it needs an exit, a player and collects\n",
+		exit_game("Invalid map, there must have 1 exit, 1 player and collects\n",
 			1, game);
 }
 
 /*
 	Map example:
-
 	1	1	1	1	1	\n
 	1	0	C	P	1	\n
 	1	E	1	C	1	\n
 	1	1	1	1	1	\0
-
 */
 
 static int	init_map(t_map *map, char *ptr)
 {
-	while ((strchr(MAP, *ptr) && map->height > 1)
-		|| (map->height == 1 && *ptr == '1'))
+	while (strchr(MAP, *ptr))
 	{
 		if (*ptr != '\n')
 			map->area++;
@@ -98,6 +97,7 @@ static int	init_map(t_map *map, char *ptr)
 	}
 	if (*ptr)
 		return (2);
+	map->width = map->area / map->height;
 	return (EXIT_SUCCESS);
 }
 

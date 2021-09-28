@@ -5,7 +5,7 @@ INC = -I ./mlx -I ./inc
 NAME = so_long
 
 SRC = src/exit.c src/load_map.c src/render.c src/start.c src/utils.c
-MAIN = core/main.c
+MAIN = src/main.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -22,7 +22,7 @@ clean:
 	@make -C ./mlx clean
 
 fclean:	clean
-	rm $(NAME)
+	@rm $(NAME)
 
 re:			fclean all
 
