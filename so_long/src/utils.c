@@ -69,3 +69,15 @@ void	init_struct(t_game *game)
 	game->map.exit = 0;
 	game->map.player = 0;
 }
+
+int	is_limit_after_c(char *s, char c, char limit)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] == c)
+		i++;
+	if (s[i] == limit)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+}

@@ -20,7 +20,8 @@
 
 /*
 ** Opens the file, checks file extension and file descriptor.
-** Returns the content in the file saved in a char pointer or exit the program in case of errors.
+** Returns the content in the file saved in a char pointer or
+** exit the program in case of errors.
 */
 char	*load_map(char *filename);
 /*
@@ -28,8 +29,8 @@ char	*load_map(char *filename);
 */
 void	init_struct(t_game *game);
 /*
-** Saves map information, such as area, height, player position, etc,
-** Opens a window and get sprites from ./img/xpm
+** Saves map information, such as area, height, width, player position,
+**  nbr of collects, exits and players. Opens a window and get sprites from ./img
 */
 void	start_game(t_game *game);
 /*
@@ -68,5 +69,9 @@ char	*ft_utoa(size_t nbr);
 ** between then or zero if they're equal.
 */
 int		ft_strcmp(char *s1, char *s2);
+/*
+** Runs the string until c is not true. returns 0 if next is end or 1 if it's not
+*/
+int		is_limit_after_c(char *s, char c, char end);
 
 #endif

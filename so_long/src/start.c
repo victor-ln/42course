@@ -24,11 +24,11 @@ void	start_game(t_game *game)
 	if (game->mlx == NULL)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
 	game->win = mlx_new_window(game->mlx, game->map.width * 64, \
-		game->map.height * 64, "so_long");
+										game->map.height * 64, "so_long");
+	game->image = mlx_new_image(game->mlx, game->map.width * 64, \
+											game->map.height * 64);
 	if (game->win == NULL)
 		exit_game("Couldn't create a window\n", EXIT_FAILURE, game);
-	game->image = mlx_new_image(game->mlx,
-			game->map.width * 64, game->map.height * 64);
 	if (game->image == NULL)
 		exit_game("Couldn't create an image\n", EXIT_FAILURE, game);
 	get_sprites(&game->sprites, game->mlx);
@@ -41,17 +41,15 @@ void	start_game(t_game *game)
 
 static void	check_map_errors(t_game *game, int status)
 {
+	int	last_line;
+
 	if (status == 2)
 		exit_game("Invalid map, it has an invalid character\n", 1, game);
-	while (*game->map.content == '1')
-		game->map.content++;
-	if (*game->map.content != '\n')
+	if (is_limit_after_c(game->map.content, '1', '\n'))
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
-	game->map.content += game->map.area + game->map.height - \
-		1 - (game->map.width * 2);
-	while (*game->map.content == '1')
-		game->map.content++;
-	if (status == 3 || *game->map.content)
+	last_line = game->map.area + game->map.height - 1 - (game->map.width * 2);
+	game->map.content += last_line;
+	if (status == 3 || is_limit_after_c(game->map.content, '1', 0))
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
 	if (game->map.area % game->map.height || 4)
 		exit_game("Invalid map, lines or columns in diff lengths\n", 1, game);
