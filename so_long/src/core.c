@@ -77,6 +77,8 @@ static void	move(t_game *game, int direction)
 	if (game->map.content[game->map.player_p + direction] == '1')
 		return ;
 	game->moved_nbr++;
+	game->map.content[game->map.player_p] = '0';
+	game->map.content[game->map.player_p + direction] = 'P';
 	if (game->map.content[game->map.player_p + direction] == 'C')
 		game->map.collects--;
 	else if (game->map.content[game->map.player_p + direction] == 'E')
