@@ -100,15 +100,15 @@ static void	move(int direction, t_game *game)
 	Move example:
 
 	if (keycode = 's')
-		direction = ((area = 20) / (height = 4) + 1) = 6
+		direction = (area / height + 1) = 6
 	player_position = 9
-	line_len = (20 / 4 + 1) = 6
+	line_len = (area / height + 1) = 6
 
-	current_line = player_p / line_len = 1
+	current_line = (player_p = 9 / line_len = 6) = 1
 	current_col = (line_len = 6 - (player_p % line_len = 3)) = 3
-	(player_p += direction) = 15
+	player_p += direction = 15
 	next_line = (player_p = 15 / line_len = 6) = 2;
-	next_col = (line_len = 6 - (player_p = 15 % line_len = 6) = 3) = 3;
+	next_col = (line_len = 6 - ((player_p % line_len) = 3)) = 3;
 */
 
 /*
