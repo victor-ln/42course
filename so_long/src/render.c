@@ -42,10 +42,10 @@ void	draw_img(t_img *img, t_img *sprite, int x, int y)
 	i = -1;
 	x *= 64;
 	y *= 64;
-	while (++i < sprite->width)
+	while (++i < 64)
 	{
 		j = -1;
-		while (++j < sprite->height)
+		while (++j < 64)
 			draw_pixel(img, i + x, j + y, get_color(sprite, i, j));
 	}
 }
