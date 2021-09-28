@@ -66,8 +66,9 @@ static int	close_window(int keycode, t_game *game)
 
 /*
 ** Receives the direction to move.
-** If direction is not valid it does nothing, else renders
-** the ground image in the player position and the player in the direction moved.
+** If direction points to a wall it does nothing, else renders
+** the ground image in the player position, the player in the direction moved and
+** changes the values of the player_p to "0" and of direction to "P" in the map.
 ** Checks if collects is in direction and decrements collects variable if it is.
 ** If collects is 0 and direction points to the way out,
 ** then exits game successfully.
