@@ -81,7 +81,7 @@ static int	init_map(t_map *map, size_t player, size_t exits)
 	}
 	if (exits != 1 || player != 1 || !map->collects)
 		return (4);
-	return (*map->content == '\0');
+	return (*map->content != '\0');
 }
 
 static void	get_sprites(t_game *game)
