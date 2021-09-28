@@ -12,14 +12,14 @@
 
 #include "so_long.h"
 
-static void	move(t_game *game, int direction);
-static void	update(t_game *game, int direction);
+static void	move(int direction, t_game *game);
+static void	update(int direction, t_game *game);
 static int	key_pressed(int keycode, t_game *game);
 static int	close_window(int keycode, t_game *game);
 
 /*
 ** The core, initializes the structure, starts the game,
-** hooks the keys pressed, window events and renders.
+** hooks the keys pressed and Destroy Notify event, and renders.
 */
 int	main(int argc, char *argv[])
 {
@@ -73,7 +73,7 @@ static int	close_window(int keycode, t_game *game)
 ** If collects is 0 and direction points to the way out,
 ** then exits game successfully.
 */
-static void	move(t_game *game, int direction)
+static void	move(int direction, t_game *game)
 {
 	if (game->map.content[game->map.player_p + direction] == '1')
 		return ;
@@ -118,7 +118,7 @@ static void	move(t_game *game, int direction)
 ** the player in the moved one and puts
 ** the string with the number of movements done.
 */
-static void	update(t_game *game, int direction)
+static void	update(int direction, t_game *game)
 {
 	int		current_line;
 	int		current_col;
