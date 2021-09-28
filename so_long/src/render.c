@@ -51,7 +51,7 @@ void	draw_img(t_img *img, t_img *sprite, int x, int y)
 }
 
 /*
-** Controls what sprite to draw.
+** Controls which sprite to draw.
 */
 static t_img	*which_one(char map_point, t_sprites *sprites)
 {
