@@ -19,7 +19,7 @@ static int	close_window(int keycode, t_game *game);
 
 /*
 ** The core, initializes the structure, starts the game,
-** hooks keys pressed, window events and renders.
+** hooks the keys pressed, window events and renders.
 */
 int	main(int argc, char *argv[])
 {

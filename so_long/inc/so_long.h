@@ -19,7 +19,7 @@
 /*
 ** Opens the file, checks file extension and file descriptor.
 ** Returns the content in the file saved in a char pointer or
-** exit the program in case of errors.
+** exits the program in case of errors.
 */
 char	*load_map(char *filename);
 /*
@@ -27,22 +27,22 @@ char	*load_map(char *filename);
 */
 void	init_struct(t_game *game);
 /*
-** Saves map information, such as area, height, width, player position,
-**  nbr of collects, exits and players. Opens a window and get sprites from ./img
+** Saves map data, such as area, height, width, player position, the number
+** of collects, exits and players. Opens a window and gets sprites from ./img
 */
 void	start_game(t_game *game);
 /*
-** Renders pixel per pixel each map character with this respectives sprites.
+** Renders pixel per pixel each map point with their respectives sprites.
 */
 void	render(t_game *game);
 /*
-** Writes "Error" if status equals 1,
-** writes the message passed, free all allocated memory and exit(status).
+** Writes "Error" if status is equals to 1, writes the message passed,
+** free all allocated memory and exits with status as argument.
 */
 void	exit_game(char *message, int status, t_game *game);
 /*
 ** Receives the image to be drawn and the sprite
-** to draw at ((x * 64),(y * 64)) position of the image.
+** to draw at (x * 64) (y * 64) position of the image.
 */
 void	draw_img(t_img *img, t_img *sprite, int x, int y);
 /*
@@ -64,7 +64,7 @@ char	*ft_strchr(const char *src, int c);
 char	*ft_utoa(size_t nbr);
 /*
 ** Compares the two strings and returns the difference
-** between then or zero if they're equal.
+** between them or zero if they're equal.
 */
 int		ft_strcmp(char *s1, char *s2);
 /*
