@@ -36,25 +36,23 @@ void	start_game(t_game *game)
 	game->map.width++;
 }
 
-static void	check_map_errors(t_game *game, int status)
+static void	check_map_errors(t_game *g, int status)
 {
-	int	last_l;
-
 	if (status == 2)
-		exit_game(INVALID_CHAR, 1, game);
-	if (is_limit_after_c(game->map.content, '1', '\n'))
-		exit_game(N_SURROUNDED, 1, game);
-	last_l = game->map.area + game->map.height - 1 - (game->map.width * 2);
-	if (status == 3 || is_limit_after_c(game->map.content + last_l, '1', '\0'))
-		exit_game(N_SURROUNDED, 1, game);
-	if (game->map.area % game->map.height || 4)
-		exit_game(DIFF_IN_LEN, 1, game);
-	if (game->map.width == game->map.height)
-		exit_game(SQUARE, 1, game);
-	if (game->map.height < 3 || game->map.width < 3)
-		exit_game(N_ENOUGH_L, 1, game);
-	if (game->map.exits != 1 || game->map.player != 1 || !game->map.collects)
-		exit_game(N_VALID, 1, game);
+		exit_game(INVALID_CHAR, 1, g);
+	if (is_limit_after_c(g->map.content, '1', '\n'))
+		exit_game(N_SURROUNDED, 1, g);
+	g->map.content = g->map.area + g->map.height - 1 - g->map.width * 2;
+	if (status == 3 || is_limit_after_c(g->map.content, '1', '\0'))
+		exit_game(N_SURROUNDED, 1, g);
+	if (g->map.area % g->map.height || 4)
+		exit_game(DIFF_IN_LEN, 1, g);
+	if (g->map.width == g->map.height)
+		exit_game(SQUARE, 1, g);
+	if (g->map.height < 3 || g->map.width < 3)
+		exit_game(N_ENOUGH_L, 1, g);
+	if (g->map.exits != 1 || g->map.player != 1 || !g->map.collects)
+		exit_game(N_VALID, 1, g);
 }
 
 static int	init_map(t_map *map)
