@@ -14,7 +14,7 @@
 # define SO_LONG_H
 
 // includes all structs, macros and other headers
-# include "so_long_init.h"
+# include "so_long_data.h"
 
 /*
 ** Opens the file, checks file extension and file descriptor.
