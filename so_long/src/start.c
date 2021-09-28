@@ -56,7 +56,7 @@ static void	check_map_errors(t_game *game, int status)
 		exit_game("Invalid map, it's a square\n", 1, game);
 	if (game->map.height < 3 || game->map.width < 3)
 		exit_game("Invalid map, not enough lines\n", 1, game);
-	if (game->map.exit != 1 || game->map.player != 1 || !game->map.collects)
+	if (game->map.exits != 1 || game->map.player != 1 || !game->map.collects)
 		exit_game("Invalid map, there must have 1 exit, 1 player and collects\n",
 			1, game);
 }
@@ -81,7 +81,7 @@ static int	init_map(t_map *map)
 			map->player_p = (map->area - 1) + (map->height - 1);
 		}
 		else if (*map->content == 'E')
-			map->exit++;
+			map->exits++;
 		map->content++;
 	}
 	if (*map->content)

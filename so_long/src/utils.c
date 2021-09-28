@@ -66,7 +66,7 @@ void	init_struct(t_game *game)
 	game->map.area = 1;
 	game->map.height = 1;
 	game->map.collects = 0;
-	game->map.exit = 0;
+	game->map.exits = 0;
 	game->map.player = 0;
 }
 

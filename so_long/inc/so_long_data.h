@@ -43,7 +43,7 @@ typedef struct s_map
 	int		area;
 	int		height;
 	int		width;
-	int		exit;
+	int		exits;
 	int		player;
 	int		collects;
 	int		player_p;
