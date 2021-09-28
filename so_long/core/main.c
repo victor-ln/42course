@@ -80,30 +80,30 @@ static void	move(t_game *game, int direction)
 	if (keycode = 's')
 		direction = ((area = 20) / (height = 4) + 1) = 6
 	player_position = 9
-	width = (20 / 4 + 1) = 6
+	line_len = (20 / 4 + 1) = 6
 
-	actual_line = ((player_p) / width) = 1
-	actual_col = width - ((player_p % width) = 3) = 3
-	after_line = ((player_p = 9 + direction = 6) / width = 6) = 2;
-	after_col = (width - (player_p = 9 + direction = 6) % width = 3) = 3;
+	actual_line = ((player_p) / line_len) = 1
+	actual_col = line_len - ((player_p % line_len) = 3) = 3
+	after_line = ((player_p = 9 + direction = 6) / line_len = 6) = 2;
+	after_col = (line_len - (player_p = 9 + direction = 6) % line_len = 3) = 3;
 */
 
 static void	update(t_game *game, int direction)
 {
-	int		col;
-	int		line;
+	int		actual_col;
+	int		after_col;
+	int		actual_line;
+	int		after_line;
 	char	*temp;
 
 	temp = ft_utoa(game->moved_nbr);
-	line = game->map.player_p / game->map.width;
-	col = game->map.width - (game->map.player_p % game->map.width);
+	actual_line = game->map.player_p / game->map.width;
+	actual_col = game->map.width - (game->map.player_p % game->map.width);
 	game->map.player_p += direction;
-	if (direction > 1 || direction < -1)
-		draw_img(game->image, game->sprites.player,
-			(game->map.player_p / game->map.width), col);
-	else
-		draw_img(game->image, game->sprites.player, line,
-			(game->map.width - (game->map.player_p % game->map.width)));
+	after_line = game->map.player_p / game->map.width;
+	after_col = game->map.width - (game->map.player_p % game->map.width);
+	draw_img(game->image, game->sprites.ground, actual_col, actual_line);
+	draw_img(game->image, game->sprites.player, after_col, after_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
 	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, temp);
