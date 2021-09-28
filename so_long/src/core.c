@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/24 00:14:27 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/09/24 00:14:27 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/09/27 23:51:32 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/09/27 23:51:32 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 	t_game	game;
 
 	if (argc != 2)
-		exit_game("Invalid number of arguments\n", EXIT_FAILURE, 0);
+		exit_game("Invalid number of arguments\n", EXIT_FAILURE, &game);
 	init_struct(&game);
 	game.map.content = load_map(argv[1]);
 	start_game(&game);
@@ -49,7 +49,8 @@ static int	key_pressed(int keycode, t_game *game)
 static int	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
-	return (exit_game("Window closed\n", EXIT_SUCCESS, game));
+	exit_game("Window closed\n", EXIT_SUCCESS, game);
+	return (0);
 }
 
 static void	move(t_game *game, int direction)
@@ -97,6 +98,8 @@ static void	update(t_game *game, int direction)
 	char	*temp;
 
 	temp = ft_utoa(game->moved_nbr);
+	if (!temp)
+		exit_game("Malloc error\n", EXIT_FAILURE, game);
 	actual_line = game->map.player_p / game->map.width;
 	actual_col = game->map.width - (game->map.player_p % game->map.width);
 	game->map.player_p += direction;

@@ -14,7 +14,7 @@
 
 static void	free_game(t_game *game);
 
-int	exit_game(char *message, int status, t_game *game)
+void	exit_game(char *message, int status, t_game *game)
 {
 	if (status)
 	{

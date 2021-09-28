@@ -22,7 +22,6 @@ typedef struct s_save_map
 
 static char		*save_map(int fd);
 static char		*ft_strjoin(const char *s1, const char *s2);
-static char		*ft_strdup(const char *string);
 static size_t	ft_strlen(const char *string);
 
 char	*load_map(char *filename)
@@ -44,18 +43,15 @@ static char	*save_map(int fd)
 	t_save_map	s_data;
 
 	s_data.size = read(fd, s_data.buffer, 1000);
+	s_data.map = malloc(1);
+	*s_data.map = 0;
 	while (s_data.size > 0)
 	{
 		s_data.buffer[s_data.size] = 0;
-		if (!s_data.map && s_data.size > 0)
-			s_data.map = ft_strdup(s_data.buffer);
-		else if (s_data.map && s_data.size > 0)
-		{
-			s_data.swap = ft_strdup(s_data.map);
-			free(s_data.map);
-			s_data.map = ft_strjoin(s_data.swap, s_data.buffer);
-			free(s_data.swap);
-		}
+		s_data.swap = ft_strjoin(s_data.map, "");
+		free(s_data.map);
+		s_data.map = ft_strjoin(s_data.swap, s_data.buffer);
+		free(s_data.swap);
 		s_data.size = read(fd, s_data.buffer, 1000);
 	}
 	close(fd);
@@ -97,24 +93,4 @@ static char	*ft_strjoin(const char *s1, const char *s2)
 	}
 	*new = 0;
 	return (new);
-}
-
-static char	*ft_strdup(const char *string)
-{
-	char	*new_str;
-	size_t	i;
-
-	i = 0;
-	if (!string)
-		return (NULL);
-	new_str = (char *)malloc(ft_strlen(string) + 1);
-	if (!new_str)
-		return (NULL);
-	while (string[i])
-	{
-		new_str[i] = string[i];
-		i++;
-	}
-	new_str[i] = 0;
-	return (new_str);
 }

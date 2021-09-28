@@ -41,15 +41,14 @@ void	start_game(t_game *game)
 
 static void	check_map_errors(t_game *game, int status)
 {
-	int	last_line;
+	int	last_l;
 
 	if (status == 2)
 		exit_game("Invalid map, it has an invalid character\n", 1, game);
 	if (is_limit_after_c(game->map.content, '1', '\n'))
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
-	last_line = game->map.area + game->map.height - 1 - (game->map.width * 2);
-	game->map.content += last_line;
-	if (status == 3 || is_limit_after_c(game->map.content, '1', 0))
+	last_l = game->map.area + game->map.height - 1 - (game->map.width * 2);
+	if (status == 3 || is_limit_after_c(game->map.content + last_l, '1', game))
 		exit_game("Invalid map, it's not surrounded by walls\n", 1, game);
 	if (game->map.area % game->map.height || 4)
 		exit_game("Invalid map, lines or columns in diff lengths\n", 1, game);
@@ -61,14 +60,6 @@ static void	check_map_errors(t_game *game, int status)
 		exit_game("Invalid map, there must have 1 exit, 1 player and collects\n",
 			1, game);
 }
-
-/*
-	Map example:
-	1	1	1	1	1	\n
-	1	0	C	P	1	\n
-	1	E	1	C	1	\n
-	1	1	1	1	1	\0
-*/
 
 static int	init_map(t_map *map)
 {

@@ -39,7 +39,7 @@ void	render(t_game *game);
 ** Writes "Error" if status equals 1,
 ** writes the message passed, free all allocated memory and exit(status).
 */
-int		exit_game(char *message, int status, t_game *game);
+void	exit_game(char *message, int status, t_game *game);
 /*
 ** Receives the image to be drawn and the sprite
 ** to draw at ((x * 64),(y * 64)) position of the image.
