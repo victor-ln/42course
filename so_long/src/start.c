@@ -13,7 +13,7 @@
 #include "so_long.h"
 
 static int	init_map(t_map *map);
-static void	get_sprites(t_game *s);
+static void	get_sprites(t_game *game);
 static void	check_map_errors(t_game *game, int status);
 static void	specific_one(t_img **img, void *mlx, char *path);
 
