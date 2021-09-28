@@ -23,11 +23,12 @@
 # define ESC 65307
 # define MAP "01CEP\n"
 
-# define PATH_P "./img/player.xpm"
-# define PATH_C "./img/collect.xpm"
-# define PATH_E "./img/exit.xpm"
-# define PATH_0 "./img/ground.xpm"
-# define PATH_1 "./img/wall.xpm"
+# define N_VALID "Invalid map, there must have 1 exit, 1 player and collects\n"
+# define DIFF_IN_LEN "Invalid map, lines or columns in diff lengths\n"
+# define N_SURROUNDED "Invalid map, it's not surrounded by walls\n"
+# define INVALID_CHAR "Invalid map, it has an invalid character\n"
+# define N_ENOUGH_L "Invalid map, not enough lines or columns\n"
+# define SQUARE "Invalid map, it's a square. It must be a rectangle\n"
 
 typedef struct s_sprites
 {

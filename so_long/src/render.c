@@ -73,8 +73,5 @@ size_t	get_color(t_img *img, int x, int y)
 
 void	draw_pixel(t_img *img, int x, int y, size_t color)
 {
-	char	*pixel;
-
-	pixel = img->data + (y * img->size_line + x * (img->bpp / 8));
-	*(size_t *)pixel = color;
+	img->data[(y * img->size_line + x * (img->bpp / 8))] = color;
 }

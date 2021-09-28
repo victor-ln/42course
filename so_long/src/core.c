@@ -19,7 +19,7 @@ static int	close_window(int keycode, t_game *game);
 
 /*
 ** The core, initializes the structure, starts the game,
-** hooks keys pressed and window events and renders.
+** hooks keys pressed, window events and renders.
 */
 int	main(int argc, char *argv[])
 {
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[])
 
 /*
 ** Controls where to move when keycode is "asdw" or
-** exit_game if ESC is pressed.
+** exits the game if ESC is pressed.
 */
 static int	key_pressed(int keycode, t_game *game)
 {
@@ -55,7 +55,7 @@ static int	key_pressed(int keycode, t_game *game)
 }
 
 /*
-** Exit_game if close_window box is clicked.
+** Exits the game if close_window box is clicked.
 */
 static int	close_window(int keycode, t_game *game)
 {

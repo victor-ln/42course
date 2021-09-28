@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   way_out.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/24 00:15:14 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/09/24 00:15:14 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/09/28 12:54:26 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/09/28 12:54:26 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exit_game(char *message, int status, t_game *game)
 		while (*message)
 			write(1, message++, 1);
 	free_game(game);
-	way_out(status);
+	exit(status);
 }
 
 static void	free_game(t_game *game)
