@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_init.h                                     :+:      :+:    :+:   */
+/*   so_long_data.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/27 18:32:47 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/09/27 18:32:47 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/09/27 23:51:00 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/09/27 23:51:00 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_INIT_H
-# define SO_LONG_INIT_H
+#ifndef SO_LONG_DATA_H
+# define SO_LONG_DATA_H
 
 # include <fcntl.h>
 # include <stdlib.h>
