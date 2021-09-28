@@ -41,7 +41,7 @@ char	*ft_utoa(size_t nbr)
 
 	size = 0;
 	temp = nbr;
-	while (temp || (!temp && !size))
+	while (temp || !size)
 	{
 		temp /= 10;
 		size++;
