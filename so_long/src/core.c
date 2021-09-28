@@ -36,8 +36,8 @@ int	main(int argc, char *argv[])
 }
 
 /*
-** Controls where to move when keycode is "asdw" or
-** exits the game if ESC is pressed.
+** Controls where to move when keycode is a, s, d or w
+** or exits the game if ESC is pressed.
 */
 static int	key_pressed(int keycode, t_game *game)
 {
@@ -132,8 +132,8 @@ static void	update(t_game *game, int direction)
 	game->map.player_p += direction;
 	next_line = game->map.player_p / game->map.width;
 	next_col = game->map.width - (game->map.player_p % game->map.width);
-	draw_img(game->image, game->sprites.ground, current_col, current_line);
-	draw_img(game->image, game->sprites.player, next_col, next_line);
+	draw_image(game->image, game->sprites.ground, current_col, current_line);
+	draw_image(game->image, game->sprites.player, next_col, next_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
 	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, temp);

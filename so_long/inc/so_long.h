@@ -34,7 +34,7 @@ void	start_game(t_game *game);
 /*
 ** Renders pixel per pixel each map point with their respectives sprites.
 */
-void	render(t_game *game);
+void	render_game(t_game *game);
 /*
 ** Writes "Error" if status is equals to 1, writes the message passed,
 ** free all allocated memory and exits with status as argument.
@@ -44,7 +44,7 @@ void	exit_game(char *message, int status, t_game *game);
 ** Receives the image to be drawn and the sprite
 ** to draw at (x * 64) (y * 64) position of the image.
 */
-void	draw_img(t_img *img, t_img *sprite, int x, int y);
+void	draw_image(t_img *img, t_img *sprite, int x, int y);
 /*
 ** Returns the pixel color of (x, y) position of the sprite.
 */

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   render_game.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,7 @@
 
 static t_img	*which_one(char map_point, t_sprites *sprites);
 
-void	render(t_game *g)
+void	render_game(t_game *g)
 {
 	int		x;
 	int		y;
@@ -27,14 +27,14 @@ void	render(t_game *g)
 		while (++x < g->map.width)
 		{
 			map_p = g->map.content[g->map.width * y + x + (y != 0)];
-			draw_img(g->image, which_one(map_p, &g->sprites), x, y);
+			draw_image(g->image, which_one(map_p, &g->sprites), x, y);
 		}
 	}
 	mlx_put_image_to_window(g->mlx, g->win, g->image, 0, 0);
 	mlx_string_put(g->mlx, g->win, 0, 0, g->moved_nbr * x, "Moved : 0");
 }
 
-void	draw_img(t_img *img, t_img *sprite, int x, int y)
+void	draw_image(t_img *img, t_img *sprite, int x, int y)
 {
 	int		i;
 	int		j;

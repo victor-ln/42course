@@ -32,7 +32,7 @@ void	start_game(t_game *game)
 	if (!game->image)
 		exit_game("Couldn't create an image\n", EXIT_FAILURE, game);
 	get_sprites(game);
-	render(game);
+	render_game(game);
 	game->map.width++;
 }
 
