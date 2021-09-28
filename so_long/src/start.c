@@ -12,14 +12,14 @@
 
 #include "so_long.h"
 
-static int	init_map(t_map *map);
+static int	init_map(t_map *map, size_t player, size_t exits);
 static void	get_sprites(t_game *game);
 static void	check_map_errors(t_game *game, int status);
 static void	specific_one(t_img **img, void *mlx, char *path);
 
 void	start_game(t_game *game)
 {
-	check_map_errors(game, init_map(&game->map));
+	check_map_errors(game, init_map(&game->map, 0, 0));
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
@@ -38,50 +38,50 @@ void	start_game(t_game *game)
 
 static void	check_map_errors(t_game *g, int status)
 {
-	if (status == 2)
+	if (status == 1)
 		exit_game(INVALID_CHAR, 1, g);
-	if (is_limit_after_c(g->map.content, '1', '\n'))
+	if (is_limit_after_c(g->map.content, '1', '\n') || status == 2)
 		exit_game(N_SURROUNDED, 1, g);
+	g->map.width = g->map.area / g->map.height;
 	g->map.content = g->map.area + g->map.height - 1 - g->map.width * 2;
-	if (status == 3 || is_limit_after_c(g->map.content, '1', '\0'))
+	if (is_limit_after_c(g->map.content, '1', '\0'))
 		exit_game(N_SURROUNDED, 1, g);
-	if (g->map.area % g->map.height || 4)
+	if (g->map.area % g->map.height || status == 3)
 		exit_game(DIFF_IN_LEN, 1, g);
 	if (g->map.width == g->map.height)
 		exit_game(SQUARE, 1, g);
 	if (g->map.height < 3 || g->map.width < 3)
 		exit_game(N_ENOUGH_L, 1, g);
-	if (g->map.exits != 1 || g->map.player != 1 || !g->map.collects)
+	if (status == 4)
 		exit_game(N_VALID, 1, g);
 }
 
-static int	init_map(t_map *map)
+static int	init_map(t_map *map, size_t player, size_t exits)
 {
 	while (strchr(MAP, *map->content))
 	{
 		if (*map->content != '\n')
 			map->area++;
 		else if (*(map->content + 1) != '1' || *(map->content - 1) != '1')
-			return (3);
+			return (2);
 		else if (map->area % map->height)
-			return (4);
+			return (3);
 		else
 			map->height++;
 		if (*map->content == 'C')
 			map->collects++;
 		else if (*map->content == 'P')
 		{
-			map->player++;
+			player++;
 			map->player_p = (map->area - 1) + (map->height - 1);
 		}
 		else if (*map->content == 'E')
-			map->exits++;
+			exits++;
 		map->content++;
 	}
-	if (*map->content)
-		return (2);
-	map->width = map->area / map->height;
-	return (EXIT_SUCCESS);
+	if (exits != 1 || player != 1 || !map->collects)
+		return (4);
+	return (*map->content == '\0');
 }
 
 static void	get_sprites(t_game *game)

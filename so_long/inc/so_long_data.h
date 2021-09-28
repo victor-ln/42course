@@ -25,10 +25,10 @@
 
 # define N_VALID "Invalid map, there must have 1 exit, 1 player and collects\n"
 # define DIFF_IN_LEN "Invalid map, lines or columns in diff lengths\n"
+# define SQUARE "Invalid map, it's a square. It must be a rectangle\n"
 # define N_SURROUNDED "Invalid map, it's not surrounded by walls\n"
 # define INVALID_CHAR "Invalid map, it has an invalid character\n"
 # define N_ENOUGH_L "Invalid map, not enough lines or columns\n"
-# define SQUARE "Invalid map, it's a square. It must be a rectangle\n"
 
 typedef struct s_sprites
 {
@@ -44,8 +44,6 @@ typedef struct s_map
 	int		area;
 	int		height;
 	int		width;
-	int		exits;
-	int		player;
 	int		collects;
 	int		player_p;
 	char	*content;
@@ -53,9 +51,9 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	int			moved_nbr;
 	void		*mlx;
 	void		*win;
+	int			moved_nbr;
 	t_map		map;
 	t_img		*image;
 	t_sprites	sprites;
