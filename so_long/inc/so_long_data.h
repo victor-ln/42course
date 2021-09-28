@@ -34,7 +34,7 @@ typedef struct s_sprites
 	t_img	*collect;
 	t_img	*player;
 	t_img	*ground;
-	t_img	*exit;
+	t_img	*way_out;
 	t_img	*wall;
 }				t_sprites;
 

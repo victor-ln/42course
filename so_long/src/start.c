@@ -32,7 +32,7 @@ void	start_game(t_game *game)
 	if (game->image == NULL)
 		exit_game("Couldn't create an image\n", EXIT_FAILURE, game);
 	get_sprites(&game->sprites, game->mlx);
-	if (!game->sprites.collect || !game->sprites.exit || !game->sprites.ground
+	if (!game->sprites.collect || !game->sprites.way_out || !game->sprites.ground
 		|| !game->sprites.player || !game->sprites.wall)
 		exit_game("Sprites got NULL\n", EXIT_FAILURE, game);
 	render(game);
@@ -94,7 +94,7 @@ static void	get_sprites(t_sprites *sprites, void *mlx)
 {
 	specific_one(&sprites->player, mlx, PATH_P);
 	specific_one(&sprites->collect, mlx, PATH_C);
-	specific_one(&sprites->exit, mlx, PATH_E);
+	specific_one(&sprites->way_out, mlx, PATH_E);
 	specific_one(&sprites->wall, mlx, PATH_1);
 	specific_one(&sprites->ground, mlx, PATH_0);
 }

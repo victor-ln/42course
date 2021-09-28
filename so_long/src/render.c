@@ -63,7 +63,7 @@ static t_img	*which_one(char map_point, t_sprites *sprites)
 		return (sprites->collect);
 	if (map_point == 'P')
 		return (sprites->player);
-	return (sprites->exit);
+	return (sprites->way_out);
 }
 
 size_t	get_color(t_img *img, int x, int y)

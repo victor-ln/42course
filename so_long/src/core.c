@@ -69,7 +69,7 @@ static int	close_window(int keycode, t_game *game)
 ** If direction is not valid it does nothing, else renders
 ** the ground img in the player position and the player in the direction.
 ** Checks if collects is in direction and decrements collects variable.
-** If collects is 0 and direction points to exit, then exit_game successfully.
+** If collects is 0 and direction points to way_out, then exit_game successfully.
 */
 static void	move(t_game *game, int direction)
 {

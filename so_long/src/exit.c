@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   way_out.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -26,7 +26,7 @@ void	exit_game(char *message, int status, t_game *game)
 		while (*message)
 			write(1, message++, 1);
 	free_game(game);
-	exit(status);
+	way_out(status);
 }
 
 static void	free_game(t_game *game)
@@ -41,8 +41,8 @@ static void	free_game(t_game *game)
 		free(game->map.content);
 	if (game->sprites.collect != NULL)
 		free(game->sprites.collect);
-	if (game->sprites.exit != NULL)
-		free(game->sprites.exit);
+	if (game->sprites.way_out != NULL)
+		free(game->sprites.way_out);
 	if (game->sprites.ground != NULL)
 		free(game->sprites.ground);
 	if (game->sprites.player != NULL)
