@@ -19,8 +19,8 @@
 # include "so_long_init.h"
 
 /*
-** Opens the file, checks file extension and file descriptor
-** returns its content in a char pointer or exit the program in case of errors.
+** Opens the file, checks file extension and file descriptor.
+** Returns the content in the file saved in a char pointer or exit the program in case of errors.
 */
 char	*load_map(char *filename);
 /*
