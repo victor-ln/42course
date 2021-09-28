@@ -77,7 +77,6 @@ static void	move(t_game *game, int direction)
 {
 	if (game->map.content[game->map.player_p + direction] == '1')
 		return ;
-	game->moved_nbr++;
 	if (game->map.content[game->map.player_p + direction] == 'C')
 		game->map.collects--;
 	else if (game->map.content[game->map.player_p + direction] == 'E')
@@ -127,7 +126,7 @@ static void	update(t_game *game, int direction)
 	int		next_col;
 	char	*temp;
 
-	temp = ft_utoa(game->moved_nbr);
+	temp = ft_utoa(++game->moved_nbr);
 	if (!temp)
 		exit_game("Malloc error\n", EXIT_FAILURE, game);
 	current_line = game->map.player_p / game->map.width;
@@ -138,8 +137,8 @@ static void	update(t_game *game, int direction)
 	draw_image(game->image, game->sprites.ground, current_col, current_line);
 	draw_image(game->image, game->sprites.player, next_col, next_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
-	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
-	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, temp);
+	mlx_string_put(game->mlx, game->win, 10, 10, 0xFFFFFF, "Moved :");
+	mlx_string_put(game->mlx, game->win, 60, 10, 0xFFFFFF, temp);
 	free(temp);
 	temp = 0;
 }

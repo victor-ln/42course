@@ -31,7 +31,8 @@ void	render_game(t_game *g)
 		}
 	}
 	mlx_put_image_to_window(g->mlx, g->win, g->image, 0, 0);
-	mlx_string_put(g->mlx, g->win, 0, 0, g->moved_nbr * x, "Moved : 0");
+	mlx_string_put(g->mlx, g->win, 10, 10, 0xFFFFFF, "Moved :");
+	mlx_string_put(g->mlx, g->win, 60, 10, 0xFFFFFF, "0");
 }
 
 void	draw_image(t_img *img, t_img *sprite, int x, int y)
