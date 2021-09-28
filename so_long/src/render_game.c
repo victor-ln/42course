@@ -68,10 +68,10 @@ static t_img	*which_one(char map_point, t_sprites *sprites)
 
 size_t	get_color(t_img *img, int x, int y)
 {
-	return (*(size_t *) img->data + (y * img->size_line + x * (img->bpp / 8)));
+	return ((size_t *) img->data[y * img->size_line + x * (img->bpp / 8)]);
 }
 
 void	draw_pixel(t_img *img, int x, int y, size_t color)
 {
-	img->data[(y * img->size_line + x * (img->bpp / 8))] = color;
+	img->data[y * img->size_line + x * (img->bpp / 8)] = color;
 }
