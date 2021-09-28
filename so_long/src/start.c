@@ -45,7 +45,7 @@ static void	check_map_errors(t_game *game, int status)
 	if (is_limit_after_c(game->map.content, '1', '\n'))
 		exit_game(N_SURROUNDED, 1, game);
 	last_l = game->map.area + game->map.height - 1 - (game->map.width * 2);
-	if (status == 3 || is_limit_after_c(game->map.content + last_l, '1', game))
+	if (status == 3 || is_limit_after_c(game->map.content + last_l, '1', '\0'))
 		exit_game(N_SURROUNDED, 1, game);
 	if (game->map.area % game->map.height || 4)
 		exit_game(DIFF_IN_LEN, 1, game);
