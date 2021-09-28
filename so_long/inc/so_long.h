@@ -13,9 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-/*
-** includes all structs, macros and other headers
-*/
+// includes all structs, macros and other headers
 # include "so_long_init.h"
 
 /*
