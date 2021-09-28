@@ -12,14 +12,14 @@
 
 #include "so_long.h"
 
-static int	init_map(t_map *map, char *ptr);
+static int	init_map(t_map *map);
 static void	get_sprites(t_sprites *s, void *mlx);
 static void	check_map_errors(t_game *game, int status);
 static void	specific_one(t_img **img, void *mlx, char *path);
 
 void	start_game(t_game *game)
 {
-	check_map_errors(game, init_map(&game->map, game->map.content));
+	check_map_errors(game, init_map(&game->map));
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
@@ -70,30 +70,30 @@ static void	check_map_errors(t_game *game, int status)
 	1	1	1	1	1	\0
 */
 
-static int	init_map(t_map *map, char *ptr)
+static int	init_map(t_map *map)
 {
-	while (strchr(MAP, *ptr))
+	while (strchr(MAP, *map->content))
 	{
-		if (*ptr != '\n')
+		if (*map->content != '\n')
 			map->area++;
-		else if (*(ptr + 1) != '1' || *(ptr - 1) != '1')
+		else if (*(map->content + 1) != '1' || *(map->content - 1) != '1')
 			return (3);
 		else if (map->area % map->height)
 			return (4);
 		else
 			map->height++;
-		if (*ptr == 'C')
+		if (*map->content == 'C')
 			map->collects++;
-		else if (*ptr == 'P')
+		else if (*map->content == 'P')
 		{
 			map->player++;
 			map->player_p = (map->area - 1) + (map->height - 1);
 		}
-		else if (*ptr == 'E')
+		else if (*map->content == 'E')
 			map->exit++;
-		ptr++;
+		map->content++;
 	}
-	if (*ptr)
+	if (*map->content)
 		return (2);
 	map->width = map->area / map->height;
 	return (EXIT_SUCCESS);
