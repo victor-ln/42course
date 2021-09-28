@@ -26,7 +26,7 @@ int	main(int argc, char *argv[])
 	t_game	game;
 
 	if (argc != 2)
-		exit_game("Invalid number of arguments\n", EXIT_FAILURE, &game);
+		exit_game("Invalid number of arguments\n", 1, &game);
 	init_struct(&game);
 	game.map.content = load_map(argv[1]);
 	start_game(&game);
@@ -50,7 +50,7 @@ static int	key_pressed(int keycode, t_game *game)
 	else if (keycode == 'w')
 		move(game, (game->map.width * -1));
 	else if (keycode == ESC)
-		exit_game("ESC pressed\n", EXIT_SUCCESS, game);
+		exit_game("ESC pressed\n", 0, game);
 	return (0);
 }
 
@@ -60,7 +60,7 @@ static int	key_pressed(int keycode, t_game *game)
 static int	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
-	exit_game("Window closed\n", EXIT_SUCCESS, game);
+	exit_game("Window closed\n", 0, game);
 	return (0);
 }
 
@@ -81,7 +81,7 @@ static void	move(t_game *game, int direction)
 		game->map.collects--;
 	else if (game->map.content[game->map.player_p + direction] == 'E')
 		if (!game->map.collects)
-			exit_game("YOU WIN !\n", EXIT_SUCCESS, game);
+			exit_game("YOU WIN !\n", 0, game);
 	game->map.content[game->map.player_p] = '0';
 	game->map.content[game->map.player_p + direction] = 'P';
 	update(game, direction);
@@ -128,7 +128,7 @@ static void	update(t_game *game, int direction)
 
 	temp = ft_utoa(++game->moved_nbr);
 	if (!temp)
-		exit_game("Malloc error\n", EXIT_FAILURE, game);
+		exit_game("Malloc error\n", 1, game);
 	current_line = game->map.player_p / game->map.width;
 	current_col = game->map.width - (game->map.player_p % game->map.width);
 	game->map.player_p += direction;

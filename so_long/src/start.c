@@ -22,15 +22,15 @@ void	start_game(t_game *game)
 	check_map_errors(game, init_map(&game->map, 0, 0));
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		exit_game("Mlx_init got NULL\n", EXIT_FAILURE, game);
+		exit_game("Mlx_init got NULL\n", 1, game);
 	game->win = mlx_new_window(game->mlx, game->map.width * 64, \
 		game->map.height * 64, "so_long");
 	game->image = mlx_new_image(game->mlx, game->map.width * 64, \
 		game->map.height * 64);
 	if (!game->win)
-		exit_game("Couldn't create a window\n", EXIT_FAILURE, game);
+		exit_game("Couldn't create a window\n", 1, game);
 	if (!game->image)
-		exit_game("Couldn't create an image\n", EXIT_FAILURE, game);
+		exit_game("Couldn't create an image\n", 1, game);
 	get_sprites(game);
 	render_game(game);
 	game->map.width++;
@@ -93,7 +93,7 @@ static void	get_sprites(t_game *game)
 	specific_one(&game->sprites.ground, game->mlx, "./img/ground.xpm");
 	if (!game->sprites.collect || !game->sprites.way_out \
 	|| !game->sprites.ground || !game->sprites.player || !game->sprites.wall)
-		exit_game("Sprites got NULL\n", EXIT_FAILURE, game);
+		exit_game("Sprites got NULL\n", 1, game);
 }
 
 static void	specific_one(t_img **img, void *mlx, char *path)

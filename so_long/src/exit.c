@@ -31,22 +31,22 @@ void	exit_game(char *message, int status, t_game *game)
 
 static void	free_game(t_game *game)
 {
-	if (game->mlx != NULL)
+	if (!game->mlx)
 		free(game->mlx);
-	if (game->win != NULL)
+	if (!game->win)
 		free(game->win);
-	if (game->image != NULL)
+	if (!game->image)
 		free(game->image);
-	if (game->map.content != NULL)
+	if (!game->map.content)
 		free(game->map.content);
-	if (game->sprites.collect != NULL)
+	if (!game->sprites.collect)
 		free(game->sprites.collect);
-	if (game->sprites.way_out != NULL)
+	if (!game->sprites.way_out)
 		free(game->sprites.way_out);
-	if (game->sprites.ground != NULL)
+	if (!game->sprites.ground)
 		free(game->sprites.ground);
-	if (game->sprites.player != NULL)
+	if (!game->sprites.player)
 		free(game->sprites.player);
-	if (game->sprites.wall != NULL)
+	if (!game->sprites.wall)
 		free(game->sprites.wall);
 }

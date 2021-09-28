@@ -31,10 +31,10 @@ char	*load_map(char *filename)
 	while (*filename)
 		filename++;
 	if (ft_strcmp(filename - 4, ".ber"))
-		exit_game("Invalid extension\n", EXIT_FAILURE, 0);
+		exit_game("Invalid extension\n", 1, 0);
 	fd = open(filename, 00);
 	if (fd < 0)
-		exit_game("Invalid file\n", EXIT_FAILURE, 0);
+		exit_game("Invalid file\n", 1, 0);
 	return (save_map(fd));
 }
 
@@ -56,7 +56,7 @@ static char	*save_map(int fd)
 	}
 	close(fd);
 	if (!s_data.map)
-		exit_game("Malloc error", EXIT_FAILURE, 0);
+		exit_game("Malloc error", 1, 0);
 	return (s_data.map);
 }
 
