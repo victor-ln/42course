@@ -70,7 +70,7 @@ void	init_struct(t_game *game)
 	game->map.player = 0;
 }
 
-int	is_limit_after_c(char *s, char c, char limit)
+int	is_limit_after_c(char *s, int c, int limit)
 {
 	int	i;
 

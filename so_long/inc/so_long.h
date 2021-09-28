@@ -68,8 +68,9 @@ char	*ft_utoa(size_t nbr);
 */
 int		ft_strcmp(char *s1, char *s2);
 /*
-** Runs the string till c differs *s. If *s equals end returns 0 else returns 1.
+** Runs the string till c differs *s.
+** If then *s equals to limit returns 0 else returns 1.
 */
-int		is_limit_after_c(char *s, char c, char end);
+int		is_limit_after_c(char *s, int c, int limit);
 
 #endif

@@ -17,6 +17,10 @@ static void	update(t_game *game, int direction);
 static int	key_pressed(int keycode, t_game *game);
 static int	close_window(int keycode, t_game *game);
 
+/*
+** The core, initializes the structure, starts the game,
+** hooks keys pressed and window events and renders.
+*/
 int	main(int argc, char *argv[])
 {
 	t_game	game;
@@ -31,6 +35,10 @@ int	main(int argc, char *argv[])
 	mlx_loop(game.mlx);
 }
 
+/*
+** Controls where to move when keycode is "asdw" or
+** exit_game if ESC is pressed.
+*/
 static int	key_pressed(int keycode, t_game *game)
 {
 	if (keycode == 'd')
@@ -46,6 +54,9 @@ static int	key_pressed(int keycode, t_game *game)
 	return (0);
 }
 
+/*
+** Exit_game if close_window box is clicked.
+*/
 static int	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
@@ -53,6 +64,13 @@ static int	close_window(int keycode, t_game *game)
 	return (0);
 }
 
+/*
+** Receives the direction to move.
+** If direction is not valid it does nothing, else renders
+** the ground img in the player position and the player in the direction.
+** Checks if collects is in direction and decrements collects variable.
+** If collects is 0 and direction points to exit, then exit_game successfully.
+*/
 static void	move(t_game *game, int direction)
 {
 	if (game->map.content[game->map.player_p + direction] == '1')
@@ -83,18 +101,24 @@ static void	move(t_game *game, int direction)
 	player_position = 9
 	line_len = (20 / 4 + 1) = 6
 
-	actual_line = ((player_p) / line_len) = 1
-	actual_col = line_len - ((player_p % line_len) = 3) = 3
-	after_line = ((player_p = 9 + direction = 6) / line_len = 6) = 2;
-	after_col = (line_len - (player_p = 9 + direction = 6) % line_len = 3) = 3;
+	actual_line = player_p / line_len = 1
+	actual_col = (line_len = 6 - (player_p % line_len = 3)) = 3
+	(player_p += direction) = 15
+	next_line = (player_p = 15 / line_len = 6) = 2;
+	next_col = (line_len = 6 - (player_p = 15 % line_len = 6) = 3) = 3;
 */
 
+/*
+** Receives direction and calculates the colum and line to move the player,
+** draws the sprite of the ground in the actual position, the player in the moved
+** and puts the string with the number of movements done.
+*/
 static void	update(t_game *game, int direction)
 {
-	int		actual_col;
-	int		after_col;
 	int		actual_line;
-	int		after_line;
+	int		actual_col;
+	int		next_line;
+	int		next_col;
 	char	*temp;
 
 	temp = ft_utoa(game->moved_nbr);
@@ -103,10 +127,10 @@ static void	update(t_game *game, int direction)
 	actual_line = game->map.player_p / game->map.width;
 	actual_col = game->map.width - (game->map.player_p % game->map.width);
 	game->map.player_p += direction;
-	after_line = game->map.player_p / game->map.width;
-	after_col = game->map.width - (game->map.player_p % game->map.width);
+	next_line = game->map.player_p / game->map.width;
+	next_col = game->map.width - (game->map.player_p % game->map.width);
 	draw_img(game->image, game->sprites.ground, actual_col, actual_line);
-	draw_img(game->image, game->sprites.player, after_col, after_line);
+	draw_img(game->image, game->sprites.player, next_col, next_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
 	mlx_string_put(game->mlx, game->win, 0, 0, 0x0, "Moved : ");
 	mlx_string_put(game->mlx, game->win, 8, 0, 0x0, temp);
