@@ -19,6 +19,7 @@
 # include <errno.h>
 # include "mlx.h"
 # include "mlx_int.h"
+# include "libft.h"
 
 # define ESC 65307
 # define MAP "01CEP\n"
