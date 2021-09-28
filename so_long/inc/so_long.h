@@ -70,7 +70,7 @@ char	*ft_utoa(size_t nbr);
 */
 int		ft_strcmp(char *s1, char *s2);
 /*
-** Runs the string until c is not true. returns 0 if next is end or 1 if it's not
+** Runs the string until c is not true. returns 0 if next is end or 1 if it's not.
 */
 int		is_limit_after_c(char *s, char c, char end);
 
