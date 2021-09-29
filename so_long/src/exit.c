@@ -29,7 +29,7 @@ void	exit_game(char *message, int status, t_game *game)
 
 static void	destroy_everything(t_game *game)
 {
-	if (game == NULL)
+	if (!game)
 		return ;
 	if (game->sprites->collect)
 		mlx_destroy_image(game->mlx, game->sprites->collect);
@@ -45,13 +45,13 @@ static void	destroy_everything(t_game *game)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 		mlx_destroy_display(game->mlx);
-	if (game->sprites != NULL)
+	if (game->sprites)
 		free(game->sprites);
-	if (game->mlx != NULL)
+	if (game->mlx)
 		free(game->mlx);
-	if (game->map.content != NULL)
+	if (game->map.content)
 		free(game->map.content);
-	game->map.content = NULL;
-	game->sprites = NULL;
-	game->mlx = NULL;
+	game->map.content = 0;
+	game->sprites = 0;
+	game->mlx = 0;
 }
