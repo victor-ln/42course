@@ -4,7 +4,7 @@ LINKS = -lbsd -lX11 -lXext -lm -lz
 
 INC = -I ../mlx -I ../inc -I ../libft
 
-SRC = exit.c ft_load_map.c ft_render.c ft_start_game.c ft_utils.c \
+SRC = ft_load_map.c ft_render.c ft_start_game.c ft_utils.c \
 
 OBJ = $(SRC:.c=.o)
 

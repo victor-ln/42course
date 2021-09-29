@@ -23,14 +23,21 @@ static int	close_window(int keycode, t_game *game);
 */
 int	main(int argc, char *argv[])
 {
-	t_game	game;
+	t_game	*game;
 
-	game.map.content = ft_load_map(argv[1], argc);
-	init_struct(&game);
-	ft_start_game(&game);
-	mlx_key_hook(game.win, key_pressed, &game);
-	mlx_hook(game.win, 17, 0L, close_window, &game);
-	mlx_loop(game.mlx);
+	check_argc(argc);
+	game = (t_game *)malloc(sizeof(t_game));
+	if (!game)
+	{
+		perror("Error\nMalloc error");
+		exit(1);
+	}
+	ft_start_struct(game);
+	ft_load_map(argv[1], game);
+	ft_start_game(game);
+	mlx_key_hook(game->win, key_pressed, game);
+	mlx_hook(game->win, 17, 0L, close_window, game);
+	mlx_loop(game->mlx);
 }
 
 /*
@@ -44,9 +51,9 @@ static int	key_pressed(int keycode, t_game *game)
 	else if (keycode == 'a')
 		move(-1, game);
 	else if (keycode == 's')
-		move(game->map.width, game);
+		move(game->map_info.width, game);
 	else if (keycode == 'w')
-		move((game->map.width * -1), game);
+		move((game->map_info.width * -1), game);
 	else if (keycode == ESC)
 		exit_game("ESC pressed\n", 0, game);
 	return (0);
@@ -73,15 +80,15 @@ static int	close_window(int keycode, t_game *game)
 */
 static void	move(int direction, t_game *game)
 {
-	if (game->map.content[game->map.player_p + direction] == '1')
+	if (game->map[game->map_info.player_p + direction] == '1')
 		return ;
-	if (game->map.content[game->map.player_p + direction] == 'C')
-		game->map.collects--;
-	else if (game->map.content[game->map.player_p + direction] == 'E')
-		if (!game->map.collects)
+	if (game->map[game->map_info.player_p + direction] == 'C')
+		game->map_info.collects--;
+	else if (game->map[game->map_info.player_p + direction] == 'E')
+		if (!game->map_info.collects)
 			exit_game("YOU WIN !\n", 0, game);
-	game->map.content[game->map.player_p] = '0';
-	game->map.content[game->map.player_p + direction] = 'P';
+	game->map[game->map_info.player_p] = '0';
+	game->map[game->map_info.player_p + direction] = 'P';
 	update(direction, game);
 }
 
@@ -127,11 +134,13 @@ static void	update(int direction, t_game *game)
 	temp = ft_utoa(++game->moved_nbr);
 	if (!temp)
 		exit_game("Malloc error\n", 1, game);
-	current_line = (game->map.player_p / game->map.width) * 32;
-	current_col = (game->map.width - game->map.player_p % game->map.width) * 32;
-	game->map.player_p += direction;
-	next_line = (game->map.player_p / game->map.width) * 32;
-	next_col = (game->map.width - game->map.player_p % game->map.width) * 32;
+	current_line = (game->map_info.player_p / game->map_info.width);
+	current_col = (game->map_info.width - \
+		game->map_info.player_p % game->map_info.width) * 32;
+	game->map_info.player_p += direction;
+	next_line = game->map_info.player_p / game->map_info.width;
+	next_col = (game->map_info.width - \
+		game->map_info.player_p % game->map_info.width) * 32;
 	draw_image(game->image, game->sprites->ground, current_col, current_line);
 	draw_image(game->image, game->sprites->player, next_col, next_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);

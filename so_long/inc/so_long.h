@@ -17,19 +17,23 @@
 # include "so_long_data.h"
 
 /*
-** Check how many arguments was passed,
-** Opens the file, checks file extension and file descriptor.
-** Returns the content in the file saved in a char pointer or
+**  Checks if there's just one argument to be read.
+*/
+void	check_argc(int argc);
+/*
+** Opens the file, checks file extension and file descriptor and
+** Saves the content of the filename in a char pointer or
 ** exits the program in case of errors.
 */
-char	*ft_load_map(char *filename, int counter);
+void	ft_load_map(char *filename, t_game *game);
 /*
-** Initializes stack variables of game structure and its sub structures.
+** Initializes variables of game structure and its structures.
 */
-void	init_struct(t_game *game);
+void	ft_start_struct(t_game *game);
 /*
 ** Saves map info, such as area, height, width, player position, the number
-** of collects, exits and players. Opens a window and gets sprites from ./img
+** of collects, exits and players and checks if they're valid.
+** Opens a window, creates an image and gets sprites from ./img dir.
 */
 void	ft_start_game(t_game *game);
 /*

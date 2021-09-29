@@ -12,25 +12,12 @@
 
 #include "so_long.h"
 
-typedef struct s_save_map
-{
-	char	*swap;
-	char	*map;
-	char	buffer[1001];
-	ssize_t	size;
-}	t_save_map;
+static char	*save_map(int fd);
 
-static char		*save_map(int fd);
-
-char	*ft_load_map(char *filename, int counter)
+void	ft_load_map(char *filename, t_game *game)
 {
 	int		fd;
 
-	if (counter != 2)
-	{
-		ft_putstr_fd("Error\nInvalid number of arguments\n", 2);
-		exit(1);
-	}
 	fd = open(filename, 00);
 	if (fd < 0)
 	{
@@ -45,29 +32,32 @@ char	*ft_load_map(char *filename, int counter)
 		close(fd);
 		exit (1);
 	}
-	return (save_map(fd));
+	game->map = save_map(fd);
+	if (!game->map)
+	{
+		ft_putstr_fd("Error\n", 2);
+		exit_game(strerror(errno), 0, game);
+	}
 }
 
 static char	*save_map(int fd)
 {
-	t_save_map	data;
+	char	*swap;
+	char	*map;
+	char	buffer[1001];
+	long	size;
 
-	data.size = read(fd, data.buffer, 1000);
-	data.map = ft_calloc(1, 1);
-	while (data.size > 0)
+	size = read(fd, buffer, 1000);
+	map = ft_calloc(1, 1);
+	while (size > 0)
 	{
-		data.buffer[data.size] = 0;
-		data.swap = strdup(data.map);
-		free(data.map);
-		data.map = ft_strjoin(data.swap, data.buffer);
-		free(data.swap);
-		data.size = read(fd, data.buffer, 1000);
+		buffer[size] = 0;
+		swap = strdup(map);
+		free(map);
+		map = ft_strjoin(swap, buffer);
+		free(swap);
+		size = read(fd, buffer, 1000);
 	}
 	close(fd);
-	if (!data.map)
-	{
-		ft_putstr_fd(strerror(errno), 2);
-		exit(1);
-	}
-	return (data.map);
+	return (map);
 }

@@ -21,6 +21,7 @@
 ** in the string src or NULL if the character is not found.
 */
 char	*ft_strchr(const char *src, int c);
+void	ft_bzero(void *ptr, size_t n);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s);

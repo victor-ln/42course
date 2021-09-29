@@ -15,42 +15,42 @@
 static void	get_sprites(t_game *game);
 static void	check_for_map_errors(t_game *game, int status);
 static void	specific_one(t_img **img, void *mlx, char *path);
-static int	save_map_info(t_map *map, size_t player, size_t exits);
+static int	save_map_info(t_map *map_info, char *map);
 
 void	ft_start_game(t_game *game)
 {
-	check_for_map_errors(game, save_map_info(&game->map, 0, 0));
+	check_for_map_errors(game, save_map_info(&game->map_info, game->map));
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit_game("Mlx_init got NULL\n", 1, game);
-	game->win = mlx_new_window(game->mlx, (game->map.width - 1) * 32, \
-		(game->map.height - 1) * 32, "so_long");
-	game->image = mlx_new_image(game->mlx, (game->map.width - 1) * 32, \
-		(game->map.height - 1) * 32);
+	game->win = mlx_new_window(game->mlx, (game->map_info.width - 1) * 32, \
+		(game->map_info.height - 1) * 32, "so_long");
+	game->image = mlx_new_image(game->mlx, (game->map_info.width - 1) * 32, \
+		(game->map_info.height - 1) * 32);
 	if (!game->win)
 		exit_game("Couldn't create a window\n", 1, game);
 	if (!game->image)
 		exit_game("Couldn't create an image\n", 1, game);
 	get_sprites(game);
 	ft_render(game);
-	game->map.width++;
+	game->map_info.width++;
 }
 
 static void	check_for_map_errors(t_game *g, int status)
 {
 	if (status == 1)
 		exit_game(INVALID_CHAR, 1, g);
-	if (is_end_after_c(g->map.content, '1', '\n') || status == 2)
+	if (is_end_after_c(g->map, '1', '\n') || status == 2)
 		exit_game(N_SURROUNDED, 1, g);
-	g->map.width = g->map.area / g->map.height;
-	g->map.content += g->map.area + g->map.height - 1 - g->map.width * 2;
-	if (is_end_after_c(g->map.content, '1', 0))
+	g->map_info.width = g->map_info.area / g->map_info.height;
+	g->map += g->map_info.area + g->map_info.height - 1 - g->map_info.width * 2;
+	if (is_end_after_c(g->map, '1', 0))
 		exit_game(N_SURROUNDED, 1, g);
-	if (g->map.area % g->map.height || status == 3)
-		exit_game(DIFF_IN_LEN, 1, g);
-	if (g->map.width == g->map.height)
+	if (g->map_info.area % g->map_info.height || status == 3)
+		exit_game(N_RECTANGLE, 1, g);
+	if (g->map_info.width == g->map_info.height)
 		exit_game(SQUARE, 1, g);
-	if (g->map.height < 3 || g->map.width < 3)
+	if (g->map_info.height < 3 || g->map_info.width < 3)
 		exit_game(N_ENOUGH_L, 1, g);
 	if (status == 4)
 		exit_game(N_VALID, 1, g);
@@ -68,32 +68,31 @@ static void	check_for_map_errors(t_game *g, int status)
 	0	32	64	96	128	
 */
 
-static int	save_map_info(t_map *map, size_t player, size_t exits)
+static int	save_map_info(t_map *map_info, char *map)
 {
-	while (strchr(MAP, *map->content))
+	size_t	aux;
+
+	aux = 0;
+	while (strchr(MAP, *map))
 	{
-		if (*map->content != '\n')
-			map->area++;
-		else if (*(map->content + 1) != '1' || *(map->content - 1) != '1')
-			return (2);
-		else if (map->area % map->height)
-			return (3);
+		if (*map != '\n')
+			map_info->area++;
+		else if (*(map + 1) != '1' || *(map - 1) != '1'
+			|| ((map_info->area % map_info->height) != 0))
+			return ((map_info->area % map_info->height) + 2);
 		else
-			map->height++;
-		if (*map->content == 'C')
-			map->collects++;
-		else if (*map->content == 'P')
-		{
-			player++;
-			map->player_p = (map->area - 1) + (map->height - 1);
-		}
-		else if (*map->content == 'E')
-			exits++;
-		map->content++;
+			map_info->height++;
+		if (*map == 'C')
+			map_info->collects++;
+		else if (*map == 'E' && !aux)
+			aux++;
+		else if (*map == 'P' && !map_info->player_p)
+			map_info->player_p = (map_info->area - 1) + (map_info->height - 1);
+		else if ((aux != 1 || map_info->player_p) && !ft_strchr("01", *map))
+			return (4);
+		map++;
 	}
-	if (exits != 1 || player != 1 || !map->collects)
-		return (4);
-	return (*map->content != 0);
+	return (*map != 0);
 }
 
 static void	get_sprites(t_game *game)

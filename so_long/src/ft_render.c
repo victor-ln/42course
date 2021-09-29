@@ -21,12 +21,12 @@ void	ft_render(t_game *g)
 	int		map_p;
 
 	y = 0;
-	while (y < g->map.height)
+	while (y < g->map_info.height)
 	{
 		x = 0;
-		while (x < g->map.width)
+		while (x < g->map_info.width)
 		{
-			map_p = g->map.content[g->map.width * y + x + (y != 0)];
+			map_p = g->map[g->map_info.width * y + x + (y != 0)];
 			draw_image(g->image, which_one(map_p, &g->sprites), x * 32, y * 32);
 			x++;
 		}
