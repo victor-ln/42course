@@ -12,41 +12,46 @@
 
 #include "so_long.h"
 
-static void	free_game(t_game *game);
+static void	destroy_everything(t_game *game);
 
 void	exit_game(char *message, int status, t_game *game)
 {
 	if (status)
 	{
-		write(2, "Error\n", 6);
-		while (*message)
-			write(2, message++, 1);
+		ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd(message, 2);
 	}
 	else
-		while (*message)
-			write(1, message++, 1);
-	free_game(game);
+		ft_putstr_fd(message, 1);
+	destroy_everything(game);
 	exit(status);
 }
 
-static void	free_game(t_game *game)
+static void	destroy_everything(t_game *game)
 {
-	if (!game->mlx)
+	if (game == NULL)
+		return ;
+	if (game->sprites->collect)
+		mlx_destroy_image(game->mlx, game->sprites->collect);
+	if (game->sprites->ground)
+		mlx_destroy_image(game->mlx, game->sprites->ground);
+	if (game->sprites->wall)
+		mlx_destroy_image(game->mlx, game->sprites->wall);
+	if (game->sprites->player)
+		mlx_destroy_image(game->mlx, game->sprites->player);
+	if (game->sprites->way_out)
+		mlx_destroy_image(game->mlx, game->sprites->way_out);
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
+		mlx_destroy_display(game->mlx);
+	if (game->sprites != NULL)
+		free(game->sprites);
+	if (game->mlx != NULL)
 		free(game->mlx);
-	if (!game->win)
-		free(game->win);
-	if (!game->image)
-		free(game->image);
-	if (!game->map.content)
+	if (game->map.content != NULL)
 		free(game->map.content);
-	if (!game->sprites.collect)
-		free(game->sprites.collect);
-	if (!game->sprites.way_out)
-		free(game->sprites.way_out);
-	if (!game->sprites.ground)
-		free(game->sprites.ground);
-	if (!game->sprites.player)
-		free(game->sprites.player);
-	if (!game->sprites.wall)
-		free(game->sprites.wall);
+	game->map.content = NULL;
+	game->sprites = NULL;
+	game->mlx = NULL;
 }

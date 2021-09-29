@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/08 04:21:01 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/08/08 04:21:01 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/09/28 20:12:14 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/09/28 20:12:14 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+int	ft_strcmp(char *s1, char *s2)
 {
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	if (to_find[i] == '\0')
-		return ((char *)str);
-	while (str[i] != '\0' && i < len)
+	while (*s1 && s2 && *s1 == *s2)
 	{
-		j = 0;
-		while (str[i + j] == to_find[j] && (i + j) < len && to_find[j] != '\0')
-		{
-			j++;
-			if (to_find[j] == '\0')
-				return ((char *)str + i);
-		}
-		i++;
+		s1++;
+		s2++;
 	}
-	return (NULL);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

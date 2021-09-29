@@ -1,50 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start.c                                            :+:      :+:    :+:   */
+/*   ft_start_game.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/24 00:14:07 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/09/24 00:14:07 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/09/29 00:22:59 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/09/29 00:22:59 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	init_map(t_map *map, size_t player, size_t exits);
 static void	get_sprites(t_game *game);
-static void	check_map_errors(t_game *game, int status);
+static void	check_for_map_errors(t_game *game, int status);
 static void	specific_one(t_img **img, void *mlx, char *path);
+static int	save_map_info(t_map *map, size_t player, size_t exits);
 
-void	start_game(t_game *game)
+void	ft_start_game(t_game *game)
 {
-	check_map_errors(game, init_map(&game->map, 0, 0));
+	check_for_map_errors(game, save_map_info(&game->map, 0, 0));
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit_game("Mlx_init got NULL\n", 1, game);
-	game->win = mlx_new_window(game->mlx, game->map.width * 64, \
-		game->map.height * 64, "so_long");
-	game->image = mlx_new_image(game->mlx, game->map.width * 64, \
-		game->map.height * 64);
+	game->win = mlx_new_window(game->mlx, (game->map.width - 1) * 32, \
+		(game->map.height - 1) * 32, "so_long");
+	game->image = mlx_new_image(game->mlx, (game->map.width - 1) * 32, \
+		(game->map.height - 1) * 32);
 	if (!game->win)
 		exit_game("Couldn't create a window\n", 1, game);
 	if (!game->image)
 		exit_game("Couldn't create an image\n", 1, game);
 	get_sprites(game);
-	render_game(game);
+	ft_render(game);
 	game->map.width++;
 }
 
-static void	check_map_errors(t_game *g, int status)
+static void	check_for_map_errors(t_game *g, int status)
 {
 	if (status == 1)
 		exit_game(INVALID_CHAR, 1, g);
-	if (is_limit_after_c(g->map.content, '1', '\n') || status == 2)
+	if (is_end_after_c(g->map.content, '1', '\n') || status == 2)
 		exit_game(N_SURROUNDED, 1, g);
 	g->map.width = g->map.area / g->map.height;
-	g->map.content = g->map.area + g->map.height - 1 - g->map.width * 2;
-	if (is_limit_after_c(g->map.content, '1', '\0'))
+	g->map.content += g->map.area + g->map.height - 1 - g->map.width * 2;
+	if (is_end_after_c(g->map.content, '1', 0))
 		exit_game(N_SURROUNDED, 1, g);
 	if (g->map.area % g->map.height || status == 3)
 		exit_game(DIFF_IN_LEN, 1, g);
@@ -56,7 +56,19 @@ static void	check_map_errors(t_game *g, int status)
 		exit_game(N_VALID, 1, g);
 }
 
-static int	init_map(t_map *map, size_t player, size_t exits)
+/*
+	Map example:
+
+	0	1	2	3	4	5	columns
+
+	1	1	1	1	1	\n	line 0	0
+	1	0	C	P	1	\n	line 1	32
+	1	E	1	C	1	\n	line 2	64
+	1	1	1	1	1	\0	line 3	96
+	0	32	64	96	128	
+*/
+
+static int	save_map_info(t_map *map, size_t player, size_t exits)
 {
 	while (strchr(MAP, *map->content))
 	{
@@ -81,18 +93,18 @@ static int	init_map(t_map *map, size_t player, size_t exits)
 	}
 	if (exits != 1 || player != 1 || !map->collects)
 		return (4);
-	return (*map->content != '\0');
+	return (*map->content != 0);
 }
 
 static void	get_sprites(t_game *game)
 {
-	specific_one(&game->sprites.player, game->mlx, "./img/player.xpm");
-	specific_one(&game->sprites.collect, game->mlx, "./img/collect.xpm");
-	specific_one(&game->sprites.way_out, game->mlx, "./img/exit.xpm");
-	specific_one(&game->sprites.wall, game->mlx, "./img/wall.xpm");
-	specific_one(&game->sprites.ground, game->mlx, "./img/ground.xpm");
-	if (!game->sprites.collect || !game->sprites.way_out \
-	|| !game->sprites.ground || !game->sprites.player || !game->sprites.wall)
+	specific_one(&game->sprites->player, game->mlx, "./img/player.xpm");
+	specific_one(&game->sprites->collect, game->mlx, "./img/collect.xpm");
+	specific_one(&game->sprites->way_out, game->mlx, "./img/exit.xpm");
+	specific_one(&game->sprites->wall, game->mlx, "./img/wall.xpm");
+	specific_one(&game->sprites->ground, game->mlx, "./img/ground.xpm");
+	if (!game->sprites->collect || !game->sprites->way_out \
+	|| !game->sprites->ground || !game->sprites->player || !game->sprites->wall)
 		exit_game("Sprites got NULL\n", 1, game);
 }
 

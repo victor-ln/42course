@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/08 04:20:27 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/08/08 04:20:27 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/09/28 23:42:36 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/09/28 23:42:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	if (s != NULL)
-	{
-		i = -1;
-		while (s[++i])
-			ft_putchar_fd(s[i], fd);
-	}
+	while (*s)
+		write(fd, s++, 1);
 }

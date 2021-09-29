@@ -18,21 +18,22 @@ static int	key_pressed(int keycode, t_game *game);
 static int	close_window(int keycode, t_game *game);
 
 /*
-** The core, initializes the structure, starts the game,
-** hooks the keys pressed and Destroy Notify event, and renders.
+** The core, initializes the structure, starts the ** hooks the keys pressed
+** and Destroy window event, and render, games.
 */
 int	main(int argc, char *argv[])
 {
-	t_game	game;
+	t_game	*game;
 
-	if (argc != 2)
-		exit_game("Invalid number of arguments\n", 1, &game);
-	init_struct(&game);
-	game.map.content = load_map(argv[1]);
-	start_game(&game);
-	mlx_key_hook(game.win, key_pressed, &game);
-	mlx_hook(game.win, 17, 0L, close_window, &game);
-	mlx_loop(game.mlx);
+	game->map.content = ft_load_map(argv[1], argc);
+	game = (t_game *)malloc(sizeof(t_game));
+	if (!game)
+		exit_game("Malloc error\n", 1, game);
+	init_struct(game);
+	ft_start_game(game);
+	mlx_key_hook(game->win, key_pressed, game);
+	mlx_hook(game->win, 17, 0L, close_window, game);
+	mlx_loop(game->mlx);
 }
 
 /*
@@ -42,13 +43,13 @@ int	main(int argc, char *argv[])
 static int	key_pressed(int keycode, t_game *game)
 {
 	if (keycode == 'd')
-		move(game, 1);
+		move(1, game);
 	else if (keycode == 'a')
-		move(game, -1);
+		move(-1, game);
 	else if (keycode == 's')
-		move(game, game->map.width);
+		move(game->map.width, game);
 	else if (keycode == 'w')
-		move(game, (game->map.width * -1));
+		move((game->map.width * -1), game);
 	else if (keycode == ESC)
 		exit_game("ESC pressed\n", 0, game);
 	return (0);
@@ -84,7 +85,7 @@ static void	move(int direction, t_game *game)
 			exit_game("YOU WIN !\n", 0, game);
 	game->map.content[game->map.player_p] = '0';
 	game->map.content[game->map.player_p + direction] = 'P';
-	update(game, direction);
+	update(direction, game);
 }
 
 /*
@@ -129,13 +130,13 @@ static void	update(int direction, t_game *game)
 	temp = ft_utoa(++game->moved_nbr);
 	if (!temp)
 		exit_game("Malloc error\n", 1, game);
-	current_line = game->map.player_p / game->map.width;
-	current_col = game->map.width - (game->map.player_p % game->map.width);
+	current_line = (game->map.player_p / game->map.width) * 32;
+	current_col = (game->map.width - game->map.player_p % game->map.width) * 32;
 	game->map.player_p += direction;
-	next_line = game->map.player_p / game->map.width;
-	next_col = game->map.width - (game->map.player_p % game->map.width);
-	draw_image(game->image, game->sprites.ground, current_col, current_line);
-	draw_image(game->image, game->sprites.player, next_col, next_line);
+	next_line = (game->map.player_p / game->map.width) * 32;
+	next_col = (game->map.width - game->map.player_p % game->map.width) * 32;
+	draw_image(game->image, game->sprites->ground, current_col, current_line);
+	draw_image(game->image, game->sprites->player, next_col, next_line);
 	mlx_put_image_to_window(game->mlx, game->win, game->image, 0, 0);
 	mlx_string_put(game->mlx, game->win, 10, 10, 0xFFFFFF, "Moved :");
 	mlx_string_put(game->mlx, game->win, 60, 10, 0xFFFFFF, temp);

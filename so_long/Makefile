@@ -1,29 +1,46 @@
-CC = clang
-FLAGS = -Wall -Werror -Wextra -fsanitize=address
-LINKS = -lbsd -lX11 -lXext -lm -lz
-INC = -I ./mlx -I ./inc
 NAME = so_long
-
-SRC = src/exit.c src/load_map.c src/render.c src/start.c src/utils.c
-MAIN = src/main.c
-
-OBJ = $(SRC:.c=.o)
+MLX = ./mlx/libmlx.a
+LIB = ./libft/libft.a
+MAIN = ./src/main.c
+FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
+LINKS = -lbsd -lX11 -lXext -lm -lz
+INC = -I ./mlx -I ./libft -I ./inc
+OBJ = src/exit.o src/load_map.o src/render.o src/start.o src/utils.o
 
 all:		$(NAME)
 
-$(NAME):
-	@clang $(FLAGS) $(INC) -c $(SRC)
+$(NAME):	libft_a mlx_a src_a
+	@clang $(FLAGS) $(INC) $(MAIN) $(OBJ) $(LIB) $(MLX) $(LINKS) -o $(NAME)
+
+libft_a:
+	@echo "Compiling Libft [ .. ]"
+	@make -C ./libft
+	@echo "Libft is ready! [ OK ]"
+
+mlx_a:
+	@echo "Compiling Mlx [ .. ]"
 	@make -C ./mlx
-	@mv *.o src
-	@clang $(FLAGS) $(INC) $(OBJ) $(MAIN) ./mlx/libmlx.a $(LINKS) -o $(NAME)
+	@echo "Mlx is ready! [ OK ]"
+
+src_a:
+	@echo "Compiling Source [ .. ]"
+	@make -C ./src all
+	@echo "Source compiled! [ OK ]"
 
 clean:
-	@rm -fr $(OBJ)
+	@make -C ./src clean
 	@make -C ./mlx clean
+	@make -C ./libft clean
+	@echo "Object files removed."
 
 fclean:	clean
+	@make -C ./src fclean
+	@make -C ./libft fclean
 	@rm $(NAME)
+	@echo "Binaries removed."
 
 re:			fclean all
 
 bonus:		$(NAME)
+
+.PHONY: all, clean, fclean, re, message, libft_c
