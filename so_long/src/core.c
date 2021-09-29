@@ -23,17 +23,14 @@ static int	close_window(int keycode, t_game *game);
 */
 int	main(int argc, char *argv[])
 {
-	t_game	*game;
+	t_game	game;
 
-	game->map.content = ft_load_map(argv[1], argc);
-	game = (t_game *)malloc(sizeof(t_game));
-	if (!game)
-		exit_game("Malloc error\n", 1, game);
-	init_struct(game);
-	ft_start_game(game);
-	mlx_key_hook(game->win, key_pressed, game);
-	mlx_hook(game->win, 17, 0L, close_window, game);
-	mlx_loop(game->mlx);
+	game.map.content = ft_load_map(argv[1], argc);
+	init_struct(&game);
+	ft_start_game(&game);
+	mlx_key_hook(game.win, key_pressed, &game);
+	mlx_hook(game.win, 17, 0L, close_window, &game);
+	mlx_loop(game.mlx);
 }
 
 /*

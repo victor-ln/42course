@@ -1,11 +1,11 @@
 NAME = so_long
 MLX = ./mlx/libmlx.a
 LIB = ./libft/libft.a
-MAIN = ./src/main.c
+MAIN = ./src/core.c
 FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
 LINKS = -lbsd -lX11 -lXext -lm -lz
 INC = -I ./mlx -I ./libft -I ./inc
-OBJ = src/exit.o src/load_map.o src/render.o src/start.o src/utils.o
+OBJ = src/exit.o src/ft_load_map.o src/ft_render.o src/ft_start_game.o src/ft_utils.o
 
 all:		$(NAME)
 
