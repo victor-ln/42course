@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 00:38:42 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/01 04:03:54 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/01 04:33:11 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	key_press(int keycode, t_game *game)
 /*
 ** Receives the direction to move.
 ** If the direction points to a wall,
-** it does nothing but renders the game later
+** it does nothing else renders the game later
 ** to change player position value to "0" and
 ** direction plus player position value to "P" on the map.
 ** Checks if the collects is in the direction and

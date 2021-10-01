@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 23:56:56 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/01 03:51:41 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/01 04:33:25 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	map_info(t_game *game, char *map)
 
 /*
 ** Runs the string till map pointer differs '1'.
-** After it differs returns 1 if it's followed by '\0' or '\n' and 0 if it isn't.
+** After it differs returns 1 if it's followed by '\0' or '\n', or 0 if it isn't.
 */
 static int	is_surrounded(char *map)
 {
