@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 23:56:56 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/04 20:58:54 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/04 23:15:54 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	validate_map(t_game *game)
 		ft_putstr_fd(INVALID, 2);
 	else
 		return ;
+	free(game->sprites);
 	free(game->map);
+	free(game);
 	exit(1);
 }
 
