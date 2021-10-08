@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/08 04:20:41 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/08 03:25:19 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/10/07 00:40:08 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/10/07 00:40:44 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+char	*ft_utoa(unsigned int nbr)
 {
-	unsigned int	i;
+	unsigned int	temp;
+	int				size;
+	char			*string;
 
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
+	temp = nbr;
+	size = 0;
+	while (temp || !size)
 	{
-		f(i, s + i);
-		i++;
+		temp /= 10;
+		size++;
 	}
+	string = (char *)malloc(size + 1);
+	string[size--] = 0;
+	while (size >= 0)
+	{
+		string[size--] = nbr % 10 + 48;
+		nbr /= 10;
+	}
+	return (string);
 }

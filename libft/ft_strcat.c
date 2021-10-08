@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/08 04:20:41 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/08 03:25:19 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/10/07 00:41:49 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/10/07 00:41:54 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+char	*ft_strcat(char *s1, char *s2)
 {
 	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		f(i, s + i);
+	j = 0;
+	while (s1[i])
 		i++;
-	}
+	while (s2[j])
+		s1[i++] = s2[j++];
+	s1[i] = 0;
+	return (s1);
 }
