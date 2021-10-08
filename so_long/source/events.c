@@ -5,33 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 00:38:42 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/04 21:44:39 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/10/07 22:58:51 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	move(int direction, t_game *game);
+static void	apply_changes(t_game *game);
 
 int	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
-	(void)game;
-	ft_putstr_fd("Window closed\n", 1);
-	exit(0);
+	exit_game(game, "Window closed\n");
+	return (0);
 }
 
 int	key_press(int keycode, t_game *game)
 {
 	if (keycode == 'd')
-		move(1, game);
+		player_moving(game, game->sprites->player_d[RIGHT], 1, 0);
 	else if (keycode == 'a')
-		move(-1, game);
-	else if (keycode == 's')
-		move(game->width, game);
+		player_moving(game, game->sprites->player_d[LEFT], -1, 0);
 	else if (keycode == 'w')
-		move((game->width * -1), game);
+		player_moving(game, game->sprites->player_d[UP], 0, -1);
+	else if (keycode == 's')
+		player_moving(game, game->sprites->player_d[DOWN], 0, 1);
 	else if (keycode == ESC)
 		exit_game(game, "ESC pressed\n");
 	return (0);
@@ -48,35 +47,60 @@ int	key_press(int keycode, t_game *game)
 ** If the collection is 0 and the direction points to the exit,
 ** then exits the game successfully.
 */
-static void	move(int direction, t_game *game)
+static void	apply_changes(t_game *game)
 {
-	if (game->map[game->player_p + direction] == '1')
-		return ;
-	if (game->map[game->player_p + direction] == 'C')
+	char	*temp;
+
+	if (game->map[game->player.y][game->player.x] == 'C')
+	{
 		game->collects--;
-	else if (game->map[game->player_p + direction] == 'E')
+		if (game->collects < 5)
+		{
+			temp = ft_utoa(5 - game->collects);
+			mlx_destroy_image(game->mlx, game->sprites->way_out);
+			load_sprite(&game->sprites->way_out, game->mlx, \
+				ft_strcat("./sprites/exit/", temp));
+			free(temp);
+			draw_sprite(game->img, game->sprites->way_out, \
+				game->exit.x, game->exit.y);
+		}
+	}
+	else if (game->map[game->player.y][game->player.x] == 'E')
 		if (!game->collects)
 			exit_game(game, "YOU WIN !\n");
-	game->map[game->player_p] = '0';
-	game->map[game->player_p + direction] = 'P';
-	draw_sprite(game->img, game->sprites->ground, \
-		game->player_p % game->width, game->player_p / game->width);
-	game->player_p += direction;
-	draw_sprite(game->img, game->sprites->player, \
-		game->player_p % game->width, game->player_p / game->width);
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	if (game->map[game->player.y][game->player.x] != 'E')
+		game->map[game->player.y][game->player.x] = 'P';
 	move_display(game);
+}
+
+static void	player_moving(t_game *g, t_player *direction, int to_x, int to_y)
+{
+	int	frame;
+
+	frame = 16;
+	g->map[g->player.y][g->player.x] = '0';
+	while (frame <= 48)
+	{
+		draw_sprite(g->img, g->sprites->ground, \
+			g->player.x * 64, g->player.y * 64);
+		if (frame > 16)
+			draw_image(g, g->player.x + to_x, g->player.y + to_y);
+		draw_sprite(g->img, direction->moves[frame % 2], g->player.x * 64 \
+			+ (to_x * frame), g->player.y * 64 + (to_y * frame));
+		mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
+		frame += 16;
+	}
+	g->player.x += to_x;
+	g->player.y += to_y;
+	apply_changes(g);
 }
 
 void	move_display(t_game *game)
 {
 	char	*temp;
 
-	temp = ft_utoa(game->moved_nbr++);
-	if (!temp)
-		error(game, "Malloc for moves string failed\n", errno);
+	temp = ft_utoa(game->movements++);
 	mlx_string_put(game->mlx, game->win, 10, 10, 0xFFFFFF, "Moved :");
-	mlx_string_put(game->mlx, game->win, 60, 10, 0xFFFFFF, temp);
+	mlx_string_put(game->mlx, game->win, 60, 10, 0XFFFFFF, temp);
 	free(temp);
-	temp = 0;
 }

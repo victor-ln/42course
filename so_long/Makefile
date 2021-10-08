@@ -4,8 +4,8 @@ MAIN = source/main.c
 FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
 LINKS = -lbsd -lX11 -lXext -lm -lz
 INC = -I ./minilibx-linux -I ./include
-OBJ = objects/exit.o objects/events.o objects/validation.o objects/render_game.o objects/start_game.o objects/utils.o
-SRC = source/exit.c source/events.c source/validation.c source/render_game.c source/start_game.c source/utils.c
+OBJ = objects/end_game.o objects/events.o objects/validate_map.o objects/render_game.o objects/start_game.o objects/load_map.o
+SRC = source/end_game.c source/events.c source/validate_map.c source/render_game.c source/start_game.c source/load_map.c
 
 all:		$(NAME)
 

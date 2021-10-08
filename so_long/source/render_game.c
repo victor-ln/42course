@@ -6,72 +6,82 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 00:46:12 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/04 22:58:40 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/07 21:39:04 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void		draw_image(t_game *game, int x, int y, char map_point);
-
 void	render_game(t_game *game)
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 
-	y = -1;
-	while (++y < game->height)
+	y = 0;
+	while (y < game->height)
 	{
-		x = -1;
-		while (++x < game->width)
-			draw_image(game, x, y, game->map[game->width * y + x]);
+		x = 0;
+		while (x < game->width)
+		{
+			draw_image(game, x * 64, y * 64);
+			x++;
+		}
+		y++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	move_display(game);
 }
 
-/*
-** Receives the image to be drawn and the sprite
-** to draw at (x * image_width) (y * image_height) position of the image.
-*/
-static void	draw_image(t_game *game, int x, int y, char map_point)
+void	draw_image(t_game *game, int x, int y)
 {
-	if (map_point == '0')
-		draw_sprite(game->img, game->sprites->ground, x, y);
-	else if (map_point == '1')
+	char	*map_point;
+
+	map_point = game->map[y][x];
+	if (map_point == '1')
 		draw_sprite(game->img, game->sprites->wall, x, y);
+	else if (map_point == '0')
+		draw_sprite(game->img, game->sprites->ground, x, y);
 	else if (map_point == 'C')
-		draw_sprite(game->img, game->sprites->collectible, x, y);
+		draw_sprite(game->img, game->sprites->collect, x, y);
 	else if (map_point == 'E')
 		draw_sprite(game->img, game->sprites->way_out, x, y);
-	else if (map_point == 'P')
-		draw_sprite(game->img, game->sprites->player, x, y);
+	else if (game->player.x <= (game->width / 2))
+		draw_sprite(game->img, game->sprites->player_d[RIGHT]->moves[3], x, y);
+	else
+		draw_sprite(game->img, game->sprites->player_d[LEFT]->moves[3], x, y);
 }
 
-void	draw_sprite(t_img *img, t_img *sprite, int x, int y)
+void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
-	x *= sprite->width;
-	y *= sprite->height;
-	i = -1;
-	while (++i < sprite->height)
+	j = 0;
+	while (j < sprite->height)
 	{
-		j = -1;
-		while (++j < sprite->width)
-			draw_pixel(img, i + x, j + y, get_color(sprite, i, j));
+		i = 0;
+		while (i < sprite->width)
+		{
+			draw_pixel(image, x + i, y + j, get_color(sprite, i, j));
+			i++;
+		}
+		j++;
 	}
 }
 
-size_t	get_color(t_img *img, int x, int y)
+unsigned int	get_color(t_img *img, int x, int y)
 {
-	return (*(size_t *)img->data + (x * img->bpp / 8 + y * img->size_line));
+	return (*(unsigned int *)
+		(img->data + (x * img->bpp / 8 + y * img->size_line)));
 }
 
-void	draw_pixel(t_img *img, int x, int y, size_t color)
+void	draw_pixel(t_img *img, int x, int y, unsigned int color)
 {
-	char	*pixel;
+	char			*pixel;
 
-	pixel = img->data + (x * img->bpp / 8 + y * img->size_line);
-	*(size_t *)pixel = color;
+	if (color != WHITE)
+	{
+		pixel = img->data + (x * img->bpp / 8 + y * img->size_line);
+		*(unsigned int *)pixel = color;
+	}
 }
