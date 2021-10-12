@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 01:30:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/07 22:44:55 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:14:08 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,28 @@
 # include "mlx_int.h"
 # include "libft.h"
 
-# define INVALID		"Invalid map, must have 1 exit, 1 player and collects\n"
-# define N_SURROUNDED	"Invalid map, it's not surrounded by walls\n"
-# define INVALID_CHAR	"Invalid map, it has an invalid character\n"
-# define N_RECTANGLE	"Invalid map, it's not rectangular\n"
-# define N_SYMMETRIC	"Invalid map, it's not symmetrical\n"
-# define EMPTY			"Invalid map, it is empty\n"
-# define MAP			"01CEP\n"
-# define WHITE			0XFFFFFF
 # define ESC			65307
+
 # define UP				0
 # define DOWN			1
 # define RIGHT			2
 # define LEFT			3
 
-typedef struct s_player
+typedef struct s_moves
 {
-	t_img		**moves;
-}			t_player;
+	t_img		**walk;
+	t_img		*idle;
+}				t_moves;
 
 typedef struct s_sprites
 {
-	t_img		*ground;
-	t_img		*wall;
-	t_img		*way_out;
-	t_img		*collect;
-	t_player	**player_d;
+	t_img			*grass;
+	t_img			*tree;
+	t_img			*door_o;
+	t_img			*door_c;
+	t_img			**coins;
+	t_moves			**hero;
+	t_moves			**enemy;
 }				t_sprites;
 
 typedef struct s_coord
@@ -57,19 +53,23 @@ typedef struct s_coord
 typedef struct s_game
 {
 	char		**map;
-	char		*map_b;
 	void		*mlx;
 	void		*win;
 	int			width;
 	int			height;
-	int			exit_p;
-	int			player_p;
-	int			collects;
+	int			exits;
+	int			heros;
+	int			coins_n;
 	int			movements;
+	int			stopped[2];
+	int			walls;
 	t_img		*img;
 	t_sprites	*sprites;
-	t_coord		player;
+	char		*map_b;
+	t_coord		hero;
 	t_coord		exit;
+	t_coord		enemy;
+	t_coord		*coins;
 }				t_game;
 
 #endif

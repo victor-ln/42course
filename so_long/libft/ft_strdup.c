@@ -10,10 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Returns a pointer to a new string which is
-** a duplicate of the s string.
-*/
+#include "libft.h"
+
 char	*ft_strdup(const char *s)
 {
 	char			*new_str;

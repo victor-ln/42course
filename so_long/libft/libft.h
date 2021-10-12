@@ -34,12 +34,23 @@ int		ft_atoi(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 
+/*
+** Compares both strings s1 and s2 and returns the difference
+** between them or zero if they're equal.
+*/
+int		ft_strcmp(char *s1, char *s2);
+
 char	*ft_itoa(int n);
 
 /*
 ** Coverts the unsigned integer nbr into a character string.
 */
 char	*ft_utoa(unsigned int nbr);
+
+/*
+** Returns a pointer to a new string which is
+** a duplicate of the s string.
+*/
 char	*ft_strdup(const char *s);
 
 /*

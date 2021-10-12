@@ -6,76 +6,71 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:08:21 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/07 21:07:12 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:14:38 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+static void	save_location(t_game *game, int *coins, int index);
 static int	is_surrounded(char *map, char end);
-static void	map_dimension(t_game *game);
-static void	map_validate(t_game *game);
-static void	map_matrix(t_game *game);
 
-static void	map_dimension(t_game *game)
+void	map_dimension(t_game *game)
 {
 	int		map_len;
-	int		x;
+	int		i;
 
-	x = 0;
-	while (game->map_b[x] != '\n')
+	i = 0;
+	while (game->map_b[i])
 	{
-		game->width++;
-		x++;
-	}
-	while (game->map_b[x])
-	{
-		if (game->map_b[x] == '\n')
+		if (game->map_b[i] == '\n')
 			game->height++;
-		x++;
+		else if (!game->height)
+			game->width++;
+		i++;
 	}
-	if (!game->map_b[x] && game->map_b[x - 1] != '\n')
-		game->height++;
+	game->height++;
 	map_len = (int)ft_strlen(game->map_b);
 	if (!map_len)
-		error(game, EMPTY, 0);
-	if (map_len != (game->width * game->height + game->height))
-		error(game, N_SYMMETRIC, 0);
+		error(game, "Invalid map, it is empty", 0);
+	if (map_len != (game->width * game->height + (game->height - 1)))
+		error(game, "Invalid map, it's not symmetrical", 0);
 	if (game->width == game->height)
-		error(game, N_RECTANGLE, 0);
+		error(game, "Invalid map, it's not rectangular", 0);
 }
 
-static void	map_validate(t_game *game)
+void	map_validation(t_game *game)
 {
-	int	i;
+	int		i;
 
 	i = -1;
-	if (!is_surrounded(game->map_b, '\n'))
-		error(game, N_SURROUNDED, 0);
-	while (ft_strchr(MAP, game->map_b[++i]))
+	while (ft_strchr("01CEP\n", game->map_b[++i]))
 	{
 		if (game->map_b[i] == '1' || game->map_b[i] == '0')
 			continue ;
 		else if (game->map_b[i] == 'C')
-			game->collects++;
-		else if (game->map_b[i] == 'E' && game->exit_p == 0)
-			game->exit_p = i;
-		else if (game->map_b[i] == 'P' && game->player_p == 0)
-			game->player_p = i;
+			game->coins_n++;
+		else if (game->map_b[i] == 'E' && !game->exits)
+			game->exits++;
+		else if (game->map_b[i] == 'P' && !game->heros)
+			game->heros++;
 		else if (game->map_b[i] != '\n')
-			error(game, INVALID, 0);
+			break ;
 		else if (game->map_b[i + 1] != '1' || game->map_b[i - 1] != '1')
-			error(game, N_SURROUNDED, 0);
+			error(game, "Invalid map, it's not surrounded by walls", 0);
 	}
-	if (game->map_b[i] == 0 && !is_surrounded(game->map_b + i - game->width, 0))
-		error(game, N_SURROUNDED, 0);
-	if (game->map_b[i] != 0)
-		error(game, INVALID_CHAR, 0);
+	if (ft_strchr("EP", game->map_b[i]) || (!game->map_b[i] && !game->coins_n))
+		error(game, "Invalid map, must have 1 exit, 1 player and collects", 0);
+	if (game->map_b[i])
+		error(game, "Invalid map, it has an invalid character", 0);
+	if (!is_surrounded(game->map_b, '\n') || \
+		!is_surrounded(game->map_b + i - game->width, 0))
+		error(game, "Invalid map, it's not surrounded by walls", 0);
 }
 
 /*
-** Runs the string till map pointer differs '1'.
-** After it differs returns 1 if it's followed by end, or 0 if it isn't.
+	Runs the string till map pointer differs '1'.
+	After it differs returns 1 if it's followed by end, or 0 if it isn't.
 */
 static int	is_surrounded(char *map, char end)
 {
@@ -85,46 +80,60 @@ static int	is_surrounded(char *map, char end)
 }
 
 /*
-	A map example:
 
-	1	1	1	1	1	\n
-	1	0	P	C	1	\n
-	1	E	1	C	1	\n
-	1	1	1	1	1	\0
+A map example:
+
+1 1 1 1 1 \n
+1 0 P C 1 \n
+1 E 1 C 1 \n
+1 1 1 1 1 \0
+
 */
 
-static void	map_matrix(t_game *game)
+void	map_matrix(t_game *game)
 {
-	int	x;
-	int	y;
-	int	z;
+	int		columns;
+	int		lines;
+	int		index;
+	int		coins;
 
-	y = -1;
-	z = -1;
-	game->map = (char **)malloc_matrix(sizeof(char) * game->width, \
-		sizeof(char *) * game->height);
-	if (!game->map)
-		error(game, "Malloc for map matrix failed\n", strerror(errno));
-	while (++y < game->height)
+	lines = 0;
+	index = 0;
+	coins = 0;
+	while (lines < game->height)
 	{
-		x = -1;
-		while (++x < game->width)
-			game->map[y][x] = game->map_b[++z];
-		z++;
+		game->map[lines] = (char *)malloc(sizeof(char) * game->width);
+		if (!game->map[lines])
+			error(game, "Malloc for map matrix failed", strerror(errno));
+		columns = 0;
+		while (columns < game->width)
+		{
+			save_location(game, &coins, index);
+			game->map[lines][columns++] = game->map_b[index++];
+		}
+		index++;
+		lines++;
 	}
-	free(game->map_b);
-	game->map_b = 0;
 }
 
-void	map_init(t_game *game)
+static void	save_location(t_game *game, int *coins, int index)
 {
-	map_dimension(game);
-	map_validate(game);
-	if (game->collects < 1)
-		error(game, INVALID, 0);
-	game->player.x = game->player_p % (game->width + 1);
-	game->player.y = game->player_p / (game->width + 1);
-	game->exit.x = game->exit_p % (game->width + 1);
-	game->exit.y = game->exit_p / (game->width + 1);
-	map_matrix(game);
+	if (game->map_b[index] == 'C')
+	{
+		game->coins[*coins].x = (index % (game->width + 1)) * 32;
+		game->coins[*coins].y = (index / (game->width + 1)) * 32;
+		(*coins)++;
+	}
+	else if (game->map_b[index] == 'E')
+	{
+		game->exit.x = (index % (game->width + 1)) * 32;
+		game->exit.y = (index / (game->width + 1)) * 32;
+	}
+	else if (game->map_b[index] == 'P')
+	{
+		game->hero.x = (index % (game->width + 1)) * 32;
+		game->hero.y = (index / (game->width + 1)) * 32;
+	}
+	else if (game->map_b[index] == '1')
+		game->walls++;
 }
