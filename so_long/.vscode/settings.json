@@ -1,0 +1,24 @@
+{
+	"files.associations": {
+		"so_long.h": "c",
+		"cstdlib": "c",
+		"climits": "c",
+		"cmath": "c",
+		"compare": "c",
+		"concepts": "c",
+		"cstdarg": "c",
+		"cstdio": "c",
+		"exception": "c",
+		"type_traits": "c",
+		"limits": "c",
+		"new": "c",
+		"*.tcc": "c",
+		"cstdint": "c",
+		"typeinfo": "c",
+		"so_long_data.h": "c",
+		"libft.h": "c"
+	},
+	"cSpell.words": [
+		"lfsr"
+	]
+}
