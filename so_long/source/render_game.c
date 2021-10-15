@@ -6,38 +6,49 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 00:46:12 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/12 02:32:22 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/14 22:25:15 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	render_game(t_game *game)
+static void	draw_coins(t_img **images, t_img **sprites, int x, int y);
+
+void	draw_game(t_game *g)
 {
 	int		x;
 	int		y;
 
 	y = 0;
-	while (y < game->height)
+	while (y < g->height)
 	{
 		x = 0;
-		while (x < game->width)
+		while (x < g->width)
 		{
-			if (game->map[y][x] == 1)
-				draw_sprite(game->img, game->sprites->tree, x * 32, y * 32);
+			draw_sprite(g->map_img, g->sprites.grass, x * 32, y * 32);
+			if (g->map[y][x] == 1)
+				draw_sprite(g->map_img, g->sprites.tree, x * 32, y * 32);
+			if (g->map[y][x] == COLL)
+				draw_coins(g->coins_img, g->sprites.coins, x * 32, y * 32);
 			else
-				draw_sprite(game->img, game->sprites->grass, x * 32, y * 32);
+				erase_coins(g->coins_img, x * 32, y * 32);
 			x++;
 		}
 		y++;
 	}
-	draw_sprite(game->img, game->sprites->door_c, game->exit.x, game->exit.y);
-	x = game->hero.x;
-	y = game->hero.y;
-	if (x <= game->width / 2)
-		display_game(game, game->sprites->hero[RIGHT]->idle, x, y);
-	else
-		display_game(game, game->sprites->hero[LEFT]->idle, x, y);
+	draw_sprite(g->map_img, g->sprites.door_c, g->exit.x, g->exit.y);
+}
+
+static void	draw_coins(t_img **images, t_img **sprites, int x, int y)
+{
+	int		i;
+
+	i = 0;
+	while (i < 4)
+	{
+		draw_sprite(images[i], sprites[i], x, y);
+		i++;
+	}
 }
 
 void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
@@ -58,16 +69,31 @@ void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 	}
 }
 
-unsigned int	get_color(t_img *img, int x, int y)
+void	erase_coins(t_img **image, int x, int y)
 {
-	return (*(unsigned int *)
-		(img->data + (x * img->bpp / 8 + y * img->size_line)));
-}
+	int		fixed[2];
+	int		height;
+	int		width;
+	int		i;
 
-void	draw_pixel(t_img *img, int x, int y, unsigned int color)
-{
-	char			*pixel;
-
-	pixel = img->data + (x * img->bpp / 8 + y * img->size_line);
-	*(unsigned int *)pixel = color;
+	fixed[0] = x;
+	fixed[1] = y;
+	width = x + 32;
+	height = y + 32;
+	i = 0;
+	while (++i < 4)
+	{
+		y = fixed[1];
+		while (y < height)
+		{
+			x = fixed[0];
+			while (x < width)
+			{
+				draw_pixel(image[i], x, y, 0xFF000000);
+				x++;
+			}
+			y++;
+		}
+		i++;
+	}
 }

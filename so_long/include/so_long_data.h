@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 01:30:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/12 11:14:08 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/14 23:48:14 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "mlx_int.h"
 # include "libft.h"
 
+# define MAP			"01CEP\n"
+
 # define ESC			65307
 
 # define UP				0
@@ -27,11 +29,16 @@
 # define RIGHT			2
 # define LEFT			3
 
+# define HERO			32
+# define ENEMY			2
+# define COLL			19
+# define EXIT			21
+
 typedef struct s_moves
 {
 	t_img		**walk;
 	t_img		*idle;
-}				t_moves;
+}	t_moves;
 
 typedef struct s_sprites
 {
@@ -42,34 +49,44 @@ typedef struct s_sprites
 	t_img			**coins;
 	t_moves			**hero;
 	t_moves			**enemy;
-}				t_sprites;
+}	t_sprites;
 
 typedef struct s_coord
 {
 	int			x;
 	int			y;
-}				t_coord;
+}	t_coord;
+
+typedef struct s_enemies
+{
+	int			x;
+	int			y;
+	int			moved_to;
+	int			step;
+}	t_enemies;
 
 typedef struct s_game
 {
 	char		**map;
-	void		*mlx;
-	void		*win;
-	int			width;
-	int			height;
+	void		*display;
+	void		*screen;
 	int			exits;
 	int			heros;
+	int			width;
+	int			height;
 	int			coins_n;
-	int			movements;
-	int			stopped[2];
-	int			walls;
-	t_img		*img;
-	t_sprites	*sprites;
+	int			moved_to;
+	int			enemies_n;
+	size_t		moves;
+	char		*moves_str;
 	char		*map_b;
+	t_sprites	sprites;
 	t_coord		hero;
 	t_coord		exit;
-	t_coord		enemy;
 	t_coord		*coins;
-}				t_game;
+	t_enemies	*enemies;
+	t_img		*map_img;
+	t_img		**coins_img;
+}	t_game;
 
 #endif

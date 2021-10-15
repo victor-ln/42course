@@ -6,40 +6,40 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 23:03:01 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/12 02:32:33 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/14 22:58:08 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	load_sprites(t_sprites *sprites, void *mlx);
-static int	char_sprites(t_moves *player, void *mlx, char *path, int len);
+static int	load_sprites(t_sprites *sprites, void *display);
+static int	characters(t_moves *character, void *display, char *path, int size);
 
-void	init_structure(t_game *g)
+void	struct_init(t_game *game)
 {
 	int		i;
 
-	i = -1;
-	ft_bzero(g, 11);
-	g->sprites = (t_sprites *)malloc(sizeof(t_sprites));
-	if (!g->sprites)
-		error(g, "Malloc for sprites failed", strerror(errno));
-	ft_bzero(g->sprites, 4);
-	g->sprites->hero = (t_moves **)malloc(sizeof(t_moves *) * 4);
-	g->sprites->enemy = (t_moves **)malloc(sizeof(t_moves *) * 4);
-	g->sprites->coins = (t_img **)malloc(sizeof(t_img *) * 4);
-	if (!g->sprites->hero || !g->sprites->enemy || !g->sprites->coins)
-		error(g, "Malloc for hero/enemy structs failed", strerror(errno));
-	while (++i < 4)
+	i = 0;
+	ft_bzero(game, 12);
+	ft_bzero(&game->sprites, 4);
+	game->height = 1;
+	game->sprites.hero = (t_moves **)malloc(sizeof(t_moves *) * 4);
+	game->sprites.enemy = (t_moves **)malloc(sizeof(t_moves *) * 4);
+	game->sprites.coins = (t_img **)malloc(sizeof(t_img *) * 4);
+	game->coins_img = (t_img **)malloc(sizeof(t_img *) * 4);
+	if (!game->sprites.hero || !game->sprites.enemy || !game->sprites.coins)
+		error(game, "Malloc to hero/enemy structs failed", strerror(errno));
+	while (i < 4)
 	{
-		g->sprites->hero[i] = (t_moves *)malloc(sizeof(t_moves) * 6);
-		g->sprites->enemy[i] = (t_moves *)malloc(sizeof(t_moves) * 4);
-		if (!g->sprites->hero[i] || !g->sprites->enemy[i, 4])
-			error(g, "Malloc for hero/enemy structs failed", strerror(errno));
-		g->sprites->hero[i]->walk = (t_img **)malloc(sizeof(t_img *) * 6);
-		g->sprites->enemy[i]->walk = (t_img **)malloc(sizeof(t_img *) * 4);
-		if (!g->sprites->hero[i]->walk || !g->sprites->enemy[i]->walk)
-			error(g, "Malloc for hero/enemy images failed", strerror(errno));
+		game->sprites.hero[i] = (t_moves *)malloc(sizeof(t_moves));
+		game->sprites.enemy[i] = (t_moves *)malloc(sizeof(t_moves));
+		if (!game->sprites.hero[i] || !game->sprites.enemy[i])
+			error(game, "Malloc to t_moves struct failed", strerror(errno));
+		game->sprites.hero[i]->walk = (t_img **)malloc(sizeof(t_img *) * 6);
+		game->sprites.enemy[i]->walk = (t_img **)malloc(sizeof(t_img *) * 4);
+		if (!game->sprites.hero[i]->walk || !game->sprites.enemy[i]->walk)
+			error(game, "Malloc to ptr of images ptrs failed", strerror(errno));
+		i++;
 	}
 }
 
@@ -50,74 +50,79 @@ void	load_environment(t_game *game)
 
 	x = game->width * 32;
 	y = game->height * 32;
-	game->mlx = mlx_init();
-	if (!game->mlx)
+	game->display = mlx_init();
+	if (!game->display)
 		error(game, "Mlx init failed", strerror(errno));
-	game->win = mlx_new_window(game->mlx, x, y, "so_long");
-	if (!game->win)
+	game->screen = mlx_new_window(game->display, x, y, "so_long");
+	if (!game->screen)
 		error(game, "Could not create a window", strerror(errno));
-	game->img = mlx_new_image(game->mlx, x, y);
-	if (!game->img)
-		error(game, "Could not create an image", strerror(errno));
-	if (load_sprites(game->sprites, game->mlx))
+	game->map_img = mlx_new_image(game->display, x, y);
+	game->coins_img[0] = mlx_new_image(game->display, x, y);
+	game->coins_img[1] = mlx_new_image(game->display, x, y);
+	game->coins_img[2] = mlx_new_image(game->display, x, y);
+	game->coins_img[3] = mlx_new_image(game->display, x, y);
+	if (!game->map_img || !game->coins_img[0] || !game->coins_img[1] \
+		|| !game->coins_img[2] || !game->coins_img[3])
+		error(game, "Could not create images", strerror(errno));
+	if (load_sprites(&game->sprites, game->display))
 		error(game, "Could not load all sprites", 0);
 }
 
-static int	load_sprites(t_sprites *s, void *mlx)
+static int	load_sprites(t_sprites *s, void *display)
 {
 	int		errors;
 
-	errors = each_sprite(&s->grass, mlx, "sprites/grass");
-	errors += each_sprite(&s->tree, mlx, "sprites/tree");
-	errors += each_sprite(&s->coins[0], mlx, "sprites/coins/1");
-	errors += each_sprite(&s->coins[1], mlx, "sprites/coins/2");
-	errors += each_sprite(&s->coins[2], mlx, "sprites/coins/3");
-	errors += each_sprite(&s->coins[3], mlx, "sprites/coins/4");
-	errors += each_sprite(&s->door_o, mlx, "sprites/door/opened");
-	errors += each_sprite(&s->door_c, mlx, "sprites/door/closed");
-	errors += char_sprites(&s->hero[RIGHT], mlx, "sprites/hero/right/ ", 6);
-	errors += char_sprites(&s->enemy[RIGHT], mlx, "sprites/enemy/right/ ", 4);
-	errors += char_sprites(&s->hero[LEFT], mlx, "sprites/hero/left/ ", 6);
-	errors += char_sprites(&s->enemy[LEFT], mlx, "sprites/enemy/left/ ", 4);
-	errors += char_sprites(&s->hero[DOWN], mlx, "sprites/hero/down/ ", 6);
-	errors += char_sprites(&s->enemy[DOWN], mlx, "sprites/enemy/down/ ", 4);
-	errors += char_sprites(&s->hero[UP], mlx, "sprites/hero/up/ ", 6);
-	errors += char_sprites(&s->enemy[UP], mlx, "sprites/enemy/up/ ", 4);
+	errors = each_sprite(&s->grass, display, "sprites/env/grass.xpm");
+	errors += each_sprite(&s->tree, display, "sprites/env/tree.xpm");
+	errors += each_sprite(&s->coins[0], display, "sprites/coins/coin-1.xpm");
+	errors += each_sprite(&s->coins[1], display, "sprites/coins/coin-2.xpm");
+	errors += each_sprite(&s->coins[2], display, "sprites/coins/coin-3.xpm");
+	errors += each_sprite(&s->coins[3], display, "sprites/coins/coin-4.xpm");
+	errors += each_sprite(&s->door_o, display, "sprites/env/door_o.xpm");
+	errors += each_sprite(&s->door_c, display, "sprites/env/door_c.xpm");
+	errors += characters(s->hero[RIGHT], display, "sprites/hero/right/ .xpm", 6);
+	errors += characters(s->hero[LEFT], display, "sprites/hero/left/ .xpm", 6);
+	errors += characters(s->hero[DOWN], display, "sprites/hero/down/ .xpm", 6);
+	errors += characters(s->hero[UP], display, "sprites/hero/up/ .xpm", 6);
+	errors += characters(s->enemy[RIGHT], display, "sprites/enemy/right/ .xpm", 4);
+	errors += characters(s->enemy[LEFT], display, "sprites/enemy/left/ .xpm", 4);
+	errors += characters(s->enemy[DOWN], display, "sprites/enemy/down/ .xpm", 4);
+	errors += characters(s->enemy[UP], display, "sprites/enemy/up/ .xpm", 4);
 	return (errors);
 }
 
-static int	char_sprites(t_moves *player, void *mlx, char *path, int len)
+static int	characters(t_moves *character, void *display, char *path, int size)
 {
 	char	*temp;
-	size_t	len;
+	size_t	length;
 	int		errors;
 	int		i;
 
 	i = 0;
 	temp = ft_strdup(path);
-	len = ft_strlen(temp) - 5;
-	temp[len] = '0';
-	errors = each_sprite(&player->idle, mlx, temp);
-	while (i < len)
+	length = ft_strlen(temp) - 5;
+	temp[length] = '0';
+	errors = each_sprite(&character->idle, display, temp);
+	while (i < size)
 	{
-		temp[len] = i + '1';
-		errors += each_sprite(&player->walk[i], mlx, temp);
+		temp[length] = i + '1';
+		errors += each_sprite(&character->walk[i], display, temp);
 		i++;
 	}
 	free(temp);
 	return (errors);
 }
 
-int	each_sprite(t_img **img, void *mlx, char *path)
+int	each_sprite(t_img **image, void *display, char *path)
 {
 	int		height;
 	int		width;
 
-	*img = mlx_xpm_file_to_image(mlx, path, &width, &height);
-	if (*img)
+	*image = mlx_xpm_file_to_image(display, path, &width, &height);
+	if (*image)
 	{
-		(*img)->height = height;
-		(*img)->width = width;
+		(*image)->height = height;
+		(*image)->width = width;
 		return (0);
 	}
 	return (1);
