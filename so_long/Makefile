@@ -35,7 +35,7 @@ mlx_a:
 clean:
 	@make -C ./mlx clean
 	@make -C ./libft clean
-	@rm -fr objects
+	@rm -fr obj
 	@echo "Object files removed."
 
 fclean:		clean
