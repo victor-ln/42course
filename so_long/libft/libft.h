@@ -34,12 +34,6 @@ char	*ft_utoa(unsigned int nbr);
 char	*ft_strdup(const char *s);
 
 /*
-	Returns a pointer to the first occurrence of the character c
-	in the string src or NULL if the character is not found.
-*/
-char	*ft_strchr(const char *str, int lt);
-
-/*
 	Allocates with malloc() and returns a new
 	string, which is the result of the concatenation
 	of ’s1’ and ’s2’.
@@ -70,5 +64,10 @@ void	ft_putendl_fd(char *s, int fd);
 	containing '\0') to that area.
 */
 void	ft_bzero(void *s, size_t n);
+
+/*
+	Generates random numbers.
+*/
+unsigned int	ft_rand(void);
 
 #endif

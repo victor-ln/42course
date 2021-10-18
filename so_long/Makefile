@@ -1,25 +1,24 @@
 NAME = so_long
-MLX = ./minilibx-linux/libmlx.a
+MLX = ./mlx/libmlx.a
 LIB = ./libft/libft.a
-MAIN = source/main.c
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
+MAIN = src/so_long.c
+FLAGS = -Wall -Werror -Wextra -g3
 LINKS = -lbsd -lX11 -lXext -lz
-INC = -I ./minilibx-linux -I ./include -I ./libft
+INC = -I ./mlx -I ./inc -I ./libft
 
-OBJ		=	objects/animations.o \
-			objects/end_game.o \
-			objects/events.o \
-			objects/load_map.o \
-			objects/map_init.o \
-			objects/map_validate.o \
-			objects/render_game.o \
-			objects/start_game.o \
-			objects/utils.o \
+OBJ		=	obj/animations.o \
+			obj/draw_game.o \
+			obj/end_game.o \
+			obj/events.o \
+			obj/load_game.o \
+			obj/load_map.o \
+			obj/map_init.o \
+			obj/map_validate.o \
 
 all:		$(NAME)
 
 $(NAME):	mlx_a libft_c
-	@make -C ./source
+	@make -C ./src
 	@clang $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
 	@echo "Game created!"
 
@@ -30,16 +29,18 @@ libft_c:
 
 mlx_a:
 	@echo "Compiling Mlx [ .. ]"
-	@make -C ./minilibx-linux
+	@make -C ./mlx
 	@echo "Mlx is ready! [ OK ]"
 
 clean:
-	@make -C ./minilibx-linux clean
+	@make -C ./mlx clean
+	@make -C ./libft clean
 	@rm -fr objects
 	@echo "Object files removed."
 
 fclean:		clean
 	@rm $(NAME)
+	@make -C ./libft fclean
 	@echo "Binaries removed."
 
 re:			fclean all
