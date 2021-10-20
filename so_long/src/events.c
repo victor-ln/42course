@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 00:42:36 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:26:46 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	move_player(t_game *game, short dir, int to_x, int to_y)
 	display_game(game);
 	if (game->map[y + to_y][x + to_x] != 1)
 	{
-		if (game->map[y + to_y][x + to_x] != EXIT)
+		if (game->map[y][x] != EXIT)
 			game->map[y][x] = 0;
 		steps = -1;
 		while (++steps <= 7)
