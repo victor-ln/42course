@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 01:30:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 22:17:16 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:01:15 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define SO_LONG_DATA_H
 
 # include <errno.h>
-# include "mlx.h"
-# include "mlx_int.h"
+# include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
 # include "libft.h"
 
 # define C_WHITE		0xFFFFFF
@@ -52,23 +52,21 @@ typedef struct s_players
 
 typedef struct s_game
 {
-	int			exits_num;
-	int			heros_num;
-	int			coins_num;
-	int			enemies_num;
+	u_int16_t	enemies_num;
+	u_int16_t	coins_num;
+	u_int16_t	height;
+	u_int16_t	width;
+	u_int16_t	frame;
 	u_int32_t	moves_num;
-	int			width;
-	int			height;
-	short		frame;
 	void		*mlx;
 	void		*screen;
 	char		*moves_str;
-	t_players	*enemies;
-	t_img		*img;
 	char		**map;
 	char		*map_ber;
+	t_img		*img;
 	t_sprites	sprites;
 	t_players	hero;
+	t_players	*enemies;
 }	t_game;
 
 #endif

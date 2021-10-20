@@ -6,15 +6,24 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:40:17 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 22:05:32 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:12:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	is_valid(t_game *game, char map_point);
+static void	is_valid(t_game *game, t_map_validate *map);
 static int	is_border(t_game *game, int i);
 static void	is_rectangular(t_game *game);
+
+typedef struct s_map_validate
+{
+	u_int16_t	exits_num;
+	u_int16_t	heros_num;
+	u_int16_t	coins_num;
+	u_int16_t	zeros_num;
+	u_int16_t	i;
+}	t_map_validate;
 
 /*
 
@@ -30,23 +39,28 @@ A map example:
 
 void	map_validate(t_game *game)
 {
-	int		i;
+	t_map_validate	map;
 
-	i = 0;
 	is_rectangular(game);
-	while (game->map_ber[i])
+	ft_bzero(&map, 6);
+	if (!map.i)
+		printf("OK\n\n");
+	sleep(3);
+	while (game->map_ber[map.i])
 	{
-		if (is_border(game, i))
+		if (is_border(game, map.i))
 		{
-			if (game->map_ber[i] != '1')
+			if (game->map_ber[map.i] != '1')
 				error(game, "Invalid map, it's not surrounded by walls", 0);
 		}
 		else
-			is_valid(game, game->map_ber[i]);
-		i++;
+			is_valid(game, &map);
+		map.i++;
 	}
-	if (game->exits_num != 1 || game->heros_num != 1 || !game->coins_num)
+	if (map.exits_num != 1 || map.heros_num != 1 || !map.coins_num)
 		error(game, "Invalid map, must have 1 exit, 1 player and collects", 0);
+	if (!map.zeros_num)
+		error(game, "Invalid map, must have free spaces too", 0);
 }
 
 /*
@@ -76,16 +90,18 @@ static void	is_rectangular(t_game *game)
 		error(game, "Invalid map, it's not rectangular", 0);
 }
 
-static void	is_valid(t_game *game, char map_point)
+static void	is_valid(t_game *game, t_map_validate *map)
 {
-	if (map_point == '1' || map_point == '0')
+	if (game->map_ber[map.i] == '1')
 		return ;
-	else if (map_point == 'C')
-		game->coins_num++;
-	else if (map_point == 'E')
-		game->exits_num++;
-	else if (map_point == 'P')
-		game->heros_num++;
+	else if (game->map_ber[map.i] == '0')
+		map->zeros_num++;
+	else if (game->map_ber[map.i] == 'C')
+		map->coins_num++;
+	else if (game->map_ber[map.i] == 'E')
+		map->exits_num++;
+	else if (game->map_ber[map.i] == 'P')
+		map->heros_num++;
 	else if (map_point != '\n')
 		error(game, "Invalid map, it has an invalid character", 0);
 }
