@@ -6,15 +6,11 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:40:17 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 23:12:36 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:17:30 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static void	is_valid(t_game *game, t_map_validate *map);
-static int	is_border(t_game *game, int i);
-static void	is_rectangular(t_game *game);
 
 typedef struct s_map_validate
 {
@@ -24,6 +20,10 @@ typedef struct s_map_validate
 	u_int16_t	zeros_num;
 	u_int16_t	i;
 }	t_map_validate;
+
+static void	is_valid(t_game *game, t_map_validate *map);
+static int	is_border(t_game *game, int i);
+static void	is_rectangular(t_game *game);
 
 /*
 
@@ -61,6 +61,7 @@ void	map_validate(t_game *game)
 		error(game, "Invalid map, must have 1 exit, 1 player and collects", 0);
 	if (!map.zeros_num)
 		error(game, "Invalid map, must have free spaces too", 0);
+	game->coins_num = map.coins_num;
 }
 
 /*
@@ -92,17 +93,17 @@ static void	is_rectangular(t_game *game)
 
 static void	is_valid(t_game *game, t_map_validate *map)
 {
-	if (game->map_ber[map.i] == '1')
+	if (game->map_ber[map->i] == '1')
 		return ;
-	else if (game->map_ber[map.i] == '0')
+	else if (game->map_ber[map->i] == '0')
 		map->zeros_num++;
-	else if (game->map_ber[map.i] == 'C')
+	else if (game->map_ber[map->i] == 'C')
 		map->coins_num++;
-	else if (game->map_ber[map.i] == 'E')
+	else if (game->map_ber[map->i] == 'E')
 		map->exits_num++;
-	else if (game->map_ber[map.i] == 'P')
+	else if (game->map_ber[map->i] == 'P')
 		map->heros_num++;
-	else if (map_point != '\n')
+	else if (game->map_ber[map->i] != '\n')
 		error(game, "Invalid map, it has an invalid character", 0);
 }
 

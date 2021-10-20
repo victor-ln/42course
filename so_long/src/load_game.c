@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 21:47:10 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 22:36:52 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:15:14 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static void	game_init(t_game *game)
 	game->sprites.grass = 0;
 	game->sprites.tree = 0;
 	game->coins_num = 0;
-	game->exits_num = 0;
-	game->heros_num = 0;
 	game->enemies = 0;
 	game->frame = 0;
 	game->img = 0;
