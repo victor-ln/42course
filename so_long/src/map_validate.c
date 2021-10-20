@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:40:17 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 23:17:30 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 23:18:17 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ void	map_validate(t_game *game)
 
 	is_rectangular(game);
 	ft_bzero(&map, 6);
-	if (!map.i)
-		printf("OK\n\n");
-	sleep(3);
 	while (game->map_ber[map.i])
 	{
 		if (is_border(game, map.i))
