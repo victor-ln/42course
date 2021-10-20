@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 22:03:05 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 00:04:01 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,32 @@ static void			draw_pixel(t_img *image, int x, int y, unsigned int color);
 static unsigned int	get_color(t_img *image, int x, int y);
 static void			draw_players(t_game *game);
 
-void	draw_game(t_game *game)
+void	draw_game(t_game *g)
 {
 	int		x;
 	int		y;
 
 	y = -1;
-	while (++y < game->height)
+	while (++y < g->height)
 	{
 		x = -1;
-		while (++x < game->width)
+		while (++x < g->width)
 		{
-			draw_sprite(game->img, game->sprites.grass, x, y);
-			if (game->map[y][x] == 1)
-				draw_sprite(game->img, game->sprites.tree, x, y);
-			else if (game->map[y][x] == COLL)
-				draw_sprite(game->img, game->sprites.coins[game->frame], x, y);
-			else if (game->map[y][x] == EXIT)
+			draw_sprite(g->img, g->sprites.grass, x * 32, y * 32);
+			if (g->map[y][x] == 1)
+				draw_sprite(g->img, g->sprites.tree, x * 32, y * 32);
+			else if (g->map[y][x] == COLL)
+				draw_sprite(g->img, g->sprites.coins[g->frame], x * 32, y * 32);
+			else if (g->map[y][x] == EXIT)
 			{
-				if (!game->coins_num)
-					draw_sprite(game->img, game->sprites.door[1], x, y);
+				if (!g->coins_num)
+					draw_sprite(g->img, g->sprites.door[1], x * 32, y * 32);
 				else
-					draw_sprite(game->img, game->sprites.door[0], x, y);
+					draw_sprite(g->img, g->sprites.door[0], x * 32, y * 32);
 			}
 		}
 	}
-	draw_players(game);
+	draw_players(g);
 }
 
 /*
@@ -56,11 +56,9 @@ static void	draw_players(t_game *game)
 	draw_sprite(game->img, game->sprites.hero[game->hero.dir][game->hero.step], \
 		game->hero.x, game->hero.y);
 	while (++i < game->enemies_num)
-	{
 		draw_sprite(game->img, \
 			game->sprites.enemy[game->enemies[i].dir][game->enemies[i].step], \
 			game->enemies[i].x, game->enemies[i].y);
-	}
 }
 
 /*
