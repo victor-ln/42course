@@ -6,12 +6,13 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 21:47:10 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 00:04:23 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:52:26 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	ft_delay(int mil_secs);
 static void	game_init(t_game *game);
 
 void	load_game(t_game *game, int fd)
@@ -25,10 +26,14 @@ void	load_game(t_game *game, int fd)
 
 void	display_game(t_game *game)
 {
+	if (++game->frame == 4)
+		game->frame = 0;
 	draw_game(game);
+	ft_delay(48000);
 	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
 	mlx_string_put(game->mlx, game->screen, 10, 10, C_WHITE, "Moved :");
 	mlx_string_put(game->mlx, game->screen, 60, 10, C_WHITE, game->moves_str);
+	hero_got_caught(game);
 }
 
 static void	game_init(t_game *game)
@@ -37,10 +42,10 @@ static void	game_init(t_game *game)
 		error(0, "Malloc for game struct failed", strerror(errno));
 	game->sprites.coins = 0;
 	game->sprites.hero = 0;
-	game->sprites.door = 0;
 	game->sprites.enemy = 0;
-	game->sprites.grass = 0;
+	game->sprites.door = 0;
 	game->sprites.tree = 0;
+	game->sprites.grass = 0;
 	game->coins_num = 0;
 	game->enemies = 0;
 	game->frame = 0;
@@ -51,4 +56,12 @@ static void	game_init(t_game *game)
 	game->map_ber = 0;
 	game->moves_num = 0;
 	game->moves_str = 0;
+}
+
+void	ft_delay(int mil_secs)
+{
+	clock_t start_time = clock();
+
+	while (clock() < start_time + mil_secs)
+		;
 }

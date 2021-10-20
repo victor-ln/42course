@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 21:37:08 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:28:31 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	save_hero_position(t_game *game, int x, int y)
 	ft_bzero(&game->hero, 3);
 	game->hero.x = x * 32;
 	game->hero.y = y * 32;
+	game->hero.step = 0;
 	if (x < (game->width / 2))
 		game->hero.dir = RIGHT;
 	else
@@ -127,6 +128,8 @@ static void	put_enemies(t_game *game)
 			else if ((game->map[y - 1][x] == ENEMY || \
 				game->map[y - 1][x - 1] == ENEMY || \
 				game->map[y][x - 1] == ENEMY))
+				continue ;
+			else if (game->enemies_num == 10)
 				continue ;
 			game->enemies_num++;
 			game->map[y][x] = ENEMY;

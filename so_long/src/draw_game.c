@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 00:04:01 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:30:48 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	draw_players(t_game *game)
 		game->hero.x, game->hero.y);
 	while (++i < game->enemies_num)
 		draw_sprite(game->img, \
-			game->sprites.enemy[game->enemies[i].dir][game->enemies[i].step], \
+			game->sprites.enemy[game->enemies[i].dir][game->enemies[i].step % 4], \
 			game->enemies[i].x, game->enemies[i].y);
 }
 
@@ -71,10 +71,10 @@ void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 	int		j;
 
 	j = -1;
-	while (++j < sprite->height)
+	while (++j < 32)
 	{
 		i = -1;
-		while (++i < sprite->width)
+		while (++i < 32)
 			draw_pixel(image, x + i, y + j, get_color(sprite, i, j));
 	}
 }
@@ -97,6 +97,6 @@ void	draw_pixel(t_img *img, int x, int y, unsigned int color)
 */
 unsigned int	get_color(t_img *img, int x, int y)
 {
-	return (*(unsigned int *)
-		(img->data + (x * img->bpp / 8 + y * img->size_line)));
+	return ((*(unsigned int *)
+		(img->data + (x * img->bpp / 8 + y * img->size_line))));
 }

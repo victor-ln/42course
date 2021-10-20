@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 01:30:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 00:03:58 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:08:13 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SO_LONG_DATA_H
 
 # include <errno.h>
+# include <time.h>
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
 # include "libft.h"
@@ -27,17 +28,17 @@
 # define LEFT			3
 # define HERO			32
 # define ENEMY			2
-# define COLL			67
-# define EXIT			69
+# define COLL			19
+# define EXIT			21
 
 typedef struct s_sprites
 {
-	t_img			*grass;
-	t_img			*tree;
-	t_img			**door;
-	t_img			**coins;
-	t_img			***hero;
-	t_img			***enemy;
+	t_img		*grass;
+	t_img		*tree;
+	t_img		**door;
+	t_img		**coins;
+	t_img		***hero;
+	t_img		***enemy;
 }	t_sprites;
 
 typedef struct s_players

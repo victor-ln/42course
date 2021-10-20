@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:42:02 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 00:04:04 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 13:27:50 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	destroy_game(t_game *game);
 
 void	error(t_game *game, char *message, char *str_error)
 {
-	if (message != 0)
+	if (message)
 	{
 		ft_putendl_fd("Error", 2);
 		ft_putendl_fd(message, 2);
@@ -86,9 +86,7 @@ static void	destroy_struct(t_game *game)
 {
 	int		i;
 
-	if (game->map_ber)
-		free(game->map_ber);
-	if (game->map)
+	if (!game->map_ber)
 	{
 		i = -1;
 		while (++i < game->height)
@@ -96,6 +94,8 @@ static void	destroy_struct(t_game *game)
 				free(game->map[i]);
 		free(game->map);
 	}
+	else
+		free(game->map_ber);
 	i = -1;
 	while (++i < 4)
 	{

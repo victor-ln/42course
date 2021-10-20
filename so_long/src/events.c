@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 23:26:46 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:42:23 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static void	move_player(t_game *game, short dir, int to_x, int to_y)
 			game->hero.y += (to_y * 4);
 			game->hero.step++;
 			if (game->hero.step == 7)
-				game->hero.step = 1;
+				game->hero.step = 0;
+			move_enemies(game);
 			display_game(game);
-			hero_got_caught(game);
 		}
 		apply_changes(game);
 	}

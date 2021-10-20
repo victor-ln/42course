@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 15:15:55 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/19 22:47:08 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:27:00 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,9 @@ int			animation(t_game *game);
 	Checks if the hero has been caught by an enemy.
 */
 void		hero_got_caught(t_game *game);
+
+void		move_enemies(t_game *game);
+
+void		ft_delay(int mil_secs);
 
 #endif
