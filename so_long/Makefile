@@ -2,7 +2,7 @@ NAME = so_long
 MLX = ./mlx/libmlx.a
 LIB = ./libft/libft.a
 MAIN = src/so_long.c
-FLAGS = -Wall -Werror -Wextra -g3
+FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 LINKS = -lbsd -lX11 -lXext -lz
 INC = -I ./mlx -I ./inc -I ./libft
 
@@ -10,6 +10,7 @@ OBJ		=	obj/animations.o \
 			obj/draw_game.o \
 			obj/end_game.o \
 			obj/events.o \
+			obj/load_environment.o \
 			obj/load_game.o \
 			obj/load_map.o \
 			obj/map_init.o \

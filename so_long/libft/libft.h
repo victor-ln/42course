@@ -20,50 +20,50 @@
 	Compares both strings s1 and s2 and returns the difference
 	between them or zero if they're equal.
 */
-int		ft_strcmp(char *s1, char *s2);
+int				ft_strcmp(char *s1, char *s2);
 
 /*
 	Returns a string representing the unsigned integer received as an argument.
 */
-char	*ft_utoa(unsigned int nbr);
+char			*ft_utoa(unsigned int nbr);
 
 /*
 	Returns a pointer to a new string which is
 	a duplicate of the string s.
 */
-char	*ft_strdup(const char *s);
+char			*ft_strdup(const char *s);
 
 /*
 	Allocates with malloc() and returns a new
 	string, which is the result of the concatenation
 	of ’s1’ and ’s2’.
 */
-char	*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strjoin(char const *s1, char const *s2);
 
 /*
 	Returns how many characters are in the given string excluding the '\0'.
 */
-size_t	ft_strlen(const char *str);
+size_t			ft_strlen(const char *str);
 
 /*
 	Allocates memory for an array of nmemb elements of size bytes
 	each and returns a pointer to the allocated memory.
 	The memory is set to zero. If nmemb or size is 0, then returns NULL.
 */
-void	*ft_calloc(size_t nmemb, size_t size);
+void			*ft_calloc(size_t nmemb, size_t size);
 
 /*
 	Outputs the string ’s’ to the given file
 	descriptor, followed by a newline.
 */
-void	ft_putendl_fd(char *s, int fd);
+void			ft_putendl_fd(char *s, int fd);
 
 /*
 	Erases the data in the n bytes of the memory
 	starting at the location pointed to by s, by writing zeros (bytes
 	containing '\0') to that area.
 */
-void	ft_bzero(void *s, size_t n);
+void			ft_bzero(void *s, size_t n);
 
 /*
 	Generates random numbers.

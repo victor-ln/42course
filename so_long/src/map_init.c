@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/18 15:10:21 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 21:37:08 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ static void	enemy_coords(t_game *game)
 				continue ;
 			game->enemies[i].x = x * 32;
 			game->enemies[i].y = y * 32;
-			game->enemies[i].step = -1;
-			game->enemies[i].to_x = 0;
-			game->enemies[i].to_y = 0;
+			game->enemies[i].step = 0;
 			game->enemies[i].dir = ft_rand() % 4;
 			i++;
 		}
@@ -117,6 +115,7 @@ static void	put_enemies(t_game *game)
 	int		y;
 
 	y = 0;
+	game->enemies_num = 0;
 	while (++y < game->height)
 	{
 		x = 0;

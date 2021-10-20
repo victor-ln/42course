@@ -6,9 +6,11 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:11:35 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/18 15:11:47 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 22:02:23 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 unsigned int	ft_rand(void)
 {

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:40:17 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/18 15:21:53 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/19 22:05:32 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static void	is_rectangular(t_game *game)
 	int		i;
 
 	i = 0;
+	game->height = 1;
+	game->width = 0;
 	while (game->map_ber[i])
 	{
 		if (game->map_ber[i] == '\n')
@@ -68,9 +70,9 @@ static void	is_rectangular(t_game *game)
 	}
 	if (!i)
 		error(game, "Invalid map, it is empty", 0);
-	if (i != ((game->width * game->height) + (game->height - 1)))
+	else if (i - (game->height - 1) != game->width * game->height)
 		error(game, "Invalid map, it's not symmetrical", 0);
-	if (game->width == game->height)
+	else if (game->width == game->height)
 		error(game, "Invalid map, it's not rectangular", 0);
 }
 
