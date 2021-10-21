@@ -15,23 +15,27 @@ OBJ			= $(SRC:.c=.o)
 all:		$(NAME)
 
 $(NAME):
-			@echo "Compiling Libft [ .. ]"
-			cc $(FLAGS) -c $(SRC)
-			ar crs $(NAME) $(OBJ)
-			@echo "Libft is ready! [ OK ]"
+	@echo "Compiling Libft [ .. ]"
+	cc $(FLAGS) -c $(SRC)
+	ar crs $(NAME) $(OBJ)
+	@mkdir obj
+	@mv $(OBJ) obj
+	@echo "Libft is ready! [ OK ]"
 
 clean:
-			rm -f $(OBJ) $(BONUS_OBJ)
+	rm -fr ./obj
 
 fclean:		clean
-			rm -f $(NAME)
+	rm -f $(NAME)
 
-re:			fclean all
+re:	fclean all
 
 bonus:		
-			@echo "Compiling Libft [ .. ]"
-			cc $(FLAGS) -c $(SRC) $(BONUS)
-			ar crs $(NAME) $(OBJ) $(BONUS_OBJ)
-			@echo "Libft with BONUS is ready! [ OK ]"
+	@echo "Compiling Libft [ .. ]"
+	cc $(FLAGS) -c $(SRC) $(BONUS)
+	ar crs $(NAME) $(OBJ) $(BONUS_OBJ)
+	@mkdir obj
+	@mv $(OBJ) $(BONUS_OBJ) obj
+	@echo "Libft with BONUS is ready! [ OK ]"
 
 .PHONY: all, clean, fclean, re, bonus

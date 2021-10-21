@@ -1,25 +1,33 @@
-NAME	= so_long
-MLX		= ./mlx/libmlx.a
-LIB		= ./libft/libft.a
-MAIN	= src/so_long.c
-FLAGS	= -Wall -Werror -Wextra -g3 -fsanitize=address
-LINKS	= -lbsd -lX11 -lXext
-INC		= -I ./mlx -I ./inc -I ./libft
+NAME		=	so_long
+MLX			=	./mlx/libmlx.a
+LIB			=	./libft/libft.a
+MAIN		=	src/so_long.c
+IS_BONUS	=	-D BONUS=1
+IS_N_BONUS	=	-D BONUS=0
+FLAGS		=	-Wall -Werror -Wextra -g3 -fsanitize=address
+LINKS		=	-lbsd -lX11 -lXext
+INC			=	-I ./mlx -I ./inc -I ./libft
 
-OBJ		=	obj/animations.o \
-			obj/draw_game.o \
-			obj/end_game.o \
-			obj/events.o \
-			obj/load_environment.o \
-			obj/load_map.o \
-			obj/map_init.o \
-			obj/map_validate.o \
+FILES		=	animations.c \
+				draw_game.c \
+				end_game.c \
+				events.c \
+				load_environment.c \
+				load_map.c \
+				map_init.c \
+				map_validate.c \
+
+SRC			=	$(addprefix src/,$(FILES))
+OBJ			=	$(addprefix obj/,$(FILES:%.c=%.o))
 
 all:		$(NAME)
 
 $(NAME):	mlx_a
+	@echo "Compiling source [ .. ]"
+	@cc $(FLAGS) $(INC) $(IS_N_BONUS) -c $(SRC)
+	@echo "Source compiled! [ OK ]"
+	@mv $(FILES:%.c=%.o) obj
 	@make -C ./libft
-	@make -C ./src
 	@cc $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
 	@echo "Game created!"
 
@@ -27,6 +35,7 @@ mlx_a:
 	@echo "Compiling Mlx [ .. ]"
 	@make -C ./mlx
 	@echo "Mlx is ready! [ OK ]"
+	@mkdir obj
 
 clean:
 	@make -C ./mlx clean
@@ -40,8 +49,11 @@ fclean:		clean
 	@echo "Binaries removed."
 
 bonus:		mlx_a
+	@echo "Compiling source [ .. ]"
+	@cc $(FLAGS) $(INC) $(IS_BONUS) -c $(SRC)
+	@echo "Source compiled! [ OK ]"
+	@mv $(FILES:%.c=%.o) obj
 	@make -C ./libft bonus
-	@make -C ./src bonus
 	@cc $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
 	@echo "Game with BONUS created!"
 
