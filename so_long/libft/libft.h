@@ -70,4 +70,9 @@ void			ft_bzero(void *s, size_t n);
 */
 unsigned int	ft_rand(void);
 
+/*
+	Delays the execution of a program for m_secs.
+*/
+void			ft_delay(int m_secs);
+
 #endif

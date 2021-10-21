@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:33:25 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 15:44:55 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 19:43:04 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,42 @@ void	move_enemies(t_game *game)
 	}
 }
 
-static int	enemy_can_move(t_game *game, int i)
+static int	enemy_can_move(t_game *g, int i)
 {
 	int		x;
 	int		y;
 
-	x = game->enemies[i].x / 32;
-	y = game->enemies[i].y / 32;
-	if (!game->enemies[i].step)
+	x = g->enemies[i].x / 32;
+	y = g->enemies[i].y / 32;
+	if (!g->enemies[i].step)
 	{
-		game->enemies[i].to_x = 0;
-		game->enemies[i].to_y = 0;
-		if (game->enemies[i].dir == RIGHT)
-			game->enemies[i].to_x = 1;
-		else if (game->enemies[i].dir == LEFT)
-			game->enemies[i].to_x = -1;
-		else if (game->enemies[i].dir == UP)
-			game->enemies[i].to_y = -1;
+		g->enemies[i].to_x = 0;
+		g->enemies[i].to_y = 0;
+		if (g->enemies[i].dir == RIGHT)
+			g->enemies[i].to_x = 1;
+		else if (g->enemies[i].dir == LEFT)
+			g->enemies[i].to_x = -1;
+		else if (g->enemies[i].dir == UP)
+			g->enemies[i].to_y = -1;
 		else
-			game->enemies[i].to_y = 1;
-		if (game->map[y + game->enemies[i].to_y][x + game->enemies[i].to_x] != HERO && \
-			game->map[y + game->enemies[i].to_y][x + game->enemies[i].to_x] != 0)
+			g->enemies[i].to_y = 1;
+		if (g->map[y + g->enemies[i].to_y][x + g->enemies[i].to_x] != HERO
+			&& g->map[y + g->enemies[i].to_y][x + g->enemies[i].to_x])
 			return (0);
-		game->map[y][x] = 0;
-		game->map[y + game->enemies[i].to_y][x + game->enemies[i].to_x] = ENEMY;
+		g->map[y][x] = 0;
+		g->map[y + g->enemies[i].to_y][x + g->enemies[i].to_x] = ENEMY;
 	}
 	return (1);
+}
+
+void	display_game(t_game *game)
+{
+	if (++game->frame == 4)
+		game->frame = 0;
+	draw_game(game);
+	ft_delay(55000);
+	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
+	mlx_string_put(game->mlx, game->screen, 10, 10, C_WHITE, "Moved :");
+	mlx_string_put(game->mlx, game->screen, 60, 10, C_WHITE, game->moves_str);
+	hero_got_caught(game);
 }

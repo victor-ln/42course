@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rand.c                                          :+:      :+:    :+:   */
+/*   ft_delay.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/18 15:11:35 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 17:51:51 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/10/20 16:43:46 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/10/20 16:55:41 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <time.h>
 
-unsigned int	ft_rand(void)
+void	ft_delay(int m_secs)
 {
-	static unsigned int		lfsr;
-	unsigned int			bit;
+	int		start_time;
 
-	if (!lfsr)
-		lfsr = 0Xabe4;
-	bit = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5)) & 1;
-	lfsr = (lfsr >> 1) | (bit << 15);
-	return (lfsr);
+	start_time = clock();
+	while (clock() < start_time + m_secs)
+		;
 }

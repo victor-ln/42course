@@ -6,16 +6,16 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 15:30:48 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:35:59 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+static void			draw_players(t_game *game);
 static void			draw_sprite(t_img *image, t_img *sprite, int x, int y);
 static void			draw_pixel(t_img *image, int x, int y, unsigned int color);
 static unsigned int	get_color(t_img *image, int x, int y);
-static void			draw_players(t_game *game);
 
 void	draw_game(t_game *g)
 {
@@ -51,21 +51,26 @@ void	draw_game(t_game *g)
 static void	draw_players(t_game *game)
 {
 	int		i;
+	int		step;
 
-	i = -1;
+	i = 0;
 	draw_sprite(game->img, game->sprites.hero[game->hero.dir][game->hero.step], \
 		game->hero.x, game->hero.y);
-	while (++i < game->enemies_num)
+	while (i < game->enemies_num)
+	{
+		step = game->enemies[i].step % 4;
 		draw_sprite(game->img, \
-			game->sprites.enemy[game->enemies[i].dir][game->enemies[i].step % 4], \
+			game->sprites.enemy[game->enemies[i].dir][step], \
 			game->enemies[i].x, game->enemies[i].y);
+		i++;
+	}
 }
 
 /*
 	Receives the image to be drawn and the sprite
 	to draw at (x * sprite width, y * sprite height) position of the image.
 */
-void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
+static void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 {
 	int		i;
 	int		j;
@@ -82,7 +87,7 @@ void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 /*
 	Draws the color in (x, y) position of the image.
 */
-void	draw_pixel(t_img *img, int x, int y, unsigned int color)
+static void	draw_pixel(t_img *img, int x, int y, unsigned int color)
 {
 	char			*pixel;
 
@@ -95,8 +100,8 @@ void	draw_pixel(t_img *img, int x, int y, unsigned int color)
 /*
 	Returns the pixel color of (x, y) position of the image.
 */
-unsigned int	get_color(t_img *img, int x, int y)
+static unsigned int	get_color(t_img *img, int x, int y)
 {
 	return ((*(unsigned int *)
-		(img->data + (x * img->bpp / 8 + y * img->size_line))));
+			(img->data + (x * img->bpp / 8 + y * img->size_line))));
 }

@@ -6,7 +6,6 @@ SRC		=	animations.c \
 			end_game.c \
 			events.c \
 			load_environment.c \
-			load_game.c \
 			load_map.c \
 			map_init.c \
 			map_validate.c \

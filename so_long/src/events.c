@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 15:42:23 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:47:18 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ static void	move_player(t_game *game, short dir, int to_x, int to_y);
 int	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
-	exit_game(game, "Window closed");
-	return (0);
+	(void)game;
+	ft_putendl_fd("Window closed", 1);
+	exit(0);
 }
 
 int	key_press(int keycode, t_game *game)
@@ -46,6 +47,7 @@ static void	move_player(t_game *game, short dir, int to_x, int to_y)
 	x = game->hero.x / 32;
 	y = game->hero.y / 32;
 	game->hero.dir = dir;
+	game->hero.step = 0;
 	display_game(game);
 	if (game->map[y + to_y][x + to_x] != 1)
 	{
@@ -56,8 +58,7 @@ static void	move_player(t_game *game, short dir, int to_x, int to_y)
 		{
 			game->hero.x += (to_x * 4);
 			game->hero.y += (to_y * 4);
-			game->hero.step++;
-			if (game->hero.step == 7)
+			if (++game->hero.step == 7)
 				game->hero.step = 0;
 			move_enemies(game);
 			display_game(game);
@@ -86,11 +87,11 @@ static void	apply_changes(t_game *game)
 	if (game->map[y][x] == EXIT)
 	{
 		if (!game->coins_num)
-			exit_game(game, "YOU WIN !\n");
+			exit_game(game, "YOU WIN !");
 	}
 	else
 		game->map[y][x] = HERO;
-	ft_bzero(&game->hero, 3);
+	game->hero.step = 0;
 }
 
 void	hero_got_caught(t_game *game)

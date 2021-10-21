@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 15:15:55 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 14:27:00 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 19:13:50 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@
 	and returns the file descriptor or -1 if there is an error.
 */
 int			check_input(int argc, char *argv);
-
-/*
-	Root of everything. Calls the keys functions to initiate the game.
-*/
-void		load_game(t_game *game, int fd);
 
 /*
 	Saves the content of the opened file in a char pointer or
@@ -99,8 +94,10 @@ int			animation(t_game *game);
 */
 void		hero_got_caught(t_game *game);
 
+/*
+	Checks if enemies can move to a random direction. If they can it moves,
+	else it changes to another random direction;
+*/
 void		move_enemies(t_game *game);
-
-void		ft_delay(int mil_secs);
 
 #endif

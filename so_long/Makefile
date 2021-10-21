@@ -11,7 +11,6 @@ OBJ		=	obj/animations.o \
 			obj/end_game.o \
 			obj/events.o \
 			obj/load_environment.o \
-			obj/load_game.o \
 			obj/load_map.o \
 			obj/map_init.o \
 			obj/map_validate.o \

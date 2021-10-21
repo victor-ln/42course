@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 01:30:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 14:08:13 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 17:02:15 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_players
 	short		to_y;
 	short		step;
 	u_int16_t	dir;
-	int			x;
-	int			y;
+	u_int16_t	x;
+	u_int16_t	y;
 }	t_players;
 
 typedef struct s_game

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 22:34:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 13:12:44 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:34:23 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,18 @@ static int	load_sprites(t_sprites *s, void *mlx)
 {
 	int		error;
 
-	error = a_sprite(&s->grass, mlx, "/home/vlima-nu/42course/so_long/img/env/grass.xpm");
-	error += a_sprite(&s->tree, mlx, "/home/vlima-nu/42course/so_long/img/env/tree.xpm");
-	error += a_set(s->door, mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/env/door- .xpm"), 2);
-	error += a_set(s->coins, mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/coins/coin- .xpm"), 4);
-	error += a_set(s->hero[RIGHT], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/hero/right/ .xpm"), 7);
-	error += a_set(s->hero[LEFT], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/hero/left/ .xpm"), 7);
-	error += a_set(s->hero[DOWN], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/hero/down/ .xpm"), 7);
-	error += a_set(s->hero[UP], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/hero/up/ .xpm"), 7);
-	error += a_set(s->enemy[RIGHT], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/enemy/right/ .xpm"), 5);
-	error += a_set(s->enemy[LEFT], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/enemy/left/ .xpm"), 5);
-	error += a_set(s->enemy[DOWN], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/enemy/down/ .xpm"), 5);
-	error += a_set(s->enemy[UP], mlx, ft_strdup("/home/vlima-nu/42course/so_long/img/enemy/up/ .xpm"), 5);
+	error = a_sprite(&s->grass, mlx, "img/env/grass.xpm");
+	error += a_sprite(&s->tree, mlx, "img/env/tree.xpm");
+	error += a_set(s->door, mlx, ft_strdup("img/env/door- .xpm"), 2);
+	error += a_set(s->coins, mlx, ft_strdup("img/coins/coin- .xpm"), 4);
+	error += a_set(s->hero[RIGHT], mlx, ft_strdup("img/hero/right/ .xpm"), 7);
+	error += a_set(s->hero[LEFT], mlx, ft_strdup("img/hero/left/ .xpm"), 7);
+	error += a_set(s->hero[DOWN], mlx, ft_strdup("img/hero/down/ .xpm"), 7);
+	error += a_set(s->hero[UP], mlx, ft_strdup("img/hero/up/ .xpm"), 7);
+	error += a_set(s->enemy[RIGHT], mlx, ft_strdup("img/enemy/right/ .xpm"), 5);
+	error += a_set(s->enemy[LEFT], mlx, ft_strdup("img/enemy/left/ .xpm"), 5);
+	error += a_set(s->enemy[DOWN], mlx, ft_strdup("img/enemy/down/ .xpm"), 5);
+	error += a_set(s->enemy[UP], mlx, ft_strdup("img/enemy/up/ .xpm"), 5);
 	return (error);
 }
 
