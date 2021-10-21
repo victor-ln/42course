@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 02:19:43 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 03:33:54 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	hero_got_caught(t_game *game)
 	{
 		if (game->hero.x == game->enemies[i].x && \
 			game->hero.y == game->enemies[i].y)
-			exit_game(game, "GAME OVER\nYOU LOSE.");
+			exit_game(game, "YOU LOSE.");
 		i++;
 	}
 }

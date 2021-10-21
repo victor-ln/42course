@@ -4,9 +4,9 @@ NAME		= libft.a
 
 SRC			=	ft_bzero.c ft_calloc.c ft_putendl_fd.c \
 				ft_strdup.c ft_strjoin.c ft_strlen.c \
-				ft_strcmp.c ft_utoa.c \
+				ft_strcmp.c ft_utoa.c ft_rand.c \
 
-BONUS		=	ft_delay.c ft_rand.c \
+BONUS		=	ft_delay.c \
 
 BONUS_OBJ	= $(BONUS:.c=.o)
 
