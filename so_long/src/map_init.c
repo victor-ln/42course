@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 01:25:05 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 01:33:24 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,7 @@ static void	put_enemies(t_game *g)
 			else if ((g->map[y - 1][x] == ENEMY || \
 				g->map[y - 1][x - 1] == ENEMY || g->map[y][x - 1] == ENEMY))
 				continue ;
-			else if (g->enemies_num == (((g->width - 2) + \
-				(g->height - 2)) / 3))
+			else if (g->enemies_num == (((g->width - 2) + (g->height - 2)) / 3))
 				break ;
 			g->enemies_num++;
 			g->map[y][x] = ENEMY;
