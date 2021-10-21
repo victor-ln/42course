@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:11:35 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 17:51:51 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 01:17:29 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ unsigned int	ft_rand(void)
 	unsigned int			bit;
 
 	if (!lfsr)
-		lfsr = 0Xabe4;
+		lfsr = *(unsigned int *)__TIME__ << 2;
 	bit = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5)) & 1;
 	lfsr = (lfsr >> 1) | (bit << 15);
 	return (lfsr);

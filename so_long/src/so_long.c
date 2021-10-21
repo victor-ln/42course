@@ -6,14 +6,14 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:18:12 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 19:16:29 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 00:37:58 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 static void		load_game(t_game *game, int fd);
-static void	game_init(t_game *game);
+static void		game_init(t_game *game);
 
 int	main(int argc, char *argv[])
 {

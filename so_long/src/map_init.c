@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 19:32:50 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 01:25:05 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,32 +112,31 @@ static void	enemy_coords(t_game *game)
 /*
 	Searches in the map free spaces to put enemies.
 */
-static void	put_enemies(t_game *game)
+static void	put_enemies(t_game *g)
 {
 	int		x;
 	int		y;
 
 	y = 0;
-	game->enemies_num = 0;
-	while (++y < game->height)
+	g->enemies_num = 0;
+	while (++y < g->height)
 	{
 		x = 0;
-		while (++x < game->width)
+		while (++x < g->width)
 		{
-			if (game->map[y][x] || game->map[y][x + 1] || \
-				game->map[y + 1][x] || game->map[y + 1][x + 1])
+			if (g->map[y][x] || g->map[y][x + 1] == 1 || \
+				g->map[y + 1][x] == 1 || g->map[y + 1][x + 1] == 1)
 				continue ;
-			else if ((game->map[y - 1][x] == ENEMY || \
-				game->map[y - 1][x - 1] == ENEMY || \
-				game->map[y][x - 1] == ENEMY))
+			else if ((g->map[y - 1][x] == ENEMY || \
+				g->map[y - 1][x - 1] == ENEMY || g->map[y][x - 1] == ENEMY))
 				continue ;
-			else if (game->enemies_num == (((game->width - 2) + \
-				(game->height - 2)) / 3))
+			else if (g->enemies_num == (((g->width - 2) + \
+				(g->height - 2)) / 3))
 				break ;
-			game->enemies_num++;
-			game->map[y][x] = ENEMY;
+			g->enemies_num++;
+			g->map[y][x] = ENEMY;
 		}
 	}
-	if (game->enemies_num != 0)
-		enemy_coords(game);
+	if (g->enemies_num != 0)
+		enemy_coords(g);
 }

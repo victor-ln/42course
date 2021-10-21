@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:33:25 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 19:43:04 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 01:28:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	display_game(t_game *game)
 	if (++game->frame == 4)
 		game->frame = 0;
 	draw_game(game);
-	ft_delay(55000);
+	ft_delay(45000);
 	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
 	mlx_string_put(game->mlx, game->screen, 10, 10, C_WHITE, "Moved :");
 	mlx_string_put(game->mlx, game->screen, 60, 10, C_WHITE, game->moves_str);
