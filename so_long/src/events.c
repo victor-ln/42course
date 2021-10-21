@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 01:20:17 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 02:19:43 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
 	(void)game;
-	ft_putendl_fd("Window closed", 1);
+	ft_putendl_fd("Window closed.", 1);
 	exit(0);
 }
 
 int	key_press(int keycode, t_game *game)
 {
 	if (keycode == ESC)
-		exit_game(game, "ESC pressed");
+		exit_game(game, "ESC pressed.");
 	if (keycode == 'd')
 		move_player(game, RIGHT, 1, 0);
 	else if (keycode == 'a')
@@ -47,24 +47,23 @@ static void	move_player(t_game *game, short dir, int to_x, int to_y)
 	x = game->hero.x / 32;
 	y = game->hero.y / 32;
 	game->hero.dir = dir;
-	game->hero.step = 0;
 	display_game(game);
-	if (game->map[y + to_y][x + to_x] != 1)
+	if (game->map[y + to_y][x + to_x] == 1)
+		return ;
+	if (game->map[y][x] != EXIT)
+		game->map[y][x] = 0;
+	steps = 0;
+	while (steps <= 7)
 	{
-		if (game->map[y][x] != EXIT)
-			game->map[y][x] = 0;
-		steps = -1;
-		while (++steps <= 7)
-		{
-			game->hero.x += (to_x * 4);
-			game->hero.y += (to_y * 4);
-			if (++game->hero.step == 7)
-				game->hero.step = 1;
-			move_enemies(game);
-			display_game(game);
-		}
-		apply_changes(game);
+		game->hero.x += (to_x * 4);
+		game->hero.y += (to_y * 4);
+		if (++game->hero.step == 7)
+			game->hero.step = 1;
+		move_enemies(game);
+		display_game(game);
+		steps++;
 	}
+	apply_changes(game);
 }
 
 /*
@@ -103,7 +102,7 @@ void	hero_got_caught(t_game *game)
 	{
 		if (game->hero.x == game->enemies[i].x && \
 			game->hero.y == game->enemies[i].y)
-			exit_game(game, "GAME OVER\nYOU LOSE");
+			exit_game(game, "GAME OVER\nYOU LOSE.");
 		i++;
 	}
 }

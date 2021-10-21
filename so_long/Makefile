@@ -1,10 +1,10 @@
-NAME = so_long
-MLX = ./mlx/libmlx.a
-LIB = ./libft/libft.a
-MAIN = src/so_long.c
-FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
-LINKS = -lbsd -lX11 -lXext -lz
-INC = -I ./mlx -I ./inc -I ./libft
+NAME	= so_long
+MLX		= ./mlx/libmlx.a
+LIB		= ./libft/libft.a
+MAIN	= src/so_long.c
+FLAGS	= -Wall -Werror -Wextra -g3 -fsanitize=address
+LINKS	= -lbsd -lX11 -lXext
+INC		= -I ./mlx -I ./inc -I ./libft
 
 OBJ		=	obj/animations.o \
 			obj/draw_game.o \
@@ -17,15 +17,11 @@ OBJ		=	obj/animations.o \
 
 all:		$(NAME)
 
-$(NAME):	mlx_a libft_c
-	@make -C ./src
-	@clang $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
-	@echo "Game created!"
-
-libft_c:
-	@echo "Compiling Libft [ .. ]"
+$(NAME):	mlx_a
 	@make -C ./libft
-	@echo "Libft is ready! [ OK ]"
+	@make -C ./src
+	@cc $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
+	@echo "Game created!"
 
 mlx_a:
 	@echo "Compiling Mlx [ .. ]"
@@ -43,8 +39,12 @@ fclean:		clean
 	@make -C ./libft fclean
 	@echo "Binaries removed."
 
+bonus:		mlx_a
+	@make -C ./libft bonus
+	@make -C ./src bonus
+	@cc $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
+	@echo "Game with BONUS created!"
+
 re:			fclean all
 
-bonus:		$(NAME)
-
-.PHONY: all, clean, fclean, re, message, libft_c
+.PHONY: all, clean, fclean, bonus, re

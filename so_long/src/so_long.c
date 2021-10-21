@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:18:12 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 00:37:58 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 02:32:34 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ static void	game_init(t_game *game)
 	game->map_ber = 0;
 	game->moves_num = 0;
 	game->moves_str = 0;
+	game->enemies_num = 0;
 }

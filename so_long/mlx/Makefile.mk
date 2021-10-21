@@ -14,7 +14,7 @@
 INC	=%%%%
 
 
-CC	= gcc
+CC	= cc
 
 NAME		= libmlx.a
 NAME_UNAME	= libmlx_$(shell uname).a
@@ -33,15 +33,15 @@ SRC	= mlx_init.c mlx_new_window.c mlx_pixel_put.c mlx_loop.c \
 
 OBJ_DIR = obj
 OBJ	= $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
+OBJ_C	= $(SRC:%.c=%.o)
 CFLAGS	= -O3 -I$(INC)
 
 all	: $(NAME)
 
-$(OBJ_DIR)/%.o: %.c
+$(NAME)	:
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
-
-$(NAME)	: $(OBJ)
+	$(CC) $(CFLAGS) $(IFLAGS) -c $(SRC)
+	@mv $(OBJ_C) $(OBJ_DIR)
 	ar -r $(NAME) $(OBJ)
 	ranlib $(NAME)
 	cp $(NAME) $(NAME_UNAME)

@@ -1,4 +1,6 @@
 FLAGS	=	-Wall -Werror -Wextra -g3
+IS_BONUS = -D BONUS=1
+IS_N_BONUS = -D BONUS=0
 INC		=	-I ../mlx -I ../inc -I ../libft
 
 SRC		=	animations.c \
@@ -15,6 +17,13 @@ OBJS	=	$(SRC:.c=.o)
 all:
 	@mkdir ../obj
 	@echo "Compiling source [ .. ]"
-	@clang $(FLAGS) $(INC) -c $(SRC)
+	@cc $(FLAGS) $(INC) $(IS_N_BONUS) -c $(SRC)
+	@echo "Source compiled! [ OK ]"
+	@mv $(OBJS) ../obj
+
+bonus:
+	@mkdir ../obj
+	@echo "Compiling source [ .. ]"
+	@cc $(FLAGS) $(INC) $(IS_BONUS) -c $(SRC)
 	@echo "Source compiled! [ OK ]"
 	@mv $(OBJS) ../obj

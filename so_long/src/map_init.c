@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 01:33:24 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 02:32:25 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	map_init(t_game *game)
 {
 	map_validate(game);
 	map_matrix(game);
-	put_enemies(game);
+	if (BONUS)
+		put_enemies(game);
 }
 
 /*
@@ -118,7 +119,6 @@ static void	put_enemies(t_game *g)
 	int		y;
 
 	y = 0;
-	g->enemies_num = 0;
 	while (++y < g->height)
 	{
 		x = 0;
@@ -136,6 +136,6 @@ static void	put_enemies(t_game *g)
 			g->map[y][x] = ENEMY;
 		}
 	}
-	if (g->enemies_num != 0)
+	if (g->enemies_num)
 		enemy_coords(g);
 }
