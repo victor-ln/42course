@@ -44,7 +44,7 @@ clean:
 	@echo "Object files removed."
 
 fclean:		clean
-	@rm $(NAME)
+	@rm -f $(NAME)
 	@make -C ./libft fclean
 	@echo "Binaries removed."
 
