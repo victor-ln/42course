@@ -1,4 +1,5 @@
 NAME		=	so_long
+CC			=	cc
 MLX			=	./mlx/libmlx.a
 LIB			=	./libft/libft.a
 MAIN		=	src/so_long.c
@@ -24,11 +25,11 @@ all:		$(NAME)
 
 $(NAME):	mlx_a
 	@echo "Compiling source [ .. ]"
-	@cc $(FLAGS) $(INC) $(IS_N_BONUS) -c $(SRC)
+	@$(CC) $(FLAGS) $(INC) $(IS_N_BONUS) -c $(SRC)
 	@echo "Source compiled! [ OK ]"
 	@mv $(FILES:%.c=%.o) obj
 	@make -C ./libft
-	@cc $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
+	@$(CC) $(FLAGS) $(INC) $(MAIN) -O3 $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
 	@echo "Game created!"
 
 mlx_a:
@@ -50,11 +51,11 @@ fclean:		clean
 
 bonus:		mlx_a
 	@echo "Compiling source [ .. ]"
-	@cc $(FLAGS) $(INC) $(IS_BONUS) -c $(SRC)
+	@$(CC) $(FLAGS) $(INC) $(IS_BONUS) -c $(SRC)
 	@echo "Source compiled! [ OK ]"
 	@mv $(FILES:%.c=%.o) obj
 	@make -C ./libft bonus
-	@cc $(FLAGS) $(INC) $(MAIN) $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
+	@$(CC) $(FLAGS) $(INC) $(MAIN) -O3 $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
 	@echo "Game with BONUS created!"
 
 re:			fclean all

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 12:23:08 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/21 19:45:48 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ void	hero_got_caught(t_game *game)
 	int		i;
 
 	i = 0;
-	if (!BONUS)
-		return ;
 	while (i < game->enemies_num)
 	{
 		if (game->hero.x == game->enemies[i].x && \

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 03:37:52 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/22 00:24:25 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,17 @@ void	draw_game(t_game *g)
 /*
 	Draws the hero and enemies (if they exist), based in their specific coordinates.
 */
-static void	draw_players(t_game *game)
+static void	draw_players(t_game *g)
 {
 	int		i;
-	int		step;
 
-	i = 0;
-	draw_sprite(game->img, game->sprites.hero[game->hero.dir][game->hero.step], \
-		game->hero.x, game->hero.y);
-	while (i < game->enemies_num)
-	{
-		step = game->enemies[i].step % 4;
-		draw_sprite(game->img, \
-			game->sprites.enemy[game->enemies[i].dir][step], \
-			game->enemies[i].x, game->enemies[i].y);
-		i++;
-	}
+	i = -1;
+	draw_sprite(g->img, g->sprites.hero[g->hero.dir][g->hero.step], \
+		g->hero.x, g->hero.y);
+	while (++i < g->enemies_num)
+		draw_sprite(g->img, \
+			g->sprites.enemy[g->enemies[i].dir][g->enemies[i].step % 4], \
+			g->enemies[i].x, g->enemies[i].y);
 }
 
 /*
