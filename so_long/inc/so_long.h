@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 15:15:55 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 10:51:18 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 12:58:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 int			check_input(int argc, char *argv);
 
 /*
-	Saves the content of the opened file in a char pointer or
-	exits the game appropriately in case of errors.
+	Saves the content of the opened file in a char pointer
+	and calls map_init.
 */
 void		load_map(t_game *game, int fd);
 

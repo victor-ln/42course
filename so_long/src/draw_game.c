@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 10:42:32 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 12:47:30 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	draw_game(t_game *game)
 */
 static void	draw_players(t_game *game)
 {
-	int		i;
+	register int		i;
 
 	i = 0;
 	draw_sprite(game->img, \
-		game->sprites.hero[game->hero.dir][game->hero.step % 7], \
+		game->sprites.hero[game->hero.dir][game->hero.step], \
 		game->hero.x, game->hero.y);
 	while (i < game->enemies_num)
 	{
@@ -91,13 +91,9 @@ static void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 */
 static void	draw_pixel(t_img *img, int x, int y, unsigned int color)
 {
-	char			*pixel;
-
 	if (color != C_NONE)
-	{
-		pixel = img->data + (x * img->bpp / 8 + y * img->size_line);
-		*(unsigned int *)pixel = color;
-	}
+		*(unsigned int *)
+			((img->data + (x * img->bpp / 8 + y * img->size_line))) = color;
 }
 
 /*

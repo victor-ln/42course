@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 10:36:36 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 10:47:40 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 11:18:28 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	start_game(t_game *game)
 
 void	display_game(t_game *game)
 {
-	move_enemies(game);
 	draw_game(game);
 	mlx_do_sync(game->mlx);
 	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
 	hero_got_caught(game);
+	move_enemies(game);
 	if (BONUS)
 	{
 		if (++game->frame == 8)

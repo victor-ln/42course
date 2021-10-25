@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 10:44:52 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 12:52:53 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	close_window(int keycode, t_game *game)
 {
 	(void)keycode;
 	(void)game;
-	ft_putendl_fd("Window closed.", 1);
 	exit(0);
 }
 
@@ -34,14 +33,7 @@ int	key_press(int keycode, t_game *game)
 	else if (keycode == 'w')
 		move_player(game, UP, 0, -1);
 	else if (keycode == ESC)
-		exit_game(game, "ESC pressed.");
-	return (0);
-}
-
-int	key_release(int keycode, t_game *game)
-{
-	(void)keycode;
-	game->hero.step = 0;
+		exit_game(game, 0);
 	return (0);
 }
 
@@ -57,8 +49,8 @@ static void	move_player(t_game *game, short dir, int to_x, int to_y)
 		{
 			game->hero.x += (to_x * 4);
 			game->hero.y += (to_y * 4);
-			if (++game->hero.step % 7 == 0)
-				game->hero.step++;
+			if (++game->hero.step == 7)
+				game->hero.step = 1;
 			display_game(game);
 			steps++;
 		}
