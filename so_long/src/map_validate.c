@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:40:17 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 04:23:35 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/24 01:07:26 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 typedef struct s_map_validate
 {
-	u_int16_t	exits_num;
-	u_int16_t	heros_num;
-	u_int16_t	coins_num;
-	u_int16_t	zeros_num;
-	u_int16_t	i;
+	int		exits_num;
+	int		heros_num;
+	int		coins_num;
+	int		zeros_num;
+	int		i;
 }	t_map_validate;
 
 static void	is_valid(t_game *game, t_map_validate *map);

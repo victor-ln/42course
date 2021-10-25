@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/22 00:24:25 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 08:27:37 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,48 +17,51 @@ static void			draw_sprite(t_img *image, t_img *sprite, int x, int y);
 static void			draw_pixel(t_img *image, int x, int y, unsigned int color);
 static unsigned int	get_color(t_img *image, int x, int y);
 
-void	draw_game(t_game *g)
+void	draw_game(t_game *game)
 {
 	int		x;
 	int		y;
 
-	y = -1;
-	while (++y < g->height)
+	y = 0;
+	while (y < game->height)
 	{
-		x = -1;
-		while (++x < g->width)
+		x = 0;
+		while (x < game->width)
 		{
-			draw_sprite(g->img, g->sprites.grass, x * 32, y * 32);
-			if (g->map[y][x] == 1)
-				draw_sprite(g->img, g->sprites.tree, x * 32, y * 32);
-			else if (g->map[y][x] == COLL)
-				draw_sprite(g->img, g->sprites.coins[g->frame], x * 32, y * 32);
-			else if (g->map[y][x] == EXIT)
-			{
-				if (!g->coins_num)
-					draw_sprite(g->img, g->sprites.door[1], x * 32, y * 32);
-				else
-					draw_sprite(g->img, g->sprites.door[0], x * 32, y * 32);
-			}
+			draw_sprite(game->img, game->sprites.grass, x * 32, y * 32);
+			if (game->map[y][x] == 1)
+				draw_sprite(game->img, game->sprites.tree, x * 32, y * 32);
+			else if (game->map[y][x] == COLL)
+				draw_sprite(game->img, game->sprites.coins[game->frame / 2], \
+					x * 32, y * 32);
+			else if (game->map[y][x] == EXIT)
+				draw_sprite(game->img, game->sprites.door[game->door], \
+					x * 32, y * 32);
+			x++;
 		}
+		y++;
 	}
-	draw_players(g);
+	draw_players(game);
 }
 
 /*
 	Draws the hero and enemies (if they exist), based in their specific coordinates.
 */
-static void	draw_players(t_game *g)
+static void	draw_players(t_game *game)
 {
 	int		i;
 
-	i = -1;
-	draw_sprite(g->img, g->sprites.hero[g->hero.dir][g->hero.step], \
-		g->hero.x, g->hero.y);
-	while (++i < g->enemies_num)
-		draw_sprite(g->img, \
-			g->sprites.enemy[g->enemies[i].dir][g->enemies[i].step % 4], \
-			g->enemies[i].x, g->enemies[i].y);
+	i = 0;
+	draw_sprite(game->img, \
+		game->sprites.hero[game->hero.dir][game->hero.step % 7], \
+		game->hero.x, game->hero.y);
+	while (i < game->enemies_num)
+	{
+		draw_sprite(game->img, \
+			game->sprites.enemy[game->enemies[i].dir][game->enemies[i].step], \
+			game->enemies[i].x, game->enemies[i].y);
+		i++;
+	}
 }
 
 /*
@@ -67,15 +70,19 @@ static void	draw_players(t_game *g)
 */
 static void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 {
-	int		i;
-	int		j;
+	register int		i;
+	register int		j;
 
-	j = -1;
-	while (++j < 32)
+	j = 0;
+	while (j < 32)
 	{
-		i = -1;
-		while (++i < 32)
+		i = 0;
+		while (i < 32)
+		{
 			draw_pixel(image, x + i, y + j, get_color(sprite, i, j));
+			i++;
+		}
+		j++;
 	}
 }
 
@@ -86,10 +93,11 @@ static void	draw_pixel(t_img *img, int x, int y, unsigned int color)
 {
 	char			*pixel;
 
-	if (color == C_NONE)
-		return ;
-	pixel = img->data + (x * img->bpp / 8 + y * img->size_line);
-	*(unsigned int *)pixel = color;
+	if (color != C_NONE)
+	{
+		pixel = img->data + (x * img->bpp / 8 + y * img->size_line);
+		*(unsigned int *)pixel = color;
+	}
 }
 
 /*

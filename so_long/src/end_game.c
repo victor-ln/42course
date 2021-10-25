@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:42:02 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/20 13:27:50 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 06:40:47 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,17 @@ static void	destroy_sprites(t_img **images, void *mlx, int x)
 {
 	int		i;
 
-	if (!images)
-		return ;
-	i = -1;
-	while (++i < x)
-		if (images[i])
-			mlx_destroy_image(mlx, images[i]);
-	free(images);
+	i = 0;
+	if (images)
+	{
+		while (i < x)
+		{
+			if (images[i])
+				mlx_destroy_image(mlx, images[i]);
+			i++;
+		}
+		free(images);
+	}
 }
 
 static void	destroy_game(t_game *game)
@@ -86,22 +90,26 @@ static void	destroy_struct(t_game *game)
 {
 	int		i;
 
-	if (!game->map_ber)
+	if (game->map)
 	{
-		i = -1;
-		while (++i < game->height)
+		i = 0;
+		while (i < game->height)
+		{
 			if (game->map[i])
 				free(game->map[i]);
+			i++;
+		}
 		free(game->map);
 	}
-	else
+	if (game->map_ber)
 		free(game->map_ber);
-	i = -1;
-	while (++i < 4)
+	i = 0;
+	while (i < 4)
 	{
 		if (game->sprites.hero)
 			destroy_sprites(game->sprites.hero[i], game->mlx, 7);
 		if (game->sprites.enemy)
 			destroy_sprites(game->sprites.enemy[i], game->mlx, 5);
+		i++;
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 02:32:25 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 08:23:56 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	save_coords(t_game *game, int x, int y);
+static void	hero_coords(t_game *game, int x, int y);
 static void	map_matrix(t_game *game);
 static void	put_enemies(t_game *game);
 static void	enemy_coords(t_game *game);
@@ -47,7 +47,8 @@ static void	map_matrix(t_game *game)
 		while (++x < game->width)
 		{
 			game->map[y][x] = game->map_ber[z++] - 48;
-			save_coords(game, x, y);
+			if (game->map[y][x] == HERO)
+				hero_coords(game, x, y);
 		}
 		z++;
 	}
@@ -55,19 +56,15 @@ static void	map_matrix(t_game *game)
 	game->map_ber = NULL;
 }
 
-static void	save_coords(t_game *game, int x, int y)
+static void	hero_coords(t_game *game, int x, int y)
 {
-	if (game->map[y][x] == HERO)
-	{
-		ft_bzero(&game->hero, 3);
-		game->hero.x = x * 32;
-		game->hero.y = y * 32;
-		game->hero.step = 0;
-		if (x < (game->width / 2))
-			game->hero.dir = RIGHT;
-		else
-			game->hero.dir = LEFT;
-	}
+	game->hero.x = x * 32;
+	game->hero.y = y * 32;
+	game->hero.step = 0;
+	if (x < (game->width / 2))
+		game->hero.dir = RIGHT;
+	else
+		game->hero.dir = LEFT;
 }
 
 static void	enemy_coords(t_game *game)
@@ -78,7 +75,7 @@ static void	enemy_coords(t_game *game)
 
 	i = 0;
 	y = 0;
-	game->enemies = (t_players *)malloc(sizeof(t_players) * game->enemies_num);
+	game->enemies = (t_enemies *)malloc(sizeof(t_enemies) * game->enemies_num);
 	if (!game->enemies)
 		error(game, "Malloc for enemies struct failed", strerror(errno));
 	while (++y < game->height)
@@ -90,6 +87,7 @@ static void	enemy_coords(t_game *game)
 				continue ;
 			game->enemies[i].x = x * 32;
 			game->enemies[i].y = y * 32;
+			game->enemies[i].steps = 0;
 			game->enemies[i].step = 0;
 			game->enemies[i].dir = ft_rand() % 4;
 			i++;

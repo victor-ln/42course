@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:18:12 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/22 00:14:27 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 06:55:32 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char *argv[])
 	t_game	*game;
 
 	game = (t_game *)malloc(sizeof(t_game));
+	game_init(game);
 	load_game(game, check_input(argc, argv[argc - 1]));
 	mlx_hook(game->screen, 17, 0L, close_window, game);
 	mlx_key_hook(game->screen, key_press, game);
@@ -29,10 +30,10 @@ int	main(int argc, char *argv[])
 
 static void	load_game(t_game *game, int fd)
 {
-	game_init(game);
 	load_map(game, fd);
 	map_init(game);
 	load_environment(game);
+	draw_game(game);
 	display_game(game);
 }
 
@@ -46,7 +47,9 @@ static void	game_init(t_game *game)
 	game->sprites.door = 0;
 	game->sprites.tree = 0;
 	game->sprites.grass = 0;
+	game->enemies_num = 0;
 	game->coins_num = 0;
+	game->door = 0;
 	game->enemies = 0;
 	game->frame = 0;
 	game->img = 0;
@@ -56,5 +59,4 @@ static void	game_init(t_game *game)
 	game->map_ber = 0;
 	game->moves_num = 0;
 	game->moves_str = 0;
-	game->enemies_num = 0;
 }

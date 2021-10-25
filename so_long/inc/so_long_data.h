@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 01:30:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 00:25:52 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 08:20:37 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,24 @@ typedef struct s_sprites
 	t_img		***enemy;
 }	t_sprites;
 
-typedef struct s_players
+typedef struct s_enemies
 {
 	short		to_x;
 	short		to_y;
-	short		step;
+	u_int16_t	steps;
+	u_int16_t	step;
 	u_int16_t	dir;
 	u_int16_t	x;
 	u_int16_t	y;
-}	t_players;
+}	t_enemies;
+
+typedef struct s_hero
+{
+	u_int16_t	step;
+	u_int16_t	dir;
+	u_int16_t	x;
+	u_int16_t	y;
+}	t_hero;
 
 typedef struct s_game
 {
@@ -58,6 +67,7 @@ typedef struct s_game
 	u_int16_t	height;
 	u_int16_t	width;
 	u_int16_t	frame;
+	u_int16_t	door;
 	u_int32_t	moves_num;
 	void		*mlx;
 	void		*screen;
@@ -65,9 +75,9 @@ typedef struct s_game
 	char		**map;
 	char		*map_ber;
 	t_img		*img;
+	t_enemies	*enemies;
 	t_sprites	sprites;
-	t_players	hero;
-	t_players	*enemies;
+	t_hero		hero;
 }	t_game;
 
 #endif
