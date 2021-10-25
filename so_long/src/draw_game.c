@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 08:27:37 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 10:42:32 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static unsigned int	get_color(t_img *image, int x, int y);
 
 void	draw_game(t_game *game)
 {
-	int		x;
-	int		y;
+	register int		x;
+	register int		y;
 
 	y = 0;
 	while (y < game->height)

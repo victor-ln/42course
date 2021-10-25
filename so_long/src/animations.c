@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:33:25 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 08:27:06 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 10:35:12 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,4 @@ static int	enemy_can_move(t_enemies *enemy, char **map)
 		map[y + enemy->to_y][x + enemy->to_x] = ENEMY;
 	}
 	return (1);
-}
-
-void	display_game(t_game *game)
-{
-	move_enemies(game);
-	draw_game(game);
-	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
-	if (BONUS)
-	{
-		if (++game->frame == 8)
-			game->frame = 0;
-		ft_delay(46500);
-		mlx_string_put(game->mlx, game->screen, 10, 10, C_WHITE, "Moves :");
-		mlx_string_put(game->mlx, game->screen, 60, 10, C_WHITE, \
-			game->moves_str);
-		hero_got_caught(game);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 08:23:56 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 10:18:49 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void	map_matrix(t_game *game)
 		}
 		z++;
 	}
-	free(game->map_ber);
-	game->map_ber = NULL;
 }
 
 static void	hero_coords(t_game *game, int x, int y)

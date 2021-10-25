@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 15:15:55 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/24 04:06:30 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 10:51:18 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,24 @@ void		load_environment(t_game *game);
 int			animation(t_game *game);
 
 /*
-	Checks if the hero has been caught by an enemy.
-*/
-void		hero_got_caught(t_game *game);
-
-/*
 	Checks if enemies can move to a random direction. If they can it moves,
 	else it changes to another random direction;
 */
 void		move_enemies(t_game *game);
+
+/*
+	Calls the Mlx functions.
+*/
+void		start_game(t_game *game);
+
+/*
+	Reloads map and the initial player position.
+*/
+void		reboot_game(t_game *game);
+
+/*
+	Sets all game struct variables to zero.
+*/
+void		game_init(t_game *game);
 
 #endif

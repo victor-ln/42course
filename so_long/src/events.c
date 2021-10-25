@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 08:10:02 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 10:44:52 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ int	key_press(int keycode, t_game *game)
 		move_player(game, UP, 0, -1);
 	else if (keycode == ESC)
 		exit_game(game, "ESC pressed.");
+	return (0);
+}
+
+int	key_release(int keycode, t_game *game)
+{
+	(void)keycode;
+	game->hero.step = 0;
 	return (0);
 }
 
@@ -87,18 +94,4 @@ static void	apply_changes(t_game *game)
 	else if (game->map[y][x] == EXIT)
 		if (!game->coins_num)
 			exit_game(game, "YOU WIN !");
-}
-
-void	hero_got_caught(t_game *game)
-{
-	int		i;
-
-	i = 0;
-	while (i < game->enemies_num)
-	{
-		if (game->hero.x == game->enemies[i].x && \
-			game->hero.y == game->enemies[i].y)
-			exit_game(game, "YOU LOSE.");
-		i++;
-	}
 }

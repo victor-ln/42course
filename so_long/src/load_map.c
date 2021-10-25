@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:35:57 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/21 01:12:47 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 09:51:24 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	load_map(t_game *game, int fd)
 	if (!game->map_ber)
 		error(game, "Malloc to map failed", strerror(errno));
 	close(fd);
+	map_init(game);
 }
 
 int	check_input(int argc, char *argv)
