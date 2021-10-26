@@ -20,7 +20,7 @@ $(NAME):
 	@echo "Compiling Libft [ .. ]"
 	@$(CC) $(FLAGS) -O3 -c $(SRC)
 	@ar crs $(NAME) $(OBJ)
-	@mkdir obj
+	@mkdir -p obj
 	@mv $(OBJ) obj
 	@echo "Libft is ready! [ OK ]"
 
@@ -36,7 +36,7 @@ bonus:
 	@echo "Compiling Libft [ .. ]"
 	@$(CC) $(FLAGS) -c $(SRC) $(BONUS)
 	@ar crs $(NAME) $(OBJ) $(BONUS_OBJ)
-	@mkdir obj
+	@mkdir -p obj
 	@mv $(OBJ) $(BONUS_OBJ) obj
 	@echo "Libft with BONUS is ready! [ OK ]"
 

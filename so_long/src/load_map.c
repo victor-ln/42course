@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:35:57 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 09:51:24 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 20:17:13 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	load_map(t_game *game, int fd)
 	char	buffer[501];
 	ssize_t	size;
 
+	if (fd < 0)
+		error(game, 0, 0);
 	game->map_ber = ft_calloc(sizeof(char), 1);
 	size = read(fd, buffer, 500);
 	while (size > 0)
@@ -48,7 +50,7 @@ int	check_input(int argc, char *argv)
 		ft_putendl_fd("Error\nInvalid file extension. It must be *.ber", 2);
 	else
 		return (fd);
-	if (fd > 0)
+	if (fd != -1)
 		close(fd);
-	exit(EXIT_FAILURE);
+	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 22:34:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/24 04:22:43 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 20:20:14 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	load_environment(t_game *game)
 	game->screen = mlx_new_window(game->mlx, game->width * 32, \
 		game->height * 32, "so_long");
 	if (!game->screen)
-		error(game, "Could not create a window", strerror(errno));
+		error(game, "Could not open a window", strerror(errno));
 	game->img = mlx_new_image(game->mlx, game->width * 32, game->height * 32);
 	if (!game->img)
-		error(game, "Could not create images", strerror(errno));
+		error(game, "Could not create image", strerror(errno));
 	sprites_malloc(game);
 	if (load_sprites(&game->sprites, game->mlx))
 		error(game, "Could not load all sprites", 0);
@@ -93,7 +93,7 @@ static int	a_set(t_img **ptr, void *mlx, char *path, int size)
 	while (i < size)
 	{
 		path[num] = '0' + i;
-		errors += a_sprite(&ptr[i], mlx, path);
+		errors += a_sprite(ptr + i, mlx, path);
 		i++;
 	}
 	free(path);

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 15:15:55 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 12:58:36 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/26 00:43:50 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		draw_game(t_game *game);
 /*
 	Exits the game if close_window box is clicked.
 */
-int			close_window(int keycode, t_game *game);
+int			close_window(t_game *game);
 
 /*
 	Controls where to move when keycode is a, s, d or w
@@ -72,7 +72,7 @@ int			key_press(int keycode, t_game *game);
 void		display_game(t_game *game);
 
 /*
-	Writes "Error\n" and the messages passed, frees
+	Writes "Error" and the messages passed, frees
 	all allocated memory and exits with status 1.
 */
 void		error(t_game *game, char *message, char *str_error);
@@ -109,5 +109,7 @@ void		reboot_game(t_game *game);
 	Sets all game struct variables to zero.
 */
 void		game_init(t_game *game);
+
+int			reload_image(t_game *game);
 
 #endif

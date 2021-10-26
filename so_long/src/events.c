@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 12:52:53 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/26 00:44:11 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 static void	apply_changes(t_game *game);
 static void	move_player(t_game *game, short dir, int to_x, int to_y);
 
-int	close_window(int keycode, t_game *game)
+int	close_window(t_game *game)
 {
-	(void)keycode;
-	(void)game;
-	exit(0);
+	exit_game(game, "Window closed");
+	return (0);
 }
 
 int	key_press(int keycode, t_game *game)
@@ -33,7 +32,7 @@ int	key_press(int keycode, t_game *game)
 	else if (keycode == 'w')
 		move_player(game, UP, 0, -1);
 	else if (keycode == ESC)
-		exit_game(game, 0);
+		exit_game(game, "Esc pressed");
 	return (0);
 }
 
@@ -86,4 +85,10 @@ static void	apply_changes(t_game *game)
 	else if (game->map[y][x] == EXIT)
 		if (!game->coins_num)
 			exit_game(game, "YOU WIN !");
+}
+
+int	reload_image(t_game *game)
+{
+	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 10:36:36 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 11:18:28 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/26 00:35:54 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	start_game(t_game *game)
 	display_game(game);
 	mlx_hook(game->screen, 17, 0L, close_window, game);
 	mlx_hook(game->screen, 02, 1L, key_press, game);
+	mlx_expose_hook(game->screen, reload_image, game);
 	mlx_loop_hook(game->mlx, animation, game);
 	mlx_loop(game->mlx);
 }
