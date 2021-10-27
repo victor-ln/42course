@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:04:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:28:13 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 15:59:25 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,32 @@ void	load_environment(t_game *game)
 	game->moves_str = ft_utoa(0);
 }
 
-static void	sprites_malloc(t_game *game)
+static void	sprites_malloc(t_game *g)
 {
 	int		i;
 
-	game->sprites.treant = (t_img ***)malloc(sizeof(t_img **) * 4);
-	game->sprites.mole = (t_img ***)malloc(sizeof(t_img **) * 4);
-	game->sprites.hero = (t_img ***)malloc(sizeof(t_img **) * 4);
-	game->sprites.enemy_death = (t_img **)malloc(sizeof(t_img *) * 6);
-	game->sprites.coins = (t_img **)malloc(sizeof(t_img *) * 4);
-	game->sprites.arrow = (t_img **)malloc(sizeof(t_img *) * 4);
-	game->sprites.door = (t_img **)malloc(sizeof(t_img *) * 2);
-	if (!game->sprites.hero || !game->sprites.coins || !game->sprites.arrow || \
-		!game->sprites.door || !game->sprites.treant || \
-		!game->sprites.enemy_death || !game->sprites.mole)
-		error(game, "Malloc to images ptrs failed", strerror(errno));
+	g->sprites.treant = (t_img ***)malloc(sizeof(t_img **) * 4);
+	g->sprites.mole = (t_img ***)malloc(sizeof(t_img **) * 4);
+	g->sprites.hero = (t_img ***)malloc(sizeof(t_img **) * 4);
+	g->sprites.enemy_death = (t_img **)malloc(sizeof(t_img *) * 6);
+	g->sprites.coins = (t_img **)malloc(sizeof(t_img *) * 4);
+	g->sprites.arrow = (t_img **)malloc(sizeof(t_img *) * 4);
+	g->sprites.door = (t_img **)malloc(sizeof(t_img *) * 2);
+	if (!g->sprites.hero || !g->sprites.coins || !g->sprites.arrow || \
+		!g->sprites.door || !g->sprites.treant || \
+		!g->sprites.enemy_death || !g->sprites.mole)
+		error(g, "Malloc to images ptrs failed", strerror(errno));
 	i = -1;
-	ft_bzero(game->sprites.hero, sizeof(t_img *) * 4);
-	ft_bzero(game->sprites.treant, sizeof(t_img *) * 4);
-	ft_bzero(game->sprites.mole, sizeof(t_img *) * 4);
+	ft_bzero(g->sprites.hero, sizeof(t_img *) * 4);
+	ft_bzero(g->sprites.treant, sizeof(t_img *) * 4);
+	ft_bzero(g->sprites.mole, sizeof(t_img *) * 4);
 	while (++i < 4)
 	{
-		game->sprites.hero[i] = (t_img **)malloc(sizeof(t_img *) * 10);
-		game->sprites.treant[i] = (t_img **)malloc(sizeof(t_img *) * 5);
-		game->sprites.mole[i] = (t_img **)malloc(sizeof(t_img *) * 5);
-		if (!game->sprites.treant[i] || !game->sprites.hero[i] || \
-			!game->sprites.mole[i])
-			error(game, "Malloc to image ptrs failed", strerror(errno));
+		g->sprites.hero[i] = (t_img **)malloc(sizeof(t_img *) * 10);
+		g->sprites.treant[i] = (t_img **)malloc(sizeof(t_img *) * 5);
+		g->sprites.mole[i] = (t_img **)malloc(sizeof(t_img *) * 5);
+		if (!g->sprites.treant[i] || !g->sprites.hero[i] || !g->sprites.mole[i])
+			error(g, "Malloc to image ptrs failed", strerror(errno));
 	}
 }
 

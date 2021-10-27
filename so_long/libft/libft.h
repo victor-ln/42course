@@ -79,6 +79,6 @@ void			ft_delay(int m_secs);
 	Copies n bytes from memory area src to memory area dest. 
 	The memory areas must not overlap.
 */
-void			*ft_memcpy(void *dest, const void *src, size_t n);
+void			*ft_memcpy(void *dest, const void *src, size_t len);
 
 #endif

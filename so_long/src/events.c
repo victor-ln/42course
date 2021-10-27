@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:05:06 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 15:55:09 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ static void	apply_changes(t_game *game)
 	y = game->hero.y / 32;
 	free(game->moves_str);
 	game->moves_str = ft_utoa(++game->moves_num);
-	if (!BONUS)
-		ft_putendl_fd(game->moves_str, 1);
 	if (game->map[y][x] == COLL)
 	{
 		game->coins_num--;

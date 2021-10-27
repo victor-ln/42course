@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 10:36:36 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 14:09:03 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 15:55:24 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,12 @@ void	display_game(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
 	hero_got_caught(game);
 	move_enemies(game);
-	if (BONUS)
-	{
-		if (++game->frame == 8)
-			game->frame = 0;
-		ft_delay(45500);
-		mlx_string_put(game->mlx, game->screen, 10, 10, C_WHITE, "Moves :");
-		mlx_string_put(game->mlx, game->screen, 60, 10, C_WHITE, \
-			game->moves_str);
-	}
+	if (++game->frame == 8)
+		game->frame = 0;
+	ft_delay(45500);
+	mlx_string_put(game->mlx, game->screen, 10, 10, C_WHITE, "Moves :");
+	mlx_string_put(game->mlx, game->screen, 60, 10, C_WHITE, \
+		game->moves_str);
 }
 
 /*
@@ -77,8 +74,7 @@ static void	hero_got_caught(t_game *g)
 
 int	animation(t_game *game)
 {
-	if (BONUS)
-		display_game(game);
+	display_game(game);
 	game->hero.step = 0;
 	return (0);
 }

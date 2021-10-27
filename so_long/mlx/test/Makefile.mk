@@ -3,7 +3,7 @@ INC=%%%%
 
 INCLIB=$(INC)/../lib
 
-CC=cc
+CC=gcc
 
 CFLAGS= -I$(INC) -O3 -I.. -g
 
@@ -23,8 +23,7 @@ endif
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) -c $(SRC)
+$(NAME): $(OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(LFLAGS)
 
 show:

@@ -1,13 +1,28 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/10/27 15:34:57 by vlima-nu          #+#    #+#              #
+#    Updated: 2021/10/27 15:53:31 by vlima-nu         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		=	so_long
-CC			=	cc
+
+CC			=	clang
+
 MLX			=	./mlx/libmlx.a
 LIB			=	./libft/libft.a
-MAIN		=	src/so_long.c
-IS_BONUS	=	-D BONUS=1
-IS_N_BONUS	=	-D BONUS=0
-FLAGS		=	-Wall -Werror -Wextra -g3
+
+FLAGS		=	-Wall -Werror -Wextra -g3 -O3
 LINKS		=	-lbsd -lX11 -lXext
 INC			=	-I ./mlx -I ./inc -I ./libft
+
+SRC_DIR		=	./src
+OBJ_DIR		=	./obj
 
 FILES		=	arrows.c \
 				draw_game.c \
@@ -19,47 +34,45 @@ FILES		=	arrows.c \
 				load_map.c \
 				map_init.c \
 				map_validate.c \
+				so_long.c \
 				window.c \
 
-SRC			=	$(addprefix src/,$(FILES))
-OBJ			=	$(addprefix obj/,$(FILES:%.c=%.o))
+SRC			=	$(addprefix $(SRC_DIR)/, $(FILES))
+OBJ			=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
 all:		$(NAME)
 
-$(NAME):	mlx_a
-	@echo "Compiling source [ .. ]"
-	@$(CC) $(FLAGS) $(INC) $(IS_N_BONUS) -c $(SRC)
-	@echo "Source compiled! [ OK ]"
-	@mv $(FILES:%.c=%.o) obj
-	@make -C ./libft
-	@$(CC) $(FLAGS) $(INC) $(MAIN) -O3 $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p obj
+	$(CC) $(FLAGS) $(INC) -c $< -o $@
+
+$(NAME):	$(MLX) $(LIB) $(OBJ)
+	@$(CC) $(FLAGS) $(OBJ) $(MLX) $(LIB) $(LINKS) $(INC) -o $(NAME)
 	@echo "Game created!"
 
-mlx_a:
+$(LIB):
+	make -C libft
+
+$(MLX):
 	@echo "Compiling Mlx [ .. ]"
 	@make -C ./mlx
 	@echo "Mlx is ready! [ OK ]"
-	@mkdir -p obj
 
 clean:
 	@make -C ./mlx clean
 	@make -C ./libft clean
 	@rm -fr obj
-	@echo "Object files removed."
+	@echo "Objects files deleted."
 
 fclean:		clean
 	@rm -f $(NAME)
 	@make -C ./libft fclean
-	@echo "Binaries removed."
+	@echo "Executable deleted."
 
-bonus:		mlx_a
-	@echo "Compiling source [ .. ]"
-	@$(CC) $(FLAGS) $(INC) $(IS_BONUS) -c $(SRC)
-	@echo "Source compiled! [ OK ]"
-	@mv $(FILES:%.c=%.o) obj
-	@make -C ./libft bonus
-	@$(CC) $(FLAGS) $(INC) $(MAIN) -O3 $(OBJ) $(MLX) $(LIB) $(LINKS) -o $(NAME)
-	@echo "Game with BONUS created!"
+bonus:		$(NAME)
+
+norm:
+	norminette src inc libft
 
 re:			fclean all
 

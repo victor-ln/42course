@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:01:06 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:01:09 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 15:57:13 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,7 @@ void	map_init(t_game *game)
 {
 	map_validate(game);
 	map_matrix(game);
-	free(game->map_ber);
-	game->map_ber = 0;
-	if (BONUS)
-	{
-		put_enemies(game);
-		if (game->enemies_num)
-		{
-			game->enemies = (t_enemies *)malloc(sizeof(t_enemies) * \
-				game->enemies_num);
-			if (!game->enemies)
-				error(game, "Malloc for enemies struct failed", \
-					strerror(errno));
-			enemy_coords(game);
-		}
-	}
+	put_enemies(game);
 }
 
 /*
@@ -65,6 +51,8 @@ static void	map_matrix(t_game *game)
 		}
 		z++;
 	}
+	free(game->map_ber);
+	game->map_ber = 0;
 }
 
 static void	hero_coords(t_game *game, int x, int y)
@@ -87,6 +75,9 @@ static void	enemy_coords(t_game *game)
 
 	i = 0;
 	y = 0;
+	game->enemies = (t_enemies *)malloc(sizeof(t_enemies) * game->enemies_num);
+	if (!game->enemies)
+		error(game, "Malloc for enemies struct failed", strerror(errno));
 	while (++y < game->height)
 	{
 		x = 0;
@@ -144,4 +135,6 @@ static void	put_enemies(t_game *g)
 			g->map[y][x] = ENEMY;
 		}
 	}
+	if (g->enemies_num)
+		enemy_coords(g);
 }
