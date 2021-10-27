@@ -6,11 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/27 02:33:32 by vlima-nu         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/26 00:44:11 by vlima-nu         ###   ########.fr       */
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
+/*   Updated: 2021/10/27 04:05:06 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +14,7 @@
 
 static void	apply_changes(t_game *game);
 static void	move_player(t_game *game, short dir, int to_x, int to_y);
-<<<<<<< HEAD
 static void	shoot_arrow(t_game *game);
-=======
-
-int	close_window(t_game *game)
-{
-	exit_game(game, "Window closed");
-	return (0);
-}
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
 
 int	key_press(int keycode, t_game *game)
 {
@@ -96,7 +83,6 @@ static void	apply_changes(t_game *game)
 			exit_game(game, "YOU WIN !");
 }
 
-<<<<<<< HEAD
 static void	shoot_arrow(t_game *game)
 {
 	int		steps;
@@ -116,10 +102,4 @@ static void	shoot_arrow(t_game *game)
 		}
 	}
 	game->hero.step = 0;
-=======
-int	reload_image(t_game *game)
-{
-	mlx_put_image_to_window(game->mlx, game->screen, game->img, 0, 0);
-	return (0);
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
 }

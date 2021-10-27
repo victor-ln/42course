@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 22:34:09 by vlima-nu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/27 03:22:46 by vlima-nu         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/25 20:20:14 by vlima-nu         ###   ########.fr       */
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
+/*   Created: 2021/10/27 04:04:16 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/10/27 04:04:26 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +28,10 @@ void	load_environment(t_game *game)
 		error(game, "Could not open a window", strerror(errno));
 	game->img = mlx_new_image(game->mlx, game->width * 32, game->height * 32);
 	if (!game->img)
-<<<<<<< HEAD
 		error(game, "Could not create images", strerror(errno));
 	game->sprites.enemy = (t_img ****)malloc(sizeof(t_img ***) * 2);
 	if (!game->sprites.enemy)
 		error(game, "Malloc for enemy ptrs failed", strerror(errno));
-=======
-		error(game, "Could not create image", strerror(errno));
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
 	sprites_malloc(game);
 	if (load_sprites(&game->sprites, game->mlx))
 		error(game, "Could not load all sprites", 0);
@@ -113,13 +105,8 @@ static int	a_set(t_img **ptr, void *mlx, char *path, int size)
 	num = ft_strlen(path) - 5;
 	while (i < size)
 	{
-<<<<<<< HEAD
 		temp[num] = '0' + i;
-		errors += a_sprite(ptr + i, mlx, temp);
-=======
-		path[num] = '0' + i;
 		errors += a_sprite(ptr + i, mlx, path);
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
 		i++;
 	}
 	free(temp);
