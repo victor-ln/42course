@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   animations.c                                       :+:      :+:    :+:   */
+/*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:33:25 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 10:35:12 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 01:44:50 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,15 @@
 
 static int	enemy_can_move(t_enemies *enemy, char **map);
 
-int	animation(t_game *game)
-{
-	if (BONUS)
-		display_game(game);
-	game->hero.step = 0;
-	return (0);
-}
-
 void	move_enemies(t_game *game)
 {
 	register int		i;
 
-	i = 0;
-	while (i < game->enemies_num)
+	i = -1;
+	while (++i < game->enemies_num)
 	{
+		if (game->enemies[i].is_alive != 1)
+			continue ;
 		if (!enemy_can_move(game->enemies + i, game->map))
 		{
 			game->enemies[i].dir = ft_rand() % 4;
@@ -43,7 +37,6 @@ void	move_enemies(t_game *game)
 		}
 		else
 			game->enemies[i].steps = 0;
-		i++;
 	}
 }
 
@@ -66,11 +59,24 @@ static int	enemy_can_move(t_enemies *enemy, char **map)
 			enemy->to_y = -1;
 		else
 			enemy->to_y = 1;
-		if (map[y + enemy->to_y][x + enemy->to_x] != HERO && \
-			map[y + enemy->to_y][x + enemy->to_x])
+		if (map[y + enemy->to_y][x + enemy->to_x])
 			return (0);
 		map[y][x] = 0;
 		map[y + enemy->to_y][x + enemy->to_x] = ENEMY;
 	}
 	return (1);
+}
+
+void	enemy_death(t_game *game, int i)
+{
+	draw_sprite(game->img, \
+		game->sprites.enemy_death[game->enemies[i].step], \
+		game->enemies[i].x, game->enemies[i].y);
+	if (++game->enemies[i].step == 6)
+	{
+		game->enemies[i].x = 0;
+		game->enemies[i].y = 0;
+		game->enemies[i].is_alive = 0;
+		game->kills++;
+	}
 }

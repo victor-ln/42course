@@ -6,7 +6,7 @@ NAME		= libft.a
 
 SRC			=	ft_bzero.c ft_calloc.c ft_putendl_fd.c \
 				ft_strdup.c ft_strjoin.c ft_strlen.c \
-				ft_strcmp.c ft_utoa.c ft_rand.c \
+				ft_strcmp.c ft_utoa.c ft_rand.c ft_memcpy.c \
 
 BONUS		=	ft_delay.c \
 
@@ -20,7 +20,7 @@ $(NAME):
 	@echo "Compiling Libft [ .. ]"
 	@$(CC) $(FLAGS) -O3 -c $(SRC)
 	@ar crs $(NAME) $(OBJ)
-	@mkdir obj
+	@mkdir -p obj
 	@mv $(OBJ) obj
 	@echo "Libft is ready! [ OK ]"
 
@@ -36,7 +36,7 @@ bonus:
 	@echo "Compiling Libft [ .. ]"
 	@$(CC) $(FLAGS) -c $(SRC) $(BONUS)
 	@ar crs $(NAME) $(OBJ) $(BONUS_OBJ)
-	@mkdir obj
+	@mkdir -p obj
 	@mv $(OBJ) $(BONUS_OBJ) obj
 	@echo "Libft with BONUS is ready! [ OK ]"
 

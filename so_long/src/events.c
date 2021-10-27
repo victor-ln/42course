@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 12:52:53 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 02:33:32 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 static void	apply_changes(t_game *game);
 static void	move_player(t_game *game, short dir, int to_x, int to_y);
-
-int	close_window(int keycode, t_game *game)
-{
-	(void)keycode;
-	(void)game;
-	exit(0);
-}
+static void	shoot_arrow(t_game *game);
 
 int	key_press(int keycode, t_game *game)
 {
@@ -32,6 +26,8 @@ int	key_press(int keycode, t_game *game)
 		move_player(game, DOWN, 0, 1);
 	else if (keycode == 'w')
 		move_player(game, UP, 0, -1);
+	else if (keycode == ' ')
+		shoot_arrow(game);
 	else if (keycode == ESC)
 		exit_game(game, 0);
 	return (0);
@@ -79,11 +75,31 @@ static void	apply_changes(t_game *game)
 		ft_putendl_fd(game->moves_str, 1);
 	if (game->map[y][x] == COLL)
 	{
-		if (--game->coins_num == 0)
-			game->door = 1;
+		game->coins_num--;
 		game->map[y][x] = 0;
 	}
 	else if (game->map[y][x] == EXIT)
-		if (!game->coins_num)
+		if (game->door)
 			exit_game(game, "YOU WIN !");
+}
+
+static void	shoot_arrow(t_game *game)
+{
+	int		steps;
+
+	game->hero.step = 7;
+	steps = game->hero.step;
+	while (++steps < 12)
+	{
+		display_game(game);
+		if (steps < 10)
+			game->hero.step++;
+		else
+		{
+			if (steps == 10)
+				put_arrow(game);
+			game->hero.step--;
+		}
+	}
+	game->hero.step = 0;
 }

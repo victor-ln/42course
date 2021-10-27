@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 15:15:55 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 12:58:36 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/26 20:22:41 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		draw_game(t_game *game);
 /*
 	Exits the game if close_window box is clicked.
 */
-int			close_window(int keycode, t_game *game);
+int			close_window(t_game *game);
 
 /*
 	Controls where to move when keycode is a, s, d or w
@@ -109,5 +109,19 @@ void		reboot_game(t_game *game);
 	Sets all game struct variables to zero.
 */
 void		game_init(t_game *game);
+
+int			reload_image(t_game *game);
+
+void		draw_arrows(t_game *game);
+
+void		put_arrow(t_game *game);
+
+/*
+	Receives the image to be drawn and the sprite
+	to draw at (x * sprite width, y * sprite height) position of the image.
+*/
+void		draw_sprite(t_img *image, t_img *sprite, int x, int y);
+
+void		enemy_death(t_game *game, int i);
 
 #endif

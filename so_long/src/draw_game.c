@@ -6,14 +6,13 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 12:47:30 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 01:40:16 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 static void			draw_players(t_game *game);
-static void			draw_sprite(t_img *image, t_img *sprite, int x, int y);
 static void			draw_pixel(t_img *image, int x, int y, unsigned int color);
 static unsigned int	get_color(t_img *image, int x, int y);
 
@@ -42,42 +41,43 @@ void	draw_game(t_game *game)
 		y++;
 	}
 	draw_players(game);
+	draw_arrows(game);
 }
 
 /*
 	Draws the hero and enemies (if they exist), based in their specific coordinates.
 */
-static void	draw_players(t_game *game)
+static void	draw_players(t_game *g)
 {
-	register int		i;
+	int		i;
 
-	i = 0;
-	draw_sprite(game->img, \
-		game->sprites.hero[game->hero.dir][game->hero.step], \
-		game->hero.x, game->hero.y);
-	while (i < game->enemies_num)
+	i = -1;
+	draw_sprite(g->img, \
+		g->sprites.hero[g->hero.dir][g->hero.step], \
+		g->hero.x, g->hero.y);
+	while (++i < g->enemies_num)
 	{
-		draw_sprite(game->img, \
-			game->sprites.enemy[game->enemies[i].dir][game->enemies[i].step], \
-			game->enemies[i].x, game->enemies[i].y);
-		i++;
+		if (!g->enemies[i].is_alive)
+			continue ;
+		else if (g->enemies[i].is_alive < 0)
+			enemy_death(g, i);
+		else
+			draw_sprite(g->img, \
+				g->sprites.enemy[g->enemies[i].who][g->enemies[i].dir] \
+				[g->enemies[i].step], g->enemies[i].x, g->enemies[i].y);
 	}
 }
 
-/*
-	Receives the image to be drawn and the sprite
-	to draw at (x * sprite width, y * sprite height) position of the image.
-*/
-static void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
+void	draw_sprite(t_img *image, t_img *sprite, int x, int y)
 {
 	register int		i;
 	register int		j;
 
 	j = 0;
-	while (j < 32)
+	while (j < sprite->height)
 	{
 		i = 0;
-		while (i < 32)
+		while (i < sprite->width)
 		{
 			draw_pixel(image, x + i, y + j, get_color(sprite, i, j));
 			i++;

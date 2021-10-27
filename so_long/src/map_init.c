@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 10:18:49 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 02:54:37 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,21 @@ void	map_init(t_game *game)
 {
 	map_validate(game);
 	map_matrix(game);
+	free(game->map_ber);
+	game->map_ber = 0;
 	if (BONUS)
+	{
 		put_enemies(game);
+		if (game->enemies_num)
+		{
+			game->enemies = (t_enemies *)malloc(sizeof(t_enemies) * \
+				game->enemies_num);
+			if (!game->enemies)
+				error(game, "Malloc for enemies struct failed", \
+					strerror(errno));
+			enemy_coords(game);
+		}
+	}
 }
 
 /*
@@ -63,6 +76,7 @@ static void	hero_coords(t_game *game, int x, int y)
 		game->hero.dir = RIGHT;
 	else
 		game->hero.dir = LEFT;
+	game->map[y][x] = 0;
 }
 
 static void	enemy_coords(t_game *game)
@@ -73,9 +87,6 @@ static void	enemy_coords(t_game *game)
 
 	i = 0;
 	y = 0;
-	game->enemies = (t_enemies *)malloc(sizeof(t_enemies) * game->enemies_num);
-	if (!game->enemies)
-		error(game, "Malloc for enemies struct failed", strerror(errno));
 	while (++y < game->height)
 	{
 		x = 0;
@@ -83,10 +94,11 @@ static void	enemy_coords(t_game *game)
 		{
 			if (game->map[y][x] != ENEMY)
 				continue ;
+			ft_bzero(game->enemies + i, sizeof(t_enemies));
 			game->enemies[i].x = x * 32;
 			game->enemies[i].y = y * 32;
-			game->enemies[i].steps = 0;
-			game->enemies[i].step = 0;
+			game->enemies[i].is_alive = 1;
+			game->enemies[i].who = ft_rand() % 2;
 			game->enemies[i].dir = ft_rand() % 4;
 			i++;
 		}
@@ -132,6 +144,4 @@ static void	put_enemies(t_game *g)
 			g->map[y][x] = ENEMY;
 		}
 	}
-	if (g->enemies_num)
-		enemy_coords(g);
 }

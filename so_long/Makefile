@@ -5,19 +5,21 @@ LIB			=	./libft/libft.a
 MAIN		=	src/so_long.c
 IS_BONUS	=	-D BONUS=1
 IS_N_BONUS	=	-D BONUS=0
-FLAGS		=	-Wall -Werror -Wextra -g3 -fsanitize=address
+FLAGS		=	-Wall -Werror -Wextra -g3
 LINKS		=	-lbsd -lX11 -lXext
 INC			=	-I ./mlx -I ./inc -I ./libft
 
-FILES		=	animations.c \
+FILES		=	arrows.c \
 				draw_game.c \
 				end_game.c \
+				enemy.c \
 				events.c \
 				game.c \
 				load_environment.c \
 				load_map.c \
 				map_init.c \
 				map_validate.c \
+				window.c \
 
 SRC			=	$(addprefix src/,$(FILES))
 OBJ			=	$(addprefix obj/,$(FILES:%.c=%.o))
@@ -37,7 +39,7 @@ mlx_a:
 	@echo "Compiling Mlx [ .. ]"
 	@make -C ./mlx
 	@echo "Mlx is ready! [ OK ]"
-	@mkdir obj
+	@mkdir -p obj
 
 clean:
 	@make -C ./mlx clean

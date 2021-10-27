@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 01:30:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/25 08:20:37 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 03:45:12 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SO_LONG_DATA_H
 
 # include <errno.h>
-# include <time.h>
+# include <threads.h>
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
 # include "libft.h"
@@ -37,37 +37,51 @@ typedef struct s_sprites
 	t_img		*tree;
 	t_img		**door;
 	t_img		**coins;
+	t_img		**arrow;
+	t_img		**enemy_death;
 	t_img		***hero;
-	t_img		***enemy;
+	t_img		****enemy;
 }	t_sprites;
 
 typedef struct s_enemies
 {
 	short		to_x;
 	short		to_y;
-	u_int16_t	steps;
-	u_int16_t	step;
-	u_int16_t	dir;
-	u_int16_t	x;
-	u_int16_t	y;
+	short		steps;
+	short		step;
+	short		dir;
+	short		x;
+	short		y;
+	short		who;
+	short		is_alive;
 }	t_enemies;
 
 typedef struct s_hero
 {
-	u_int16_t	step;
-	u_int16_t	dir;
-	u_int16_t	x;
-	u_int16_t	y;
+	short		step;
+	short		dir;
+	short		x;
+	short		y;
 }	t_hero;
+
+typedef struct s_coord
+{
+	short		x;
+	short		y;
+	short		dir;
+	short		to_x;
+	short		to_y;
+}	t_coord;
 
 typedef struct s_game
 {
-	u_int16_t	enemies_num;
-	u_int16_t	coins_num;
-	u_int16_t	height;
-	u_int16_t	width;
-	u_int16_t	frame;
-	u_int16_t	door;
+	short		enemies_num;
+	short		kills;
+	short		coins_num;
+	short		height;
+	short		width;
+	short		frame;
+	short		door;
 	u_int32_t	moves_num;
 	void		*mlx;
 	void		*screen;
@@ -78,6 +92,8 @@ typedef struct s_game
 	t_enemies	*enemies;
 	t_sprites	sprites;
 	t_hero		hero;
+	t_coord		*arrow;
+	short		arrows_num;
 }	t_game;
 
 #endif
