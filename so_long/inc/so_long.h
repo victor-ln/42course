@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 15:15:55 by vlima-nu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/26 20:22:41 by vlima-nu         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/26 00:43:50 by vlima-nu         ###   ########.fr       */
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
+/*   Created: 2021/10/27 04:00:18 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/10/27 04:00:21 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +112,6 @@ void		game_init(t_game *game);
 
 int			reload_image(t_game *game);
 
-<<<<<<< HEAD
 void		draw_arrows(t_game *game);
 
 void		put_arrow(t_game *game);
@@ -129,6 +124,4 @@ void		draw_sprite(t_img *image, t_img *sprite, int x, int y);
 
 void		enemy_death(t_game *game, int i);
 
-=======
->>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
 #endif
