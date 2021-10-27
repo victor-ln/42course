@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:04:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:15:48 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 04:28:13 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ static void	sprites_malloc(t_game *game)
 		!game->sprites.enemy_death || !game->sprites.mole)
 		error(game, "Malloc to images ptrs failed", strerror(errno));
 	i = -1;
+	ft_bzero(game->sprites.hero, sizeof(t_img *) * 4);
+	ft_bzero(game->sprites.treant, sizeof(t_img *) * 4);
+	ft_bzero(game->sprites.mole, sizeof(t_img *) * 4);
 	while (++i < 4)
 	{
 		game->sprites.hero[i] = (t_img **)malloc(sizeof(t_img *) * 10);
@@ -103,7 +106,7 @@ static int	a_set(t_img **ptr, void *mlx, char *path, int size)
 	while (i < size)
 	{
 		temp[num] = '0' + i;
-		errors += a_sprite(ptr + i, mlx, path);
+		errors += a_sprite(ptr + i, mlx, temp);
 		i++;
 	}
 	free(temp);
