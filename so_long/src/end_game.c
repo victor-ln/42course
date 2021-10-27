@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:00:55 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:00:58 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 04:12:09 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ static void	destroy_game(t_game *game)
 		free(game->enemies);
 	if (game->sprites.hero)
 		free(game->sprites.hero);
-	if (game->sprites.enemy)
-		free(game->sprites.enemy);
 	if (game->sprites.grass)
 		mlx_destroy_image(game->mlx, game->sprites.grass);
 	if (game->sprites.tree)
@@ -102,10 +100,9 @@ static void	destroy_ptrs(t_game *game)
 
 	if (game->map)
 	{
-		i = -1;
-		while (++i < game->height)
-			if (game->map[i])
-				free(game->map[i]);
+		while (game->height)
+			if (game->map[--game->height])
+				free(game->map[game->height]);
 		free(game->map);
 	}
 	else
@@ -115,20 +112,13 @@ static void	destroy_ptrs(t_game *game)
 	{
 		if (game->sprites.hero)
 			destroy_sprites(game->sprites.hero[i], game->mlx, 10);
-		if (game->sprites.enemy)
-		{
-			if (game->sprites.enemy[0])
-			{
-				destroy_sprites(game->sprites.enemy[0][i], game->mlx, 5);
-				if (i == 3)
-					free(game->sprites.enemy[0]);
-			}
-			if (game->sprites.enemy[1])
-			{
-				destroy_sprites(game->sprites.enemy[1][i], game->mlx, 5);
-				if (i == 3)
-					free(game->sprites.enemy[1]);
-			}
-		}
+		if (game->sprites.treant)
+			destroy_sprites(game->sprites.treant[i], game->mlx, 5);
+		if (game->sprites.mole)
+			destroy_sprites(game->sprites.mole[i], game->mlx, 5);
 	}
+	if (game->sprites.treant)
+		free(game->sprites.treant);
+	if (game->sprites.mole)
+		free(game->sprites.mole);
 }

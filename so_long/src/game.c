@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 10:36:36 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:04:45 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 04:13:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	game_init(t_game *game)
 		error(0, "Malloc for game struct failed", strerror(errno));
 	game->sprites.coins = 0;
 	game->sprites.hero = 0;
-	game->sprites.enemy = 0;
+	game->sprites.treant = 0;
+	game->sprites.mole = 0;
 	game->sprites.arrow = 0;
 	game->arrows_num = 0;
 	game->sprites.door = 0;

@@ -6,10 +6,9 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:00:10 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:00:11 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 04:08:29 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef SO_LONG_DATA_H
 # define SO_LONG_DATA_H
@@ -41,7 +40,8 @@ typedef struct s_sprites
 	t_img		**arrow;
 	t_img		**enemy_death;
 	t_img		***hero;
-	t_img		****enemy;
+	t_img		***treant;
+	t_img		***mole;
 }	t_sprites;
 
 typedef struct s_enemies

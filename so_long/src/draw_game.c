@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 01:40:16 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 04:15:17 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ static void	draw_players(t_game *g)
 			continue ;
 		else if (g->enemies[i].is_alive < 0)
 			enemy_death(g, i);
+		else if (g->enemies[i].who)
+			draw_sprite(g->img, g->sprites.treant[g->enemies[i].dir] \
+				[g->enemies[i].step], g->enemies[i].x, g->enemies[i].y);
 		else
-			draw_sprite(g->img, \
-				g->sprites.enemy[g->enemies[i].who][g->enemies[i].dir] \
+			draw_sprite(g->img, g->sprites.mole[g->enemies[i].dir] \
 				[g->enemies[i].step], g->enemies[i].x, g->enemies[i].y);
 	}
 }
