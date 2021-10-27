@@ -6,7 +6,11 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:43:54 by vlima-nu          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/10/27 02:54:37 by vlima-nu         ###   ########.fr       */
+=======
+/*   Updated: 2021/10/25 18:37:53 by vlima-nu         ###   ########.fr       */
+>>>>>>> 43479e832814406b84f9ea2af72729d193f9e129
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +44,7 @@ void	map_init(t_game *game)
 
 /*
 	Converts the map_ber string into a map matrix, saves
-	the x,y hero coordinates and frees the map_ber.
+	the x, y hero coordinates and frees the map_ber.
 */
 static void	map_matrix(t_game *game)
 {
@@ -107,7 +111,7 @@ static void	enemy_coords(t_game *game)
 
 /*
 	In the follow map just one enemy
-	can exist on map[1][1] position.
+	can exist on 1, 1 position.
 
 		0 1 2 3 4
 

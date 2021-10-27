@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 00:40:08 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/07 00:40:44 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/25 20:24:48 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ char	*ft_utoa(unsigned int nbr)
 		size++;
 	}
 	string = (char *)malloc(size + 1);
-	string[size--] = 0;
+	*(string + size--) = 0;
 	while (size >= 0)
 	{
-		string[size--] = nbr % 10 + 48;
+		*(string + size--) = nbr % 10 + 48;
 		nbr /= 10;
 	}
 	return (string);

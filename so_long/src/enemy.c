@@ -6,7 +6,11 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:33:25 by vlima-nu          #+#    #+#             */
+<<<<<<< HEAD:so_long/src/enemy.c
 /*   Updated: 2021/10/27 01:44:50 by vlima-nu         ###   ########.fr       */
+=======
+/*   Updated: 2021/10/25 19:51:50 by vlima-nu         ###   ########.fr       */
+>>>>>>> 43479e832814406b84f9ea2af72729d193f9e129:so_long/src/animations.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +36,8 @@ void	move_enemies(t_game *game)
 		{
 			if (++game->enemies[i].step == 5)
 				game->enemies[i].step = 1;
-			game->enemies[i].x += (game->enemies[i].to_x * 4);
-			game->enemies[i].y += (game->enemies[i].to_y * 4);
+			game->enemies[i].x += game->enemies[i].to_x;
+			game->enemies[i].y += game->enemies[i].to_y;
 		}
 		else
 			game->enemies[i].steps = 0;
@@ -52,17 +56,22 @@ static int	enemy_can_move(t_enemies *enemy, char **map)
 		enemy->to_x = 0;
 		enemy->to_y = 0;
 		if (enemy->dir == RIGHT)
-			enemy->to_x = 1;
+			enemy->to_x = 4;
 		else if (enemy->dir == LEFT)
-			enemy->to_x = -1;
+			enemy->to_x = -4;
 		else if (enemy->dir == UP)
-			enemy->to_y = -1;
+			enemy->to_y = -4;
 		else
+<<<<<<< HEAD:so_long/src/enemy.c
 			enemy->to_y = 1;
 		if (map[y + enemy->to_y][x + enemy->to_x])
+=======
+			enemy->to_y = 4;
+		if (map[y + enemy->to_y / 4][x + enemy->to_x / 4])
+>>>>>>> 43479e832814406b84f9ea2af72729d193f9e129:so_long/src/animations.c
 			return (0);
 		map[y][x] = 0;
-		map[y + enemy->to_y][x + enemy->to_x] = ENEMY;
+		map[y + enemy->to_y / 4][x + enemy->to_x / 4] = ENEMY;
 	}
 	return (1);
 }
