@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:40:17 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/26 00:16:56 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/27 14:08:31 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_map_validate
 static void	is_valid(t_game *game, t_map_validate *map);
 static int	is_border(t_game *game, int i);
 static void	is_rectangular(t_game *game);
-static void	init_map_struct(t_map_validate *map);
 
 /*
 
@@ -43,7 +42,7 @@ void	map_validate(t_game *game)
 	t_map_validate	map;
 
 	is_rectangular(game);
-	init_map_struct(&map);
+	ft_bzero(&map, sizeof(t_map_validate));
 	while (game->map_ber[map.i])
 	{
 		if (is_border(game, map.i))
@@ -72,7 +71,6 @@ static void	is_rectangular(t_game *game)
 
 	i = 0;
 	game->height = 1;
-	game->width = 0;
 	while (game->map_ber[i])
 	{
 		if (game->map_ber[i] == '\n')
@@ -115,13 +113,4 @@ static int	is_border(t_game *game, int i)
 		return (1);
 	}
 	return (0);
-}
-
-static void	init_map_struct(t_map_validate *map)
-{
-	map->exits_num = 0;
-	map->heros_num = 0;
-	map->coins_num = 0;
-	map->zeros_num = 0;
-	map->i = 0;
 }
