@@ -6,45 +6,51 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 17:41:16 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 15:55:09 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/30 04:04:06 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 static void	apply_changes(t_game *game);
-static void	move_player(t_game *game, short dir, int to_x, int to_y);
-static void	shoot_arrow(t_game *game);
+static void	move_player(t_game *game);
+static int	shoot_arrow(t_game *game);
 
 int	key_press(int keycode, t_game *game)
 {
 	if (keycode == 'd')
-		move_player(game, RIGHT, 1, 0);
+		game->hero.coord.dir = RIGHT;
 	else if (keycode == 'a')
-		move_player(game, LEFT, -1, 0);
+		game->hero.coord.dir = LEFT;
 	else if (keycode == 's')
-		move_player(game, DOWN, 0, 1);
+		game->hero.coord.dir = DOWN;
 	else if (keycode == 'w')
-		move_player(game, UP, 0, -1);
+		game->hero.coord.dir = UP;
 	else if (keycode == ' ')
-		shoot_arrow(game);
+		return (shoot_arrow(game));
 	else if (keycode == ESC)
 		exit_game(game, "Esc pressed");
+	else
+		return (0);
+	move_player(game);
 	return (0);
 }
 
-static void	move_player(t_game *game, short dir, int to_x, int to_y)
+static void	move_player(t_game *game)
 {
 	int		steps;
 
-	game->hero.dir = dir;
-	if (game->map[game->hero.y / 32 + to_y][game->hero.x / 32 + to_x] != 1)
+	set_dir(&game->hero.coord);
+	if (game->map[game->hero.coord.y / 32 + game->hero.coord.to_y] \
+			[game->hero.coord.x / 32 + game->hero.coord.to_x] != 1)
 	{
 		steps = 0;
+		game->hero.coord.to_x *= 4;
+		game->hero.coord.to_y *= 4;
 		while (steps <= 7)
 		{
-			game->hero.x += (to_x * 4);
-			game->hero.y += (to_y * 4);
+			game->hero.coord.x += game->hero.coord.to_x;
+			game->hero.coord.y += game->hero.coord.to_y;
 			if (++game->hero.step == 7)
 				game->hero.step = 1;
 			display_game(game);
@@ -67,8 +73,8 @@ static void	apply_changes(t_game *game)
 	int		x;
 	int		y;
 
-	x = game->hero.x / 32;
-	y = game->hero.y / 32;
+	x = game->hero.coord.x / 32;
+	y = game->hero.coord.y / 32;
 	free(game->moves_str);
 	game->moves_str = ft_utoa(++game->moves_num);
 	if (game->map[y][x] == COLL)
@@ -81,7 +87,7 @@ static void	apply_changes(t_game *game)
 			exit_game(game, "YOU WIN !");
 }
 
-static void	shoot_arrow(t_game *game)
+static int	shoot_arrow(t_game *game)
 {
 	int		steps;
 
@@ -100,4 +106,19 @@ static void	shoot_arrow(t_game *game)
 		}
 	}
 	game->hero.step = 0;
+	return (0);
+}
+
+void	set_dir(t_coord *ptr)
+{
+	ptr->to_x = 0;
+	ptr->to_y = 0;
+	if (ptr->dir == RIGHT)
+		ptr->to_x = 1;
+	else if (ptr->dir == LEFT)
+		ptr->to_x = -1;
+	else if (ptr->dir == UP)
+		ptr->to_y = -1;
+	else
+		ptr->to_y = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:01:06 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 15:57:13 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/30 03:20:29 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ static void	map_matrix(t_game *game)
 
 static void	hero_coords(t_game *game, int x, int y)
 {
-	game->hero.x = x * 32;
-	game->hero.y = y * 32;
+	game->hero.coord.x = x * 32;
+	game->hero.coord.y = y * 32;
 	game->hero.step = 0;
 	if (x < (game->width / 2))
-		game->hero.dir = RIGHT;
+		game->hero.coord.dir = RIGHT;
 	else
-		game->hero.dir = LEFT;
+		game->hero.coord.dir = LEFT;
 	game->map[y][x] = 0;
 }
 
@@ -86,11 +86,11 @@ static void	enemy_coords(t_game *game)
 			if (game->map[y][x] != ENEMY)
 				continue ;
 			ft_bzero(game->enemies + i, sizeof(t_enemies));
-			game->enemies[i].x = x * 32;
-			game->enemies[i].y = y * 32;
+			game->enemies[i].coord.x = x * 32;
+			game->enemies[i].coord.y = y * 32;
 			game->enemies[i].is_alive = 1;
 			game->enemies[i].who = ft_rand() % 2;
-			game->enemies[i].dir = ft_rand() % 4;
+			game->enemies[i].coord.dir = ft_rand() % 4;
 			i++;
 		}
 	}

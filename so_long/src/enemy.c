@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:33:25 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 15:59:19 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/30 04:03:05 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ void	move_enemies(t_game *game)
 			continue ;
 		if (!enemy_can_move(game->enemies + i, game->map))
 		{
-			game->enemies[i].dir = ft_rand() % 4;
+			game->enemies[i].coord.dir = ft_rand() % 4;
 			game->enemies[i].step = 0;
 		}
 		else if (++game->enemies[i].steps <= 8)
 		{
 			if (++game->enemies[i].step == 5)
 				game->enemies[i].step = 1;
-			game->enemies[i].x += (game->enemies[i].to_x * 4);
-			game->enemies[i].y += (game->enemies[i].to_y * 4);
+			game->enemies[i].coord.x += game->enemies[i].coord.to_x;
+			game->enemies[i].coord.y += game->enemies[i].coord.to_y;
 		}
 		else
 			game->enemies[i].steps = 0;
@@ -47,36 +47,37 @@ static int	enemy_can_move(t_enemies *enemy, char **map)
 
 	if (!enemy->steps)
 	{
-		x = enemy->x / 32;
-		y = enemy->y / 32;
-		enemy->to_x = 0;
-		enemy->to_y = 0;
-		if (enemy->dir == RIGHT)
-			enemy->to_x = 1;
-		else if (enemy->dir == LEFT)
-			enemy->to_x = -1;
-		else if (enemy->dir == UP)
-			enemy->to_y = -1;
-		else
-			enemy->to_y = 1;
-		if (map[y + enemy->to_y][x + enemy->to_x])
+		x = enemy->coord.x / 32;
+		y = enemy->coord.y / 32;
+		set_dir(&enemy->coord);
+		if (map[y + enemy->coord.to_y][x + enemy->coord.to_x])
 			return (0);
 		map[y][x] = 0;
-		map[y + enemy->to_y][x + enemy->to_x] = ENEMY;
+		map[y + enemy->coord.to_y][x + enemy->coord.to_x] = ENEMY;
+		enemy->coord.to_x *= 4;
+		enemy->coord.to_y *= 4;
 	}
 	return (1);
 }
 
-void	enemy_death(t_game *game, int i)
+void	enemy_death(t_game *g, int i)
 {
-	draw_sprite(game->img, \
-		game->sprites.enemy_death[game->enemies[i].step], \
-		game->enemies[i].x, game->enemies[i].y);
-	if (++game->enemies[i].step == 6)
+	int		x;
+	int		y;
+
+	draw_sprite(g->img, \
+		g->sprites.enemy_death[g->enemies[i].step], \
+		g->enemies[i].coord.x, g->enemies[i].coord.y);
+	if (++g->enemies[i].step == 6)
 	{
-		game->enemies[i].x = 0;
-		game->enemies[i].y = 0;
-		game->enemies[i].is_alive = 0;
-		game->kills++;
+		x = g->enemies[i].coord.x / 32;
+		y = g->enemies[i].coord.y / 32;
+		if (g->map[y][x] == ENEMY)
+			g->map[y][x] = 0;
+		else
+			g->map[y + g->enemies[i].coord.to_y] \
+				[x + g->enemies[i].coord.to_x] = 0;
+		ft_bzero(g->enemies + i, sizeof(t_enemies));
+		g->kills++;
 	}
 }

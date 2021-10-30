@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:20:03 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:15:17 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/30 03:32:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static void	draw_players(t_game *g)
 
 	i = -1;
 	draw_sprite(g->img, \
-		g->sprites.hero[g->hero.dir][g->hero.step], \
-		g->hero.x, g->hero.y);
+		g->sprites.hero[g->hero.coord.dir][g->hero.step], \
+		g->hero.coord.x, g->hero.coord.y);
 	while (++i < g->enemies_num)
 	{
 		if (!g->enemies[i].is_alive)
@@ -62,11 +62,13 @@ static void	draw_players(t_game *g)
 		else if (g->enemies[i].is_alive < 0)
 			enemy_death(g, i);
 		else if (g->enemies[i].who)
-			draw_sprite(g->img, g->sprites.treant[g->enemies[i].dir] \
-				[g->enemies[i].step], g->enemies[i].x, g->enemies[i].y);
+			draw_sprite(g->img, g->sprites.treant[g->enemies[i].coord.dir] \
+				[g->enemies[i].step], g->enemies[i].coord.x, \
+					g->enemies[i].coord.y);
 		else
-			draw_sprite(g->img, g->sprites.mole[g->enemies[i].dir] \
-				[g->enemies[i].step], g->enemies[i].x, g->enemies[i].y);
+			draw_sprite(g->img, g->sprites.mole[g->enemies[i].coord.dir] \
+				[g->enemies[i].step], g->enemies[i].coord.x, \
+					g->enemies[i].coord.y);
 	}
 }
 

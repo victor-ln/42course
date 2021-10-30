@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:00:10 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 15:59:19 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/30 03:24:04 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,6 @@ typedef struct s_sprites
 	t_img		***mole;
 }	t_sprites;
 
-typedef struct s_enemies
-{
-	short		to_x;
-	short		to_y;
-	short		steps;
-	short		step;
-	short		dir;
-	short		x;
-	short		y;
-	short		who;
-	short		is_alive;
-}	t_enemies;
-
-typedef struct s_hero
-{
-	short		step;
-	short		dir;
-	short		x;
-	short		y;
-}	t_hero;
-
 typedef struct s_coord
 {
 	short		x;
@@ -74,27 +53,42 @@ typedef struct s_coord
 	short		to_y;
 }	t_coord;
 
+typedef struct s_enemies
+{
+	t_coord		coord;
+	short		steps;
+	short		step;
+	short		who;
+	short		is_alive;
+}	t_enemies;
+
+typedef struct s_hero
+{
+	t_coord		coord;
+	short		step;
+}	t_hero;
+
 typedef struct s_game
 {
 	short		enemies_num;
-	short		kills;
+	short		arrows_num;
 	short		coins_num;
+	u_int32_t	moves_num;
 	short		height;
 	short		width;
+	short		kills;
 	short		frame;
 	short		door;
-	u_int32_t	moves_num;
 	void		*mlx;
 	void		*screen;
 	char		*moves_str;
-	char		**map;
 	char		*map_ber;
-	t_img		*img;
+	char		**map;
 	t_enemies	*enemies;
+	t_coord		*arrow;
+	t_img		*img;
 	t_sprites	sprites;
 	t_hero		hero;
-	t_coord		*arrow;
-	short		arrows_num;
 }	t_game;
 
 #endif

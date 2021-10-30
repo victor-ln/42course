@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 04:00:18 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 04:00:21 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/30 03:37:48 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		map_init(t_game *game);
 	Checks if map has at least one player,
 	one exit, and collects, if is rectangular and symmetrical,
 	if it's surrounded by walls "1"
-	and if there's only the "01PEC\n" chars.
+	and if there's only the "01PEC\\n" chars.
 */
 void		map_validate(t_game *game);
 
@@ -72,7 +72,7 @@ int			key_press(int keycode, t_game *game);
 void		display_game(t_game *game);
 
 /*
-	Writes "Error" and the messages passed, frees
+	Writes "Error\\n" and the messages passed, frees
 	all allocated memory and exits with status 1.
 */
 void		error(t_game *game, char *message, char *str_error);
@@ -123,5 +123,7 @@ void		put_arrow(t_game *game);
 void		draw_sprite(t_img *image, t_img *sprite, int x, int y);
 
 void		enemy_death(t_game *game, int i);
+
+void		set_dir(t_coord *ptr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 17:57:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/10/27 03:51:43 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/10/30 04:01:19 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,12 @@ void	put_arrow(t_game *game)
 		realloc_arrows(&game->arrow, game->arrows_num++);
 	if (!game->arrow)
 		error(game, "Malloc for arrows struct failed", strerror(errno));
-	game->arrow[current].to_x = 0;
-	game->arrow[current].to_y = 0;
-	game->arrow[current].dir = game->hero.dir;
-	if (game->hero.dir == RIGHT)
-		game->arrow[current].to_x = 8;
-	else if (game->hero.dir == LEFT)
-		game->arrow[current].to_x = -8;
-	else if (game->hero.dir == UP)
-		game->arrow[current].to_y = -8;
-	else
-		game->arrow[current].to_y = 8;
-	game->arrow[current].x = game->hero.x;
-	game->arrow[current].y = game->hero.y;
+	game->arrow[current].dir = game->hero.coord.dir;
+	game->arrow[current].x = game->hero.coord.x;
+	game->arrow[current].y = game->hero.coord.y;
+	set_dir(game->arrow + current);
+	game->arrow[current].to_x *= 8;
+	game->arrow[current].to_y *= 8;
 }
 
 static void	realloc_arrows(t_coord **arrows, short arrows_num)
@@ -99,8 +92,7 @@ static void	move_arrows(t_game *g)
 		if ((g->map[y][x] && g->map[y][x] != ENEMY) || hit_enemies(g, i))
 		{
 			g->arrows_num--;
-			g->arrow[i].x = 0;
-			g->arrow[i].y = 0;
+			ft_bzero(g->arrow + i, sizeof(t_coord));
 		}
 		else
 		{
@@ -110,27 +102,22 @@ static void	move_arrows(t_game *g)
 	}
 }
 
-static int	hit_enemies(t_game *game, int j)
+static int	hit_enemies(t_game *g, int j)
 {
 	int		i;
-	int		x;
-	int		y;
 
 	i = 0;
-	while (i < game->enemies_num)
+	while (i < g->enemies_num)
 	{
-		if ((game->arrow[j].x == game->enemies[i].x && \
-			game->arrow[j].y == game->enemies[i].y) || \
-			(game->arrow[j].x - game->arrow[j].to_x == game->enemies[i].x && \
-			game->arrow[j].y - game->arrow[j].to_y == game->enemies[i].y) || \
-			((game->arrow[j].x + game->arrow[j].to_x == game->enemies[i].x && \
-			game->arrow[j].y + game->arrow[j].to_y == game->enemies[i].y)))
+		if ((g->arrow[j].x == g->enemies[i].coord.x && \
+			g->arrow[j].y == g->enemies[i].coord.y) || \
+			(g->arrow[j].x - g->arrow[j].to_x == g->enemies[i].coord.x && \
+			g->arrow[j].y - g->arrow[j].to_y == g->enemies[i].coord.y) || \
+			((g->arrow[j].x + g->arrow[j].to_x == g->enemies[i].coord.x && \
+			g->arrow[j].y + g->arrow[j].to_y == g->enemies[i].coord.y)))
 		{
-			x = game->enemies[i].x / 32;
-			y = game->enemies[i].y / 32;
-			game->enemies[i].is_alive = -1;
-			game->enemies[i].step = 0;
-			game->map[y][x] = 0;
+			g->enemies[i].is_alive = -1;
+			g->enemies[i].step = 0;
 			return (1);
 		}
 		i++;
