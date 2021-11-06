@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:47:14 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/06 11:08:19 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:10:43 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	send_message(__pid_t pid, char *message)
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
-			usleep(250);
+			usleep(300);
 			ch /= 2;
 			bits++;
 		}
