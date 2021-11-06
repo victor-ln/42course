@@ -6,19 +6,19 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:47:14 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/06 11:10:43 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:29:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void	send_message(__pid_t pid, char *message);
-static int	check_pid(char *ptr, __pid_t *pid);
+static void	send_message(int pid, char *message);
+static int	check_pid(char *ptr, int *pid);
 static void	error(char *message);
 
 int	main(int argc, char **argv)
 {
-	__pid_t		pid;
+	int		pid;
 
 	pid = 0;
 	if (argc != 3)
@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-static int	check_pid(char *ptr, __pid_t *pid)
+static int	check_pid(char *ptr, int *pid)
 {
 	while (ft_isdigit(*ptr))
 	{
@@ -49,7 +49,7 @@ static int	check_pid(char *ptr, __pid_t *pid)
 	return (0);
 }
 
-static void	send_message(__pid_t pid, char *message)
+static void	send_message(int pid, char *message)
 {
 	int		ch;
 	int		bits;
