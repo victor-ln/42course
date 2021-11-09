@@ -17,22 +17,20 @@ static char		num_base(size_t num);
 
 char	*ft_hextoa(size_t nbr)
 {
-	char	*res;
+	char	*str;
 	size_t	size;
 
 	size = count_size(nbr, 16);
-	res = (char *)malloc(size + 1);
-	if (!res)
+	str = (char *)malloc(size + 1);
+	if (!str)
 		return (NULL);
-	*(res + size--) = 0;
-	while (nbr)
+	*(str + size) = 0;
+	while (nbr || size)
 	{
-		*(res + size--) = num_base((nbr % 16));
+		*(str + --size) = num_base(nbr % 16);
 		nbr /= 16;
 	}
-	if (!size && !res[1])
-		*(res + size) = '0';
-	return (res);
+	return (str);
 }
 
 char	*ft_utoa(unsigned int nbr)
@@ -44,14 +42,12 @@ char	*ft_utoa(unsigned int nbr)
 	str = (char *)malloc(size + 1);
 	if (!str)
 		return (NULL);
-	*(str + size--) = 0;
-	while (nbr)
+	*(str + size) = 0;
+	while (nbr || size)
 	{
-		*(str + size--) = num_base((nbr % 10));
+		*(str + --size) = num_base(nbr % 10);
 		nbr /= 10;
 	}
-	if (!size && !str[1])
-		*(str + size) = '0';
 	return (str);
 }
 
@@ -60,9 +56,7 @@ static size_t	count_size(size_t num, size_t base)
 	size_t	size;
 
 	size = 0;
-	if (!num)
-		return (1);
-	while (num)
+	while (num || !size)
 	{
 		num /= base;
 		size++;
@@ -75,5 +69,5 @@ static char	num_base(size_t num)
 	char	*base;
 
 	base = "0123456789abcdef";
-	return (base[num]);
+	return (*(base + num));
 }

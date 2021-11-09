@@ -12,43 +12,19 @@
 
 #include "../inc/ft_printf.h"
 
-void	ft_start_struct(t_params *p)
-{
-	p->type = 0;
-	p->hash = 0;
-	p->plus_or_space = 0;
-	p->zr_or_spaces = 0;
-	p->width = 0;
-	p->precision = 0;
-	p->precision_c = 0;
-}
-
-t_data	*ft_toward_specifier(t_data *format)
+t_data	*toward_specifier(t_data *format)
 {
 	while (!ft_strchr(TYPES, *format) && *format)
 		format++;
-	return (++format);
+	return (format + 1);
 }
 
-int	ft_printchar(int width, char c, int offset)
+int	printchar(int width, char c, int offset)
 {
 	int	printed;
 
-	printed = 0;
-	while (width > offset)
-	{
-		printed += write(1, &c, 1);
-		width--;
-	}
+	printed = width - offset;
+	while (--width >= offset)
+		write(1, &c, 1);
 	return (printed);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

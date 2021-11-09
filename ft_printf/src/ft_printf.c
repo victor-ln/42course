@@ -23,13 +23,13 @@ int	ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (*format)
 	{
-		option = ft_is_valid(format + 1, &params, args);
+		option = is_valid(format + 1, &params, args);
 		if (!option)
 			printed += (write(1, format++, 1));
 		else if (option > 0)
 		{
-			printed += ft_print_args(params, args);
-			format = ft_toward_specifier(++format);
+			printed += print_args(params, args);
+			format = toward_specifier(format + 1);
 		}
 		else
 			return (-1);

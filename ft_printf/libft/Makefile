@@ -1,22 +1,25 @@
-CFLAGS		= -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror -g3 -O3
 CC			= clang
 NAME		= libft.a
 
 SRC			=	ft_itoa.c ft_strchr.c ft_strdup.c ft_strlcpy.c ft_strlen.c \
-				ft_toupper.c ft_isdigit.c \
+				ft_toupper.c ft_isdigit.c ft_bzero.c ft_strcmp.c \
 
 OBJ			= $(SRC:.c=.o)
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME):
+	@$(CC) $(FLAGS) -c $(SRC)
 	@ar crs $(NAME) $(OBJ)
+	@mkdir -p obj
+	@mv $(OBJ) obj
 
 clean:
-	@rm -f $(OBJ) $(BONUS_OBJ)
+	@rm -rf ./obj
 
 fclean:		clean
-	@rm -f $(NAME)
+	@rm -fr $(NAME)
 
 re:			fclean all
 

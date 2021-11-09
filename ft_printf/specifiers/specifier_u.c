@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_specifier_c.c                                   :+:      :+:    :+:   */
+/*   specifier_u.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/28 02:06:10 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/08/28 02:06:10 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/11/01 17:24:44 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/11/01 17:24:44 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-char	*ft_specifier_c(va_list args)
+char	*specifier_u(va_list args, t_params p)
 {
-	char	*arg;
+	unsigned int	nbr;
+	char			*arg;
 
-	arg = (char *)malloc(sizeof(char) * 1 + 1);
+	nbr = va_arg(args, unsigned int);
+	if (!nbr && !p.precision && p.precision_c)
+		return (ft_strdup(""));
+	arg = ft_utoa(nbr);
 	if (!arg)
 		return (NULL);
-	*arg = va_arg(args, int);
-	*(arg + 1) = 0;
 	return (arg);
 }

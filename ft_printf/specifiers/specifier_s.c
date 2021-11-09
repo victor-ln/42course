@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_specifier_s.c                                   :+:      :+:    :+:   */
+/*   specifier_s.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/28 02:06:40 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/08/28 02:06:40 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/11/01 17:24:36 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/11/01 17:24:36 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*readjusted_str(char *arg, int precision);
 
-char	*ft_specifier_s(va_list args, t_params p)
+char	*specifier_s(va_list args, t_params p)
 {
 	char	*arg;
 
@@ -28,7 +28,7 @@ char	*ft_specifier_s(va_list args, t_params p)
 	}
 	if ((int)ft_strlen(arg) > p.precision && p.precision_c)
 		return (readjusted_str(arg, p.precision));
-	if (p.precision == 0 && p.precision_c)
+	if (!p.precision && p.precision_c)
 		return (NULL);
 	return (ft_strdup(arg));
 }
