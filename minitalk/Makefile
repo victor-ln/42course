@@ -15,7 +15,6 @@ SRC			=	src/error.c
 OBJ			=	src/error.o
 
 RM			=	rm -rf
-SAFE_MKDIR	=	mkdir -p
 
 all:		$(NAME)
 
