@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 22:23:10 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/06 11:05:39 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/09 20:26:57 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,21 @@
 #include <stdio.h>
 #include <signal.h>
 
-typedef struct s_minitalk_tester
+typedef struct s_tester
 {
 	char	*command;
 	int		test;
 	int		fork_pid;
 	char	server_pid[10];
 	int		server_pid_n;
-}	t_minitalk_tester;
+	size_t	characters_sent;
+}	t_tester;
 
-void	rand_text(char *command, char *pid);
+void	rand_text(t_tester *root);
 
 int	main(void)
 {
-	t_minitalk_tester	root;
+	t_tester	root;
 
 	root.command = malloc(400);
 	root.fork_pid = fork();
@@ -41,10 +42,11 @@ int	main(void)
 		printf("\nType your server PID : ");
 		scanf("%s", root.server_pid);
 		root.test = 0;
+		root.characters_sent = 0;
 		while (++root.test <= 100)
 		{
 			printf("\n\n/*			TEST : %d			*/\n\n", root.test);
-			rand_text(root.command, root.server_pid);
+			rand_text(&root);
 			system(root.command);
 		}
 		printf("\n\nAll tests done\n\n");
@@ -52,25 +54,27 @@ int	main(void)
 		root.server_pid_n = atoi(root.server_pid);
 		if (!kill(root.server_pid_n, 0))
 			kill(root.server_pid_n, SIGINT);
+		printf("Characters sent: %ld\n", root.characters_sent);
 	}
 	return (0);
 }
 
-void	rand_text(char *command, char *pid)
+void	rand_text(t_tester *root)
 {
 	char	*str;
 	int		index;
 	int		before;
 
 	str = "01234568789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVVWXYZ";
-	memset(command, 0, 400);
-	strcpy(command, "../client ");
-	strcat(command, pid);
-	index = strlen(command);
+	memset(root->command, 0, 400);
+	strcpy(root->command, "../client ");
+	strcat(root->command, root->server_pid);
+	index = strlen(root->command);
 	before = index + 1;
-	command[index] = ' ';
+	root->command[index] = ' ';
 	while (++index < 400)
-		command[index] = str[rand() % 65];
-	printf("Expected : \n%s\n", command + before);
+		root->command[index] = str[rand() % 65];
+	printf("Expected : \n%s\n", root->command + before);
+	root->characters_sent += strlen(root->command + before);
 	printf("\nGot : \n");
 }
