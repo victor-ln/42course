@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:08:51 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/09 19:42:08 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/09 22:55:21 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	send_message_len(void)
 	{
 		kill(g_client.server_pid, \
 			g_client.signals[(g_client.message_len >> (--i)) & 1]);
-		usleep (1000);
+		pause();
 	}
 	else
 		g_client.process = send_message;
@@ -49,7 +49,7 @@ void	send_message(void)
 	{
 		kill(g_client.server_pid, \
 			g_client.signals[(g_client.message[byte] >> (--bit)) & 1]);
-		usleep (1000);
+		pause();
 	}
 	else if (g_client.message[++byte])
 		bit = 8;
