@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 11:01:52 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/09 19:46:15 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:41:43 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_server
 {
 	char		*message;
 	size_t		message_len;
-	int			message_sent;
 	pid_t		client_pid;
 	void		(*process)(int, struct s_server *);
 }	t_server;

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:47:14 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/09 19:37:41 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/10 15:14:26 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,20 @@ void	start_connection(void)
 	sa.sa_handler = get_signal;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	while (g_client.is_connected > 0)
+	connect();
+	while (!kill(g_client.server_pid, 0) && g_client.is_connected)
 		g_client.process();
-	if (g_client.is_connected == -1)
-		error("Connection refused by SERVER,\nCould not send message.", \
-			"CLIENT");
-	else if (!errno)
+	if (!g_client.is_connected)
 		ft_printf("CLIENT: Message sent successfully.\n");
 }
 
 void	get_signal(int signal)
 {
 	if (signal == SIGUSR1)
-		g_client.is_connected = -1;
+	{
+		ft_printf("CLIENT: SERVER cannot connect for a while\n");
+		sleep(1);
+	}
+	else
+		g_client.is_connected = 1;
 }

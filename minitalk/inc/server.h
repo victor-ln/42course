@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:16:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/09 21:08:46 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/10 15:30:25 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void		handler(int signal, siginfo_t *info, void *null);
 void		get_message_len(int signal, t_server *server);
 
 /*
-	Calculates each bit received until completes a byte, and stores its value in the
+	Calculates every bit received until completes a byte, and stores its value in the
 	string to be displayed when the number of bytes is equal to the message length.
 */
 void		get_message(int signal, t_server *server);
 
 /*
-	Frees allocated memory and set to zero most variables.
+	Sets to zero some variables and sets function pointer to get_message_len().
 */
-void		restart_server(t_server *server);
+void		start_server(t_server *server);
 
 #endif

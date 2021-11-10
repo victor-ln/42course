@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_utils.c                                     :+:      :+:    :+:   */
+/*   client_processes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 18:08:51 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/09 22:55:21 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/11/10 07:13:31 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/11/10 15:18:24 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
 #include "client.h"
 
 extern t_client	g_client;
@@ -23,7 +22,7 @@ void	start_struct(char **args)
 	g_client.message_len = ft_strlen(args[2]);
 	g_client.signals[0] = SIGUSR1;
 	g_client.signals[1] = SIGUSR2;
-	g_client.is_connected = 1;
+	g_client.is_connected = 0;
 }
 
 void	send_message_len(void)
@@ -34,7 +33,7 @@ void	send_message_len(void)
 	{
 		kill(g_client.server_pid, \
 			g_client.signals[(g_client.message_len >> (--i)) & 1]);
-		pause();
+		usleep(10000);
 	}
 	else
 		g_client.process = send_message;
@@ -49,7 +48,7 @@ void	send_message(void)
 	{
 		kill(g_client.server_pid, \
 			g_client.signals[(g_client.message[byte] >> (--bit)) & 1]);
-		pause();
+		usleep(10000);
 	}
 	else if (g_client.message[++byte])
 		bit = 8;
@@ -78,4 +77,14 @@ pid_t	check_pid(char *ptr)
 			error("Process does not exist", "CLIENT");
 	}
 	return (pid);
+}
+
+void	connect(void)
+{
+	while (!g_client.is_connected)
+	{
+		kill(g_client.server_pid, SIGUSR1);
+		sleep(1);
+	}
+	ft_printf("CLIENT: Connection established\n");
 }
