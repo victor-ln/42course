@@ -32,7 +32,7 @@ void	handler(int signal, siginfo_t *info, void *null)
 
 	if (server.client_pid != info->si_pid)
 	{
-		if (server.message || !server.message_len)
+		if (server.message && server.client_pid)
 		{
 			kill(info->si_pid, SIGUSR1);
 			return ;
