@@ -56,7 +56,7 @@ void	send_message_len(void)
 	{
 		kill(g_client.server_pid, \
 			g_client.signals[(g_client.message_len >> (--i)) & 1]);
-		usleep(1000);
+		usleep(10000);
 	}
 	else
 		g_client.process = send_message;
