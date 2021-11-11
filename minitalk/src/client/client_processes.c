@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 07:13:31 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/11 03:37:17 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/11 05:38:33 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	start_struct(char **args)
 	g_client.signals[0] = SIGUSR1;
 	g_client.signals[1] = SIGUSR2;
 	g_client.is_connected = 0;
+	if (!g_client.message_len)
+		error("Empty message", "CLIENT");
 }
 
 void	send_message_len(void)

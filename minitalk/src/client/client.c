@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:47:14 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/11 03:14:22 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/11 05:08:47 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	get_signal(int signal)
 		else
 		{
 			ft_printf("CLIENT: Message sent successfully.\n");
-			g_client.is_connected = 0;
+			exit(0);
 		}
 	}
 	else
