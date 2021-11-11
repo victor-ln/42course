@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:15:05 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/10 15:12:47 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/11 01:34:27 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,9 @@ void	handler(int signal, siginfo_t *info, void *null)
 			kill(info->si_pid, SIGUSR1);
 			return ;
 		}
-		else
-		{
-			start_server(&server);
-			server.client_pid = info->si_pid;
-		}
+		server.client_pid = info->si_pid;
+		server.process = confirm_signal;
 	}
-	else
-		server.process(signal, &server);
-	kill(server.client_pid, SIGUSR2);
+	server.process(signal, &server);
 	(void)null;
 }

@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:47:14 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/10 15:14:26 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/11 03:14:22 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,41 @@
 t_client	g_client;
 
 #define INV_ARGC "Invalid number of arguments\n\
-it needs the server PID and the message to send"
+it needs the server PID and a message to send"
 
 int	main(int argc, char **argv)
-{
-	if (argc != 3)
-		error(INV_ARGC, "CLIENT");
-	start_struct(argv);
-	start_connection();
-	return (0);
-}
-
-void	start_connection(void)
 {
 	t_sigaction	sa;
 
 	ft_bzero(&sa, sizeof(t_sigaction));
+	if (argc != 3)
+		error(INV_ARGC, "CLIENT");
+	start_struct(argv);
 	sa.sa_handler = get_signal;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	connect();
-	while (!kill(g_client.server_pid, 0) && g_client.is_connected)
+	while (g_client.is_connected && !kill(g_client.server_pid, 0))
 		g_client.process();
-	if (!g_client.is_connected)
-		ft_printf("CLIENT: Message sent successfully.\n");
+	if (g_client.is_connected)
+		error("SERVER is not active anymore", "CLIENT");
+	return (0);
 }
 
 void	get_signal(int signal)
 {
 	if (signal == SIGUSR1)
 	{
-		ft_printf("CLIENT: SERVER cannot connect for a while\n");
-		sleep(1);
+		if (!g_client.is_connected)
+		{
+			ft_printf("CLIENT: SERVER cannot connect for a while\n");
+			sleep(2);
+		}
+		else
+		{
+			ft_printf("CLIENT: Message sent successfully.\n");
+			g_client.is_connected = 0;
+		}
 	}
 	else
 		g_client.is_connected = 1;

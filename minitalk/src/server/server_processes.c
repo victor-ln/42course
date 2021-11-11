@@ -6,11 +6,22 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 07:44:40 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/10 15:08:59 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/11 03:16:07 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
+
+void	confirm_signal(int signal, t_server *server)
+{
+	if (signal == SIGUSR1)
+		kill(server->client_pid, SIGUSR2);
+	else
+		kill(server->client_pid, SIGUSR1);
+	server->process = get_message_len;
+	server->message_len = 0;
+	server->message = 0;
+}
 
 void	get_message_len(int signal, t_server *server)
 {
@@ -27,6 +38,7 @@ void	get_message_len(int signal, t_server *server)
 		if (!server->message)
 			error("Malloc for message string failed", "SERVER");
 	}
+	kill(server->client_pid, SIGUSR2);
 }
 
 void	get_message(int signal, t_server *server)
@@ -44,20 +56,14 @@ void	get_message(int signal, t_server *server)
 		if (byte == server->message_len)
 		{
 			server->message[byte] = 0;
-			ft_printf("SERVER: Message:\n%s\n", server->message);
-			start_server(server);
+			ft_printf("SERVER: Message from %d:\n%s\n", \
+				server->client_pid, server->message);
+			server->process = confirm_signal;
+			free(server->message);
 			byte = 0;
 		}
 		bit = 0;
 		ch = 0;
 	}
-}
-
-void	start_server(t_server *server)
-{
-	if (server->message)
-		free(server->message);
-	server->process = get_message_len;
-	server->message_len = 0;
-	server->message = 0;
+	kill(server->client_pid, SIGUSR2);
 }

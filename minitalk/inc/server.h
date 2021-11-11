@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:16:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/10 15:30:25 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/11 02:50:01 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 /*
 	Receives the signal SIGUSR1 or SIGUSR2 and some info about the sender.
-	Checks if the signal is the same received from the last client and handles it.
+	Checks if the signal is the same received from the current process. If it is,
+	keeps process running, else sends a signal for the new client wait a while.
 */
 void		handler(int signal, siginfo_t *info, void *null);
 
@@ -29,14 +30,16 @@ void		handler(int signal, siginfo_t *info, void *null);
 void		get_message_len(int signal, t_server *server);
 
 /*
-	Calculates every bit received until completes a byte, and stores its value in the
-	string to be displayed when the number of bytes is equal to the message length.
+	Calculates every bit received until it completes a byte,
+	and stores its value in the string to be displayed when
+	the number of bytes is equal to the message length.
 */
 void		get_message(int signal, t_server *server);
 
 /*
-	Sets to zero some variables and sets function pointer to get_message_len().
+	Confirms the start or end of the connection and sets the
+	function pointer to get_message_len() and message_len to zero.
 */
-void		start_server(t_server *server);
+void		confirm_signal(int signal, t_server *server);
 
 #endif

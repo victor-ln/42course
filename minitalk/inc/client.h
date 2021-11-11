@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:40:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/10 15:29:31 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/11 01:59:58 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,9 @@ void		start_struct(char **args);
 pid_t		check_pid(char *ptr);
 
 /*
-	Keeps connection with server till string is sent or some error occurs.
-*/
-void		start_connection(void);
-
-/*
-	Checks if server can handle the message.
+	Receives the signal SIGUSR1 or SIGUSR2 from the server.
+	SIGUSR2 activates the connection, SIGUSR1 leaves process
+	waiting if it is not connected or disconnects if it is.
 */
 void		get_signal(int signal);
 
@@ -44,7 +41,7 @@ void		get_signal(int signal);
 void		send_message_len(void);
 
 /*
-	Sends the message, every bit of every byte then disconnects the connection.
+	Sends the message, every bit of every byte then confirms if message was sent.
 */
 void		send_message(void);
 
