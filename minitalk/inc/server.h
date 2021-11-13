@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 18:16:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/11 02:50:01 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/13 13:12:23 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define SERVER_H
 
 # include "minitalk.h"
-
-# define DIFF_PID "SERVER: Handling signals from another client now\n"
 
 /*
 	Receives the signal SIGUSR1 or SIGUSR2 and some info about the sender.

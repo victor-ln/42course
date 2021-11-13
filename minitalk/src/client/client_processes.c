@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 07:13:31 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/11 05:38:33 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/13 13:13:24 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	send_message_len(void)
 	{
 		kill(g_client.server_pid, \
 			g_client.signals[(g_client.message_len >> (--i)) & 1]);
-		usleep(10000);
+		usleep(20000);
 	}
 	else
 		g_client.process = send_message;
@@ -73,14 +73,14 @@ void	send_message(void)
 	{
 		kill(g_client.server_pid, \
 			g_client.signals[(g_client.message[byte] >> (--bit)) & 1]);
-		usleep(10000);
+		usleep(20000);
 	}
 	else if (g_client.message[++byte])
 		bit = 8;
 	else
 	{
 		kill(g_client.server_pid, SIGUSR2);
-		usleep(10000);
+		usleep(20000);
 	}
 }
 
@@ -90,7 +90,7 @@ void	connect(void)
 	{
 		if (kill(g_client.server_pid, SIGUSR1))
 			error("SERVER is not active anymore", "CLIENT");
-		usleep(10000);
+		usleep(20000);
 	}
 	ft_printf("CLIENT: Connection established\n");
 }
