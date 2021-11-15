@@ -6,29 +6,30 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 00:13:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/13 11:37:32 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/15 17:02:25 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
+
+static void	sort_stack(t_push_swap *root);
 
 int	main(int argc, char **argv)
 {
-	t_stack		*stack;
+	t_push_swap		*root;
 
-	stack = ft_calloc(sizeof(t_stack), 1);
-	if (!stack || argc != 2)
-		end_program(stack, 1);
-	start_stack(argv[1], stack);
-	sort_stack(stack);
+	root = (t_push_swap *)ft_calloc(sizeof(t_push_swap), 1);
+	if (!root || argc != 2)
+		end_program(root, 1);
+	start_stack(argv[1], root);
+	sort_stack(root);
 }
 
-void	sort_stack(t_stack *stack)
+static void	sort_stack(t_push_swap *root)
 {
-	while (check_stack(stack))
+	while (check_stack(root))
 	{
-		ft_putstr_fd(stack->actions_strs[stack->action], 1);
+		root->operation[root->ctrl](root);
 	}
-	end_program(stack, 0);
+	end_program(root, 0);
 }

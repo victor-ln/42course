@@ -6,27 +6,27 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 03:09:52 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/13 12:29:29 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:52:23 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	check_stack(t_stack *stack)
+int	check_stack(t_push_swap *root)
 {
 	size_t	i;
 	size_t	j;
 	int		num;
 
 	i = 0;
-	if (stack->numbers != stack->a_numbers)
+	if (root->numbers != root->a->numbers)
 		return (1);
-	while (i < stack->a_numbers)
+	while (i < root->a->numbers)
 	{
 		j = i;
-		num = stack->a[i];
-		while (++j < stack->a_numbers)
-			if (stack->operator(num, stack->a[j]))
+		num = root->a->stack[i];
+		while (++j < root->a->numbers)
+			if (root->operator(num, root->a->stack[j]))
 				return (1);
 		i++;
 	}

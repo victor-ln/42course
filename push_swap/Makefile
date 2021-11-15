@@ -5,12 +5,16 @@ LIB			=	./libft/libft.a
 CC			=	clang
 FLAGS		=	-Wall -Werror -Wextra -O3 -g3
 
-SRC			=	./src/check_stack.c \
-				./src/end_program.c \
-				./src/push_swap.c \
-				./src/start_stack.c \
+FILES		=	check_stack.c \
+				end_program.c \
+				push_stack.c \
+				push_swap.c \
+				rotate_stack.c \
+				start_stack.c \
+				swap_stack.c \
 
-OBJ			=	$(addprefix ./obj/,$(notdir $(SRC:%.c=%.o)))
+SRC			=	$(addprefix ./src/, $(FILES))
+OBJ			=	$(addprefix ./obj/, $(FILES:%.c=%.o))
 
 RM			=	rm -fr
 

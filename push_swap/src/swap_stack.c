@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_program.c                                      :+:      :+:    :+:   */
+/*   swap_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/13 02:44:50 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/15 15:51:41 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/11/15 16:15:46 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/11/15 17:20:37 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	end_program(t_push_swap *root, int status)
+static void	swap(int *x, int *y);
+
+void	swap_stack(t_push_swap *root)
 {
-	if (status)
-		ft_putstr_fd("Error\n", 2);
-	if (root)
-	{
-		if (root->a)
-		{
-			if (root->a->stack)
-				free(root->a->stack);
-			free(root->a);
-		}
-		if (root->b)
-		{
-			if (root->b->stack)
-				free(root->b->stack);
-			free(root->b);
-		}
-		free(root);
-	}
-	exit(status);
+	if (root->ctrl == sa || root->ctrl == ss)
+		swap(root->a->stack, root->a->stack + 1);
+	if (root->ctrl == sb || root->ctrl == ss)
+		swap(root->b->stack, root->b->stack + 1);
+	write(1, root->operation_strs[root->ctrl], 3);
+}
+
+static void	swap(int *x, int *y)
+{
+	*x ^= *y;
+	*y ^= *x;
+	*x ^= *y;
 }
