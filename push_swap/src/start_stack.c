@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 11:35:00 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/19 04:59:41 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/19 07:15:47 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	start_stack(char *ptr, t_push_swap *root)
 	}
 	if (repeats(root->a))
 		end_program(root, 1);
-	root->a->last = root->a->stack[root->a->nums - 1];
-	root->a->_2nd_last = root->a->stack[root->a->nums - 2];
 	set_operations(root);
 }
 
