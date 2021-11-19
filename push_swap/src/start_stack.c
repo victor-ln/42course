@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 11:35:00 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/19 07:15:47 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/19 07:19:04 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,25 @@ static void	set_operations(t_push_swap *root);
 void	start_stack(char *ptr, t_push_swap *root)
 {
 	int		i;
+	int		sign;
 
 	i = 0;
 	stack_len(ptr, root);
 	while (*ptr)
 	{
+		sign = 1;
+		if (*ptr == '-')
+		{
+			sign = -1;
+			ptr++;
+		}
 		while (ft_isdigit(*ptr))
 			root->a->stack[i] = (root->a->stack[i] * 10) + (*ptr++ - '0');
 		if (!*ptr)
 			break ;
 		if (*ptr != ' ')
 			end_program(root, 1);
+		root->a->stack[i] *= sign;
 		ptr++;
 		i++;
 	}
