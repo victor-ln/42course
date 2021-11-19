@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 11:35:00 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/15 17:01:21 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/19 04:59:41 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,35 @@ void	start_stack(char *ptr, t_push_swap *root)
 		ptr++;
 		i++;
 	}
-	root->operator = is_equal;
-	if (check_stack(root))
+	if (repeats(root->a))
 		end_program(root, 1);
-	root->operator = is_bigger;
+	root->a->last = root->a->stack[root->a->nums - 1];
+	root->a->_2nd_last = root->a->stack[root->a->nums - 2];
 	set_operations(root);
 }
 
 static void	stack_len(char *ptr, t_push_swap *root)
 {
+	int		numbers;
+
+	numbers = 0;
 	while (*ptr)
 	{
 		if (ft_isdigit(*ptr) && (*(ptr + 1) == ' ' || !*(ptr + 1)))
-			root->numbers++;
+			numbers++;
 		ptr++;
 	}
-	if (root->numbers < 2)
+	if (numbers < 2)
 		end_program(root, 0);
 	root->a = (t_stack *)ft_calloc(sizeof(t_stack), 1);
 	root->b = (t_stack *)ft_calloc(sizeof(t_stack), 1);
 	if (!root->a || !root->b)
 		end_program(root, 1);
-	root->a->stack = (int *)ft_calloc(sizeof(int), root->numbers);
-	root->b->stack = (int *)ft_calloc(sizeof(int), root->numbers);
-	if (!root->a || !root->b)
+	root->a->stack = (int *)malloc(sizeof(int) * numbers);
+	root->b->stack = (int *)ft_calloc(sizeof(int), numbers);
+	if (!root->a->stack || !root->b->stack)
 		end_program(root, 1);
-	root->a->numbers = root->numbers;
+	root->a->nums = numbers;
 }
 
 static void	set_operations(t_push_swap *root)

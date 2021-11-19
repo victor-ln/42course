@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 00:13:09 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/15 17:28:20 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/19 07:02:57 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	main(int argc, char **argv)
 		end_program(root, 1);
 	start_stack(argv[1], root);
 	sort_stack(root);
+	end_program(root, 0);
 }
 
 static void	sort_stack(t_push_swap *root)
 {
-	while (check_stack(root))
+	while (not_sorted(root->a->stack, 1, root->a->nums) || root->b->nums)
 	{
 		root->operation[root->ctrl](root);
 	}
-	end_program(root, 0);
 }

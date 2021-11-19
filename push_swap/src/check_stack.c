@@ -6,39 +6,47 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 03:09:52 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/15 15:52:23 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/19 07:03:42 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	check_stack(t_push_swap *root)
+int	not_sorted(int *stack, int order, size_t n)
 {
 	size_t	i;
 	size_t	j;
 	int		num;
 
 	i = 0;
-	if (root->numbers != root->a->numbers)
-		return (1);
-	while (i < root->a->numbers)
+	while (++i < n)
 	{
-		j = i;
-		num = root->a->stack[i];
-		while (++j < root->a->numbers)
-			if (root->operator(num, root->a->stack[j]))
+		j = 0;
+		num = stack[i];
+		while (j < i)
+			if ((stack[j++] > num) == order)
 				return (1);
-		i++;
+		while (++j < n)
+			if ((stack[j] < num) == order)
+				return (1);
 	}
 	return (0);
 }
 
-int	is_equal(int num, int stack_num)
+int	repeats(t_stack *stack)
 {
-	return (num == stack_num);
-}
+	size_t	i;
+	size_t	j;
+	int		num;
 
-int	is_bigger(int num, int stack_num)
-{
-	return (num > stack_num);
+	i = 0;
+	while (i < stack->nums)
+	{
+		j = i;
+		num = stack->stack[i++];
+		while (++j < stack->nums)
+			if (num == stack->stack[j])
+				return (1);
+	}
+	return (0);
 }

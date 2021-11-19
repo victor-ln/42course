@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 00:13:53 by vlima-nu          #+#    #+#             */
-/*   Updated: 2021/11/15 17:22:17 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2021/11/19 07:09:16 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,17 @@ typedef struct s_stack		t_stack;
 
 struct s_stack
 {
-	int		*stack;
-	size_t	numbers;
+	int			*stack;
+	size_t		nums;
 };
 
 struct s_push_swap
 {
 	t_stack		*a;
 	t_stack		*b;
-	size_t		numbers;
 	int			ctrl;
-	char		*operation_strs[11];
 	void		(*operation[11])(t_push_swap *);
-	int			(*operator)(int, int);
+	char		*operation_strs[11];
 };
 
 /*
@@ -56,11 +54,18 @@ struct s_push_swap
 void		end_program(t_push_swap *root, int status);
 
 /*
-	Compares each number of stack a with all their
-	successors using the function pointer operator,
-	that can be the is_equal or is_bigger functions.
+	Compares each number of stack with all their
+	successors. Returns 1 if a number repeats, else
+	sets some variables in the stack and returns 0.
 */
-int			check_stack(t_push_swap *root);
+int			repeats(t_stack *stack);
+
+/*
+	Compares each number of stack with all their n
+	successors. Order can be 1 or 0. 1 means ascending, zero the opposite.
+	Returns 1 if its not sorted in the order given, else returns 0.
+*/
+int			not_sorted(int *stack, int order, size_t n);
 
 /*
 	Gets how many numbers there are to put in the stack a,
@@ -70,9 +75,6 @@ int			check_stack(t_push_swap *root);
 	stack to write them when they are used.
 */
 void		start_stack(char *ptr, t_push_swap *root);
-
-int			is_bigger(int num, int stack_num);
-int			is_equal(int num, int stack_num);
 
 /*
 	Swaps the first 2 elements at the top of the stack a,
