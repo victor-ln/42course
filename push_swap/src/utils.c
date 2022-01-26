@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:32:23 by vlima-nu          #+#    #+#             */
-/*   Updated: 2022/01/25 16:41:08 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:12:59 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 static size_t	compare(t_stack *x);
 
-void	sort_five(t_push_swap *data)
+void	sort_five(t_push_swap *d)
 {
-	while (!is_sorted(data->a) || data->b->n)
+	while (!is_sorted(d->a) || d->b->n)
 	{
-		if (data->a->st[0] > data->a->st[data->a->n - 1])
-			rotate(data, A + (*data->b->st < data->b->st[data->b->n - 1] && data->b->n >= 2) * 2);
-		else if (data->a->st[0] > data->a->st[1])
-			swap(data, A + (data->b->st[0] < data->b->st[1] && data->b->n >= 2) * 2);
-		else if (!is_sorted(data->a))
-			push(data, B);
-		else if (data->a->n + data->b->n <= 5)
-			push(data, A);
+		if (d->a->st[0] > d->a->st[d->a->n - 1])
+			rotate(d, A + \
+					(*d->b->st < d->b->st[d->b->n - 1] && d->b->n > 1) * 2);
+		else if (d->a->st[0] > d->a->st[1])
+			swap(d, A + (d->b->st[0] < d->b->st[1] && d->b->n > 1) * 2);
+		else if (!is_sorted(d->a))
+			push(d, B);
+		else if (d->a->n + d->b->n <= 5)
+			push(d, A);
 		else
 			break ;
 	}

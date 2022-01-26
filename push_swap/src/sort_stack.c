@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:30:38 by vlima-nu          #+#    #+#             */
-/*   Updated: 2022/01/25 21:41:18 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:10:40 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,9 @@ static void	insert(t_push_swap *data)
 	if (data->pos[A] * data->pos[B] > 0)
 	{
 		if (data->pos[A] > 0)
-		{
-			data->counter = data->pos[B];
-			if (data->pos[A] < data->pos[B])
-				data->counter = data->pos[A];
-		}
+			data->counter = data->pos[data->pos[A] > data->pos[B]];
 		else
-		{
-			data->counter = data->pos[B];
-			if (data->pos[A] > data->pos[B])
-				data->counter = data->pos[A];
-		}
+			data->counter = data->pos[data->pos[A] < data->pos[B]];
 		data->pos[A] -= data->counter;
 		data->pos[B] -= data->counter;
 		data->counter = ft_abs(data->counter);
@@ -98,7 +90,7 @@ static void	push_back(t_push_swap *data)
 		i = 0;
 		data->pos[A] = find_pos(data, data->b->st[i]);
 		data->pos[B] = i++;
-		while (i < data->b->n / 2)
+		while (i < data->b->n / 2 && (int)i < count_operations(data->pos))
 		{
 			data->tmp[A] = find_pos(data, data->b->st[i]);
 			data->tmp[B] = i;
@@ -108,8 +100,7 @@ static void	push_back(t_push_swap *data)
 			data->tmp[B] = -i;
 			if (count_operations(data->pos) > count_operations(data->tmp))
 				ft_memcpy(data->pos, data->tmp, sizeof(int) * 2);
-			if ((int)++i >= count_operations(data->pos))
-				break ;
+			i++;
 		}
 		insert(data);
 	}
