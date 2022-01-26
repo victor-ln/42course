@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_program.c                                      :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/13 02:44:50 by vlima-nu          #+#    #+#             */
-/*   Updated: 2022/01/25 21:18:40 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/11/15 16:15:46 by vlima-nu          #+#    #+#             */
+/*   Updated: 2022/01/25 17:31:54 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	end_program(t_push_swap *data, int status)
+static void	swap_stack(t_stack *x);
+
+void	swap(t_push_swap *data, int operation)
 {
-	if (status)
-		ft_putstr_fd("Error\n", 2);
-	if (data)
-	{
-		if (data->a)
-		{
-			if (data->a->st)
-				free(data->a->st);
-			free(data->a);
-		}
-		if (data->b)
-		{
-			if (data->b->st)
-				free(data->b->st);
-			free(data->b);
-		}
-		if (data->pos)
-			free(data->pos);
-		if (data->tmp)
-			free(data->tmp);
-		free(data);
-	}
-	exit(status);
+	if (operation == A || operation == R)
+		swap_stack(data->a);
+	if (operation == B || operation == R)
+		swap_stack(data->b);
+	if (!BONUS)
+		write(1, data->operation_strs[0][operation], 3);
+}
+
+static void	swap_stack(t_stack *x)
+{
+	int		temp;
+
+	if (x->n < 2)
+		return ;
+	temp = x->st[1];
+	x->st[1] = x->st[0];
+	x->st[0] = temp;
 }

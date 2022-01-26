@@ -14,7 +14,6 @@
 # define LIBFT_H
 
 # include <stdlib.h>
-# include <stdio.h>
 # include <unistd.h>
 
 typedef struct s_list
@@ -28,6 +27,7 @@ int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
+int		ft_isspace(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 
@@ -36,6 +36,11 @@ int		ft_tolower(int c);
 	pointed to by nptr to int.
 */
 int		ft_atoi(const char *nptr);
+
+/*
+	The same as atoi, except that it converts to long.
+*/
+long	ft_atol(const char *nptr);
 
 /*
 	Compares both strings s1 and s2 and returns the difference

@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_program.c                                      :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/13 02:44:50 by vlima-nu          #+#    #+#             */
-/*   Updated: 2022/01/25 21:18:40 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/11/21 14:07:25 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/11/21 14:14:24 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	end_program(t_push_swap *data, int status)
+long	ft_atol(const char *nptr)
 {
-	if (status)
-		ft_putstr_fd("Error\n", 2);
-	if (data)
+	long	num;
+	long	sign;
+
+	num = 0;
+	sign = 1;
+	while (ft_isspace(*nptr))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
 	{
-		if (data->a)
-		{
-			if (data->a->st)
-				free(data->a->st);
-			free(data->a);
-		}
-		if (data->b)
-		{
-			if (data->b->st)
-				free(data->b->st);
-			free(data->b);
-		}
-		if (data->pos)
-			free(data->pos);
-		if (data->tmp)
-			free(data->tmp);
-		free(data);
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
 	}
-	exit(status);
+	while (ft_isdigit(*nptr))
+		num = (num * 10) + (*nptr++ - 48);
+	return (num * sign);
 }

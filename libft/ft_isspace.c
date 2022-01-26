@@ -1,40 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_program.c                                      :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/13 02:44:50 by vlima-nu          #+#    #+#             */
-/*   Updated: 2022/01/25 21:18:40 by vlima-nu         ###   ########.fr       */
+/*   Created: 2021/11/21 14:10:15 by vlima-nu          #+#    #+#             */
+/*   Updated: 2021/11/21 14:10:16 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	end_program(t_push_swap *data, int status)
+int	ft_isspace(int c)
 {
-	if (status)
-		ft_putstr_fd("Error\n", 2);
-	if (data)
-	{
-		if (data->a)
-		{
-			if (data->a->st)
-				free(data->a->st);
-			free(data->a);
-		}
-		if (data->b)
-		{
-			if (data->b->st)
-				free(data->b->st);
-			free(data->b);
-		}
-		if (data->pos)
-			free(data->pos);
-		if (data->tmp)
-			free(data->tmp);
-		free(data);
-	}
-	exit(status);
+	return (c == ' ' || c == '\f' || c == '\n' || \
+			c == '\r' || c == '\t' || c == '\v');
 }
