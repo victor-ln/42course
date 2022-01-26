@@ -6,7 +6,7 @@
 /*   By: vlima-nu <vlima-nu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 18:37:25 by vlima-nu          #+#    #+#             */
-/*   Updated: 2022/01/25 21:18:25 by vlima-nu         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:25:12 by vlima-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	read_instructions(t_push_swap *data)
 	{
 		if (!ft_strchr("rapbs\n", command[i]) || i == 4)
 			finish_program(data, 2);
-		else if (command[i] == '\n' && i > 1)
+		else if (command[i] == '\n')
 		{
 			command[i + 1] = 0;
 			i = 0;
@@ -82,7 +82,7 @@ static int	execute_instruction(t_push_swap *data, char *command)
 static void	finish_program(t_push_swap *data, int status)
 {
 	if (!status)
-		ft_putstr_fd("KO\n", 2);
+		ft_putstr_fd("KO\n", 1);
 	else if (status == 1)
 		ft_putstr_fd("OK\n", 1);
 	else
